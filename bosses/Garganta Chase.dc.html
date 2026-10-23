@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}a{color:#6af5d6}a:hover{color:#b8fff0}@keyframes dice-tumble{0%{transform:rotateX(0deg) rotateY(0deg)}100%{transform:rotateX(1080deg) rotateY(720deg)}}@keyframes blink{50%{opacity:.3}}@keyframes gatepulse{50%{box-shadow:0 0 34px 8px rgba(106,245,214,.75),inset 0 0 18px rgba(106,245,214,.6)}}</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden">
+<div ref="{{ stageRef }}" data-screen-label="Garganta · The Chase" style="position:relative;flex:none;width:390px;height:844px;overflow:hidden;background:#000;image-rendering:pixelated;color:#ffffff;transform-origin:center center;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div ref="{{ driftA }}" style="position:absolute;inset:0;background:#000 url(assets/space.png) 0 0/600px 900px repeat"></div>
+<div ref="{{ driftB }}" style="position:absolute;inset:0;background:url(assets/space.png) 120px 300px/900px 1350px repeat;opacity:.28;mix-blend-mode:screen"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(70% 30% at 50% 66%,rgba(110,200,60,.2) 0%,rgba(110,200,60,0) 100%)"></div>
+</div>
+<div ref="{{ shakeRef }}" style="position:absolute;inset:0">
+
+<div style="position:absolute;left:16px;right:16px;top:12px;height:44px;display:flex;align-items:stretch;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box;z-index:6">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 10px;border-right:2px solid #3a3a5a"><div style="flex:none;width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#b8f070">{{ hudTitle }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:6px;padding:0 10px;border-right:2px solid #3a3a5a"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">ROUND</span><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1">{{ roundTxt }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px"><img src="assets/coin.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#ffd644">{{ gold }}</span></div>
+</div>
+
+<div ref="{{ trackRef }}" style="position:absolute;left:0;top:62px;width:390px;height:530px;overflow:hidden;transform-origin:50% 50%">
+<sc-if value="{{ isChase }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ gate.show }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;top:{{ gate.y }}px;height:0;transition:top .6s cubic-bezier(.3,0,.2,1)">
+<div style="position:absolute;left:85px;top:-24px;width:220px;height:48px;border:4px solid #6af5d6;border-radius:50%;box-sizing:border-box;background:radial-gradient(ellipse,rgba(106,245,214,.35),rgba(106,245,214,0) 70%);box-shadow:0 0 22px 4px rgba(106,245,214,.55),inset 0 0 14px rgba(106,245,214,.5);animation:gatepulse 1.4s ease-in-out infinite"></div>
+<div style="position:absolute;left:0;right:0;top:-44px;text-align:center;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;letter-spacing:2px;color:#6af5d6;text-shadow:2px 2px 0 #000">GATE</div>
+</div>
+</sc-if>
+<div style="position:absolute;left:0;right:0;top:8px;display:flex;justify-content:center;z-index:4;pointer-events:none"><div style="height:28px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#0a0821;border:2px solid #6af5d6;border-radius:6px;box-shadow:2px 2px 0 #240011;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">TO GATE</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#6af5d6">{{ gateDist }}</span></div></div>
+<sc-if value="{{ band.show }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:12px;right:12px;top:{{ band.top }}px;height:{{ band.h }}px;background:linear-gradient(180deg,rgba(255,77,77,.05),rgba(255,77,77,.32));border-top:2px solid rgba(255,77,77,.8);box-sizing:border-box;pointer-events:none;transition:top .3s,height .3s"></div></sc-if>
+<div ref="{{ headRef }}" style="position:absolute;left:60px;top:346px;width:269px;height:241px">
+<div style="position:absolute;inset:0;transform:rotate(180deg)">
+<img ref="{{ headImg }}" src="assets/garganta_v4.png" alt="Garganta" style="position:absolute;left:0;top:0;width:269px;height:241px;display:block;image-rendering:pixelated">
+<div ref="{{ biteRef }}" style="position:absolute;left:46px;top:48px;width:176px;height:236px;background:url(assets/garganta_bite3.png) 0 0/176px 236px no-repeat;image-rendering:pixelated;opacity:0"></div>
+<div ref="{{ shutRef }}" style="position:absolute;left:51px;top:9px;width:176px;height:236px;background:url(assets/garganta_shut.png) 0 0/176px 236px no-repeat;image-rendering:pixelated;opacity:0"></div>
+</div>
+<sc-for list="{{ eyes }}" as="e" hint-placeholder-count="3">
+<div data-eye="{{ e.i }}" onClick="{{ e.tap }}" style="position:absolute;left:{{ e.x }}px;top:{{ e.y }}px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:3px solid {{ e.bd }};border-radius:50%;background:{{ e.bg }};box-shadow:{{ e.glow }};box-sizing:border-box;cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s">
+<sc-if value="{{ e.no }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:{{ e.txt }}">{{ e.label }}</span></sc-if>
+<sc-if value="{{ e.has }}" hint-placeholder-val="{{ false }}"><img src="{{ e.src }}" alt="" style="width:24px;height:24px;display:block"></sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ surgeTag.show }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:12px;top:{{ surgeTag.y }}px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;padding:5px 8px;background:#0a0821;border:2px solid #ff4d4d;border-radius:6px;box-shadow:2px 2px 0 #240011;box-sizing:border-box;z-index:3;transition:top .3s">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ surgeTag.label }}</span>
+<div style="display:flex;align-items:baseline;gap:6px"><sc-if value="{{ surgeTag.slowed }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Jersey 15',monospace;font-size:18px;line-height:1;color:#6b7187;text-decoration:line-through">{{ surgeTag.base }}</span></sc-if><span style="font-family:'Jersey 15',monospace;font-size:26px;line-height:1;letter-spacing:1px;color:{{ surgeTag.col }}">{{ surgeTag.txt }}</span></div>
+</div></sc-if>
+<sc-for list="{{ ships }}" as="s" hint-placeholder-count="4">
+<div ref="{{ s.ref }}" style="position:absolute;left:0;top:{{ s.y }}px;width:390px;height:40px;opacity:{{ s.op }};transition:top .6s cubic-bezier(.3,0,.2,1),opacity .3s;pointer-events:{{ s.pe }};z-index:2">
+<sc-if value="{{ s.canDrop }}" hint-placeholder-val="{{ false }}"><div onClick="{{ s.drop }}" style="position:absolute;left:16px;top:4px;width:62px;height:32px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:2px solid #f2f2f2;border-radius:5px;box-shadow:inset 0 -4px 0 #b3201c,2px 2px 0 #240011;box-sizing:border-box;cursor:pointer;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px;color:#ffffff">DROP</div></sc-if>
+<span style="position:absolute;left:82px;width:90px;top:14px;text-align:right;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ s.col }}">{{ s.name }}</span>
+<div onClick="{{ s.tap }}" style="position:absolute;left:176px;top:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:2px solid {{ s.ring }};border-radius:50%;box-shadow:{{ s.ringGlow }};box-sizing:border-box;cursor:pointer">
+<div ref="{{ s.flRef }}" style="position:absolute;left:50%;top:34px;width:10px;height:12px;transform-origin:50% 0;transform:translateX(-50%);background:linear-gradient(180deg,#ffffff,#ffd644 35%,#ff9a3c 65%,rgba(255,77,77,0));border-radius:3px 3px 50% 50%"></div>
+<img src="{{ s.src }}" alt="{{ s.name }}" style="position:relative;width:28px;height:34px;display:block;filter:drop-shadow(2px 2px 0 #000)">
+</div>
+<sc-for list="{{ s.ports }}" as="pt" hint-placeholder-count="1">
+<div data-port="{{ pt.key }}" onClick="{{ pt.tap }}" style="position:absolute;left:{{ pt.x }}px;top:5px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:2px {{ pt.bs }} {{ pt.bd }};border-radius:5px;background:{{ pt.bg }};box-shadow:{{ pt.glow }};box-sizing:border-box;cursor:pointer;transition:border-color .15s,box-shadow .15s">
+<sc-if value="{{ pt.no }}" hint-placeholder-val="{{ true }}"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid {{ pt.arrow }}"></div></sc-if>
+<sc-if value="{{ pt.has }}" hint-placeholder-val="{{ false }}"><img src="{{ pt.src }}" alt="" style="width:24px;height:24px;display:block"></sc-if>
+</div>
+</sc-for>
+<sc-if value="{{ s.hasTag }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:{{ s.tagX }}px;top:11px;height:18px;display:flex;align-items:center;padding:0 4px;background:#0a0821;border:2px solid {{ s.tagCol }};border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ s.tagCol }};animation:{{ s.tagAnim }}">{{ s.tag }}</div></sc-if>
+</div>
+</sc-for>
+<sc-if value="{{ gapTag.show }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:14px;top:{{ gapTag.y }}px;display:flex;align-items:baseline;gap:5px;z-index:1;transition:top .6s cubic-bezier(.3,0,.2,1)"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">GAP</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:{{ gapTag.col }}">{{ gapTag.v }}</span></div></sc-if>
+</sc-if>
+
+<sc-if value="{{ isFight }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ fHeadRef }}" style="position:absolute;left:27px;top:20px;width:336px;height:302px">
+<img ref="{{ fHeadImg }}" src="assets/garganta_v4.png" alt="Garganta" style="position:absolute;left:0;top:0;width:336px;height:302px;display:block;image-rendering:pixelated;filter:drop-shadow(0 0 14px rgba(110,200,60,.4))">
+<div ref="{{ fBiteRef }}" style="position:absolute;left:58px;top:60px;width:220px;height:294px;background:url(assets/garganta_bite3.png) 0 0/220px 294px no-repeat;image-rendering:pixelated;opacity:0"></div>
+<sc-for list="{{ blindEyes }}" as="be" hint-placeholder-count="3"><div style="position:absolute;left:{{ be.x }}px;top:{{ be.y }}px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:2px solid #3a3a5a;border-radius:50%;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;color:#ff4d4d">X</div></sc-for>
+</div>
+<div style="position:absolute;left:16px;right:16px;top:8px;height:34px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #6fbf3a;border-radius:6px;box-shadow:3px 3px 0 #12300a;box-sizing:border-box;z-index:3">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;letter-spacing:1px;color:#b8f070">GARGANTA</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ hpSegs }}" as="hs" hint-placeholder-count="12"><div style="flex:1;min-width:0;height:10px;background:{{ hs.bg }};border:1px solid #f2f2f2;box-sizing:border-box"></div></sc-for></div>
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ hpTxt }}</span>
+</div>
+<div style="position:absolute;right:16px;top:300px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;padding:6px 10px;background:#0a0821;border:2px solid {{ fIntent.col }};border-radius:6px;box-shadow:2px 2px 0 #240011;box-sizing:border-box;z-index:3"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ fIntent.label }}</span><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:{{ fIntent.col }}">{{ fIntent.text }}</span></div>
+<sc-for list="{{ fships }}" as="fs" hint-placeholder-count="0">
+<div ref="{{ fs.ref }}" style="position:absolute;left:{{ fs.x }}px;top:372px;width:84px;height:120px;display:flex;flex-direction:column;align-items:center;gap:6px;transition:left .4s,opacity .3s;opacity:{{ fs.op }}">
+<img src="{{ fs.src }}" alt="{{ fs.name }}" style="width:36px;height:44px;display:block;filter:drop-shadow(2px 2px 0 #000)">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ fs.col }}">{{ fs.name }}</span>
+<div style="display:flex;gap:4px">
+<sc-for list="{{ fs.ports }}" as="pt" hint-placeholder-count="1">
+<div data-port="{{ pt.key }}" onClick="{{ pt.tap }}" style="position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:2px {{ pt.bs }} {{ pt.bd }};border-radius:5px;background:{{ pt.bg }};box-shadow:{{ pt.glow }};box-sizing:border-box;cursor:pointer">
+<sc-if value="{{ pt.no }}" hint-placeholder-val="{{ true }}"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid {{ pt.arrow }}"></div></sc-if>
+<sc-if value="{{ pt.has }}" hint-placeholder-val="{{ false }}"><img src="{{ pt.src }}" alt="" style="width:26px;height:26px;display:block"></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</sc-if>
+</div>
+
+<div style="position:absolute;left:12px;right:12px;top:594px;height:26px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.1;text-wrap:balance;overflow:hidden;color:{{ hintCol }}">{{ hint }}</div>
+
+<div ref="{{ trayRef }}" style="position:absolute;left:16px;right:16px;top:622px;height:100px;display:flex;flex-direction:column;padding:8px 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap"><span style="color:#a9b0c0">DICE</span><span style="color:{{ trayCol }}">{{ trayNote }}</span></div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:4px">
+<sc-for list="{{ rolled }}" as="cube" hint-placeholder-count="0">
+<div onClick="{{ cube.tap }}" style="flex:none;width:54px;height:54px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+<div style="position:relative;width:40px;height:40px">
+<div style="position:absolute;inset:0;border:2px dashed rgba(242,242,242,.25);border-radius:6px"></div>
+<div ref="{{ cube.boxRef }}" style="position:absolute;inset:0;perspective:100px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .2s;transform:{{ cube.scale }};opacity:{{ cube.show }}">
+<div ref="{{ cube.shadowRef }}" style="position:absolute;left:5px;top:38px;width:30px;height:8px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(2px)"></div>
+<div ref="{{ cube.floatRef }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div ref="{{ cube.ref }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:translateZ(20px)"><img src="{{ cube.f0 }}" alt="" style="width:40px;height:40px;display:block"><div style="position:absolute;inset:-3px;border:2px solid {{ cube.ring }};box-shadow:{{ cube.glow }};border-radius:4px;pointer-events:none;transition:border-color .2s,box-shadow .2s"></div></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg) translateZ(20px);filter:brightness(.82)"><img src="{{ cube.f1 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(90deg) translateZ(20px);filter:brightness(.9)"><img src="{{ cube.f2 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(-90deg) translateZ(20px);filter:brightness(.74)"><img src="{{ cube.f3 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(90deg) translateZ(20px);filter:brightness(.86)"><img src="{{ cube.f4 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(-90deg) translateZ(20px);filter:brightness(.78)"><img src="{{ cube.f5 }}" alt="" style="width:40px;height:40px;display:block"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{ trayEmpty }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;color:#6b7187">{{ trayEmptyTxt }}</span></sc-if>
+</div>
+</div>
+
+<button onClick="{{ primary }}" style="position:absolute;left:16px;right:16px;top:732px;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ btn.op }};transition:opacity .2s" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ btn.label }}</button>
+</div>
+
+<div ref="{{ fxRef }}" style="position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden"></div>
+
+<sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;right:0;top:60px;bottom:0;z-index:30;display:flex;flex-direction:column;padding:20px 16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(5,4,15,.6) 0%,rgba(5,4,15,.95) 80px,rgba(5,4,15,.97) 100%)">
+<div ref="{{ introRef }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ff4d4d">BOSS CONTACT</span></div>
+<div style="font-family:'Jersey 15',monospace;font-size:58px;line-height:.86;letter-spacing:2px;text-align:center;color:#ffffff;text-shadow:4px 4px 0 #240011,-3px 0 0 rgba(255,77,77,.85),3px 0 0 rgba(106,245,214,.85)">THE<br>CHASE</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;color:#a9b0c0">GARGANTA RISES FROM BELOW. RUN FOR THE GATE.</span>
+<div style="display:flex;gap:8px">
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #6af5d6;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">GATE</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#6af5d6">{{ gateFull }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #f2f2f2;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">DICE</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ diceN }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #ffd644;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">BOUNTY</span><img src="assets/coin.png" alt="" style="width:14px;height:14px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffd644">{{ bounty }}</span></div>
+</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:9px;padding:10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(242,242,242,.5);border-radius:5px;box-sizing:border-box"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #a9b0c0"></div></div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">ANY DIE IN A SHIP'S PORT PUSHES THE FLEET UP BY ITS NUMBER.</span>
+</div>
+<div style="display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:2px solid #ff4d4d;border-radius:50%;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:18px;line-height:1;color:#ffffff">4</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">MATCH AN EYE'S NUMBER TO HIT IT. EACH HIT SLOWS THE SURGE BY {{ eyeSlow }}.</span>
+</div>
+<div style="display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 4px;border:2px solid #ff4d4d;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;color:#ff4d4d">SURGE</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">IT RISES EVERY ROUND. SHIPS IT PASSES ARE EATEN, BACK FIRST.</span>
+</div>
+<div style="display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 5px;border:2px solid #e8522c;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ff9a3c">DROP</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">THROW IT A SHIP AND IT STOPS TO EAT INSTEAD OF RISING.</span>
+</div>
+<div style="display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 5px;border:2px solid #ffd644;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffd644">×2</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">PUT OUT ALL 3 EYES IN ONE ROUND TO TURN AND FIGHT IT FOR DOUBLE.</span>
+</div>
+</div>
+<div style="flex:1"></div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ engage }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">FIGHT</button>
+<button onClick="{{ decoy }}" style="height:48px;display:flex;align-items:center;justify-content:center;gap:8px;background:#0a0821;border:3px solid #f2f2f2;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:2px;color:#ffffff;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">DECOY · -{{ decoyCost }} GOLD</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;padding:0 16px;box-sizing:border-box;background:rgba(5,4,15,.9)">
+<div ref="{{ endRef }}" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#a9b0c0">GARGANTA · THE CHASE</span>
+<div style="font-family:'Jersey 15',monospace;font-size:56px;line-height:.9;letter-spacing:2px;text-align:center;color:{{ end.col }};text-shadow:4px 4px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000">{{ end.title }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ end.sub }}</span>
+<div style="width:100%;display:flex;flex-direction:column">
+<div style="height:8px;background:linear-gradient(to top right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+<div style="background:#f2f2f2 repeating-linear-gradient(0deg,rgba(10,8,33,.05) 0 1px,transparent 1px 4px);color:#0a0821;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px">
+<div style="text-align:center;font-family:'Jersey 15',monospace;font-size:28px;line-height:1;letter-spacing:2px">CHASE REPORT</div>
+<div style="text-align:center;font-family:'Silkscreen',monospace;font-size:12px;color:#3a3a5a">{{ end.stamp }}</div>
+<div style="border-top:2px dashed #0a0821;margin:2px 0"></div>
+<sc-for list="{{ end.rows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;min-height:28px">
+<div style="width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center"><img src="{{ r.src }}" alt="" style="width:18px;height:18px;display:block"></div>
+<span style="flex:1;min-width:0;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px">{{ r.label }}</span>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;white-space:nowrap;color:{{ r.col }}">{{ r.value }}</span>
+</div>
+</sc-for>
+<sc-if value="{{ end.hasTotal }}" hint-placeholder-val="{{ false }}">
+<div style="border-top:3px solid #0a0821;margin-top:2px"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:1px"><span>GOLD</span><span style="display:flex;align-items:center;gap:6px"><img src="assets/coin.png" alt="" style="width:20px;height:20px;display:block">{{ gold }}</span></div>
+</sc-if>
+</div>
+<div style="height:8px;background:linear-gradient(to bottom right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+</div>
+<button onClick="{{ restart }}" style="width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">PLAY AGAIN</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;difficulty&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;easy&quot;,&quot;normal&quot;,&quot;hard&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;'easy' | 'normal' | 'hard'&quot;,&quot;section&quot;:&quot;Encounter&quot;},&quot;sound&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Encounter&quot;},&quot;skipIntro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Encounter&quot;}}">
+class Component extends DCLogic {
+  // front→back order is chosen before the fight; the back ship is eaten first
+  FLEET = [
+    { name: 'WARDEN', ship: 'ship_teal', col: '#6af5d6', ports: 1, mult: 1 },
+    { name: 'HERALD', ship: 'ship_blue', col: '#7ab8ff', ports: 1, mult: 1 },
+    { name: 'KESTREL', ship: 'ship_violet', col: '#c79bff', ports: 2, mult: 1 },
+    { name: 'SOVEREIGN', ship: 'ship_gold', col: '#ffd644', ports: 1, mult: 2 }
+  ];
+  LEVELS = { easy: { surge: 14, step: 2, gate: 90, hp: 20 }, normal: { surge: 16, step: 2, gate: 100, hp: 24 }, hard: { surge: 18, step: 3, gate: 110, hp: 30 } };
+  LADDER = ['#ffffff', '#ffffff', '#48f320', '#ffd644', '#ff9a3c', '#ff4d4d', '#ff5cd6'];
+  EYE_SLOW = 4; SP = 6; K = 7; MAWY = 352; MAXGAP = 30; DICE = 5; BOUNTY = 100; PRESTIGE = 50; DECOY_COST = 60; GOLD0 = 120;
+  EYE_AT = [{ x: 77, y: 111 }, { x: 116, y: 90 }, { x: 156, y: 111 }]; // on the head container (eye centres of the rotated sprite)
+  BLIND_AT = [{ x: 107, y: 128 }, { x: 205, y: 128 }, { x: 156, y: 155 }];
+  wrapRef = React.createRef(); stageRef = React.createRef(); shakeRef = React.createRef(); fxRef = React.createRef(); trackRef = React.createRef();
+  driftA = React.createRef(); driftB = React.createRef(); headRef = React.createRef(); headImg = React.createRef(); biteRef = React.createRef(); shutRef = React.createRef();
+  fHeadRef = React.createRef(); fHeadImg = React.createRef(); fBiteRef = React.createRef();
+  trayRef = React.createRef(); introRef = React.createRef(); endRef = React.createRef();
+  shipRefs = [0, 1, 2, 3].map(() => React.createRef()); flRefs = [0, 1, 2, 3].map(() => React.createRef()); fShipRefs = [0, 1, 2, 3].map(() => React.createRef());
+  fl = [0, 1, 2, 3].map(() => ({ ph: Math.random() * 6.28, f: 16 + Math.random() * 10, boost: 0 }));
+  drt = [0, 1, 2, 3, 4].map(i => ({ box: React.createRef(), float: React.createRef(), shadow: React.createRef(), cube: React.createRef(), angle: i * 2.1 }));
+  ts = []; gen = 0; pend = new Set(); t0 = performance.now(); scroll = 0; vel = 12; tLast = performance.now();
+  lvl() { const p = this.props || {}; return this.LEVELS[p.difficulty] || this.LEVELS.normal; }
+  fresh() {
+    const p = this.props || {}, L = this.lvl();
+    return { phase: p.skipIntro ? 'order' : 'intro', mode: 'chase', round: 0, gold: this.GOLD0, order: [3, 2, 1, 0], P: 18, M: -8, G: L.gate, surge: L.surge,
+      eyes: [0, 1, 2].map(() => ({ v: 1 + Math.floor(Math.random() * 6), die: 0 })), ports: this.FLEET.map(f => Array(f.ports).fill(0)),
+      dice: [], pick: -1, sel: -1, dropped: false, lost: [], drops: 0, eyeHits: 0, hp: L.hp, hpMax: L.hp, ii: 0, hint: '', hintCol: '' };
+  }
+  state = this.fresh();
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.onResize = () => this.fit(); window.addEventListener('resize', this.onResize);
+    if (window.ResizeObserver && this.wrapRef.current) { this.ro = new ResizeObserver(this.onResize); this.ro.observe(this.wrapRef.current); }
+    this.onTap = () => this.ac(); window.addEventListener('pointerdown', this.onTap);
+    this.fit(); this.begin();
+  }
+  componentDidUpdate(pp) { if (pp && (pp.difficulty !== this.props.difficulty || pp.skipIntro !== this.props.skipIntro)) this.restart(); }
+  componentWillUnmount() { this.clearAll(); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); window.removeEventListener('pointerdown', this.onTap); if (this.ro) this.ro.disconnect(); }
+  fit() { const w = this.wrapRef.current, st = this.stageRef.current; if (!w || !st) return; st.style.transform = 'scale(' + Math.min(w.clientWidth / 390, w.clientHeight / 844) + ')'; }
+  begin() { const el = this.introRef.current; if (el && el.animate && !this.reduced) el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: 200, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }); }
+  restart() { this.clearAll(); [this.headRef, this.fHeadRef].forEach(r => { const el = r.current; if (el) { el.getAnimations && el.getAnimations().forEach(a => a.cancel()); el.style.opacity = ''; } }); this.setState(this.fresh(), () => this.begin()); }
+  later(f, ms) { const g = this.gen; this.ts.push(setTimeout(() => { if (g === this.gen) f(); }, ms)); }
+  clearAll() { this.gen++; this.ts.forEach(clearTimeout); this.ts = []; this.pend.clear(); clearTimeout(this.sayT); const fx = this.fxRef.current; if (fx) fx.innerHTML = ''; }
+  shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  setD(f) { this.setState(s => ({ dice: s.dice.map(f) })); }
+  posOf(s, i) { return s.P - i * this.SP; }
+  push(s) { return s.order.reduce((n, k) => n + s.ports[k].reduce((a, v) => a + v, 0) * this.FLEET[k].mult, 0); }
+  hits(s) { return s.eyes.filter(e => e.die).length; }
+  adj(s) { return s.dropped ? 0 : Math.max(0, s.surge - this.EYE_SLOW * this.hits(s)); }
+  freeDice(s) { return s.dice.map((d, j) => j).filter(j => !s.dice[j].used && !s.dice[j].fly); }
+  // ─── sound: tiny synth, unlocked on first tap ───
+  ac() { if ((this.props || {}).sound === false) return null; if (!this._ac) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { this._ac = new C(); } catch (e) { return null; } } if (this._ac.state === 'suspended') this._ac.resume(); return this._ac; }
+  tone(f, d, type, vol, f2, delay) { const a = this.ac(); if (!a) return; const t = a.currentTime + (delay || 0), o = a.createOscillator(), g = a.createGain(); o.type = type || 'square'; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d); g.gain.setValueAtTime(vol || .05, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + d + .02); }
+  noise(d, f1, f2, vol, delay) { const a = this.ac(); if (!a) return; const t = a.currentTime + (delay || 0), n = Math.floor(a.sampleRate * d), b = a.createBuffer(1, n, a.sampleRate), ch = b.getChannelData(0); for (let i = 0; i < n; i++) ch[i] = Math.random() * 2 - 1; const s = a.createBufferSource(), fl = a.createBiquadFilter(), g = a.createGain(); s.buffer = b; fl.type = 'bandpass'; fl.Q.value = 1.1; fl.frequency.setValueAtTime(f1, t); fl.frequency.exponentialRampToValueAtTime(f2, t + d); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + d * .3); g.gain.exponentialRampToValueAtTime(.0001, t + d); s.connect(fl); fl.connect(g); g.connect(a.destination); s.start(t); s.stop(t + d + .02); }
+  sfx(k) { try { if (k === 'push') { this.noise(.6, 300, 1800, .14); this.tone(110, .5, 'sawtooth', .04, 220); } else if (k === 'roar') { this.noise(.8, 400, 120, .2); this.tone(70, .7, 'sawtooth', .07, 40); } else if (k === 'chomp') { this.noise(.18, 1600, 300, .2); this.tone(90, .16, 'square', .08, 50); } else if (k === 'eye') { this.tone(880, .08, 'square', .04, 1320); this.noise(.12, 3000, 1200, .06); } else if (k === 'drop') this.tone(900, .6, 'triangle', .05, 120); else if (k === 'fill') this.tone(660, .07, 'square', .03, 990); else if (k === 'shot') this.tone(1400, .12, 'square', .03, 300); } catch (e) {} }
+  // ─── geometry + fx (shared kit) ───
+  rect(el) { const st = this.stageRef.current; if (!st || !el) return null; const S = st.getBoundingClientRect(), k = S.width / st.offsetWidth || 1, r = el.getBoundingClientRect(); return { x: (r.left - S.left) / k, y: (r.top - S.top) / k, w: r.width / k, h: r.height / k }; }
+  center(el) { const r = this.rect(el); return r ? { x: r.x + r.w / 2, y: r.y + r.h / 2 } : null; }
+  q(sel) { const st = this.stageRef.current; return st && st.querySelector(sel); }
+  maw() { const t = this.rect(this.trackRef.current); return { x: 195, y: (t ? t.y : 62) + this.MAWY + 8 }; }
+  shipC(k) { const row = this.shipRefs[k].current, im = row && row.querySelector('img'); return this.center(im); }
+  fxEl(css, txt) { const fx = this.fxRef.current; if (!fx) return null; const d = document.createElement('div'); d.style.cssText = 'position:absolute;' + css; if (txt != null) d.textContent = txt; fx.appendChild(d); return d; }
+  anim(d, kf, o) { if (!d) return; if (!d.animate) { d.remove(); return; } d.animate(kf, o).onfinish = () => d.remove(); }
+  pop(x, y, txt, col, sz) { this.anim(this.fxEl('left:' + x + 'px;top:' + y + 'px;z-index:2;font-family:"Jersey 15",monospace;font-size:' + (sz || 34) + 'px;line-height:1;letter-spacing:1px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000', txt), [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { transform: 'translate(-50%,-70%) scale(1.15)', opacity: 1, offset: .18 }, { transform: 'translate(-50%,-90%) scale(1)', opacity: 1, offset: .7 }, { transform: 'translate(-50%,-130%) scale(.95)', opacity: 0 }], { duration: 1000, easing: 'cubic-bezier(.2,.8,.3,1)' }); }
+  sparks(x, y, cols, n) { for (let i = 0; i < (n || 10); i++) { const s = 3 + Math.round(Math.random() * 3), a = Math.random() * Math.PI * 2, r = 16 + Math.random() * 34; this.anim(this.fxEl('left:' + (x - s / 2) + 'px;top:' + (y - s / 2) + 'px;width:' + s + 'px;height:' + s + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + (Math.cos(a) * r).toFixed(1) + 'px,' + (Math.sin(a) * r).toFixed(1) + 'px)', opacity: 0 }], { duration: 360 + Math.random() * 280, easing: 'cubic-bezier(.2,.8,.4,1)' }); } }
+  boomSheet() {
+    if (this._boom) return this._boom;
+    const G = 32, N = 9, cv = document.createElement('canvas'); cv.width = G * N; cv.height = G;
+    const g = cv.getContext('2d'); let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const lobes = Array.from({ length: 12 }, () => .72 + rnd() * .5), noise = Array.from({ length: G * G }, () => rnd());
+    const pal = ['#ffffff', '#fff3b0', '#ffd644', '#ff9a3c', '#e8522c', '#b3201c', '#5a1a2a', '#2a1426'];
+    for (let f = 0; f < N; f++) {
+      const p = f / (N - 1), R = 3 + p * 12.5, hole = p < .4 ? 0 : (p - .4) / .6 * R * .85;
+      for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
+        const dx = x + .5 - G / 2, dy = y + .5 - G / 2, d = Math.hypot(dx, dy), a = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI) * 12, i0 = Math.floor(a) % 12, t = a - Math.floor(a), lb = lobes[i0] * (1 - t) + lobes[(i0 + 1) % 12] * t;
+        const r = R * lb, h = hole * lb, n = noise[(y >> 1) * G + (x >> 1)];
+        if (d > r || d < h || (p > .55 && n < (p - .55) / .45 * .85)) continue;
+        const q = (d - h) / Math.max(1, r - h), heat = Math.max(0, Math.min(1, (1 - p) * 1.15 - q * .4 + (n - .5) * .3));
+        g.fillStyle = pal[Math.round((1 - heat) * (pal.length - 1))]; g.fillRect(f * G + x, y, 1, 1);
+      }
+    }
+    return (this._boom = { url: cv.toDataURL(), N, G });
+  }
+  burst(x, y, k, frames, ms) {
+    const B = this.boomSheet(), S = B.G * k, n = frames || B.N, rot = 90 * Math.floor(Math.random() * 4), fl = Math.random() < .5 ? -1 : 1;
+    const d = this.fxEl('left:' + Math.round(x - S / 2) + 'px;top:' + Math.round(y - S / 2) + 'px;width:' + S + 'px;height:' + S + 'px;image-rendering:pixelated;background:url(' + B.url + ') 0 0/' + (B.N * S) + 'px ' + S + 'px no-repeat;transform:rotate(' + rot + 'deg) scaleX(' + fl + ')');
+    this.anim(d, [{ backgroundPosition: '0px 0px' }, { backgroundPosition: (-n * S) + 'px 0px' }], { duration: ms || n * 65, easing: 'steps(' + n + ')' });
+  }
+  debris(x, y, cols, n, far) { for (let i = 0; i < n; i++) { const sz = 3 * (1 + Math.floor(Math.random() * 2)), a = Math.random() * Math.PI * 2, r = (far || 30) + Math.random() * 56; this.anim(this.fxEl('left:' + Math.round(x) + 'px;top:' + Math.round(y) + 'px;width:' + sz + 'px;height:' + sz + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + Math.round(Math.cos(a) * r) + 'px,' + Math.round(Math.sin(a) * r) + 'px)', opacity: 0 }], { duration: 520 + Math.random() * 320, easing: 'steps(7)' }); } }
+  shake(p, ms) { const el = this.shakeRef.current; if (!el || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + (-p) + 'px,' + (p * .5) + 'px)' }, { transform: 'translate(' + p + 'px,' + (-p * .4) + 'px)' }, { transform: 'translate(' + (-p * .6) + 'px,' + (p * .3) + 'px)' }, { transform: 'translate(' + (p * .3) + 'px,0)' }, { transform: 'translate(0,0)' }], { duration: ms || 260 }); }
+  flash(col, a, ms, st) { if (this.reduced) return; this.anim(this.fxEl('inset:0;background:' + col + ';opacity:0'), [{ opacity: a }, { opacity: 0 }], { duration: ms || 320, easing: st ? 'steps(' + st + ')' : 'ease-out' }); }
+  punch(el, k) { if (el && el.animate && !this.reduced) el.animate([{ scale: '1' }, { scale: '' + (k || 1.08) }, { scale: '1' }], { duration: 220, easing: 'ease-out' }); }
+  say(msg, col) { this.setState({ hint: msg, hintCol: col || '#ff4d4d' }); clearTimeout(this.sayT); this.sayT = setTimeout(() => this.setState({ hint: '' }), 1400); }
+  nope(el, msg) { if (el && el.animate && !this.reduced) el.animate([{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '-2px 0' }, { translate: '0 0' }], { duration: 240 }); this.say(msg); }
+  stamp(word, sub, col, y, size) {
+    const fx = this.fxRef.current; if (!fx) return;
+    const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;right:0;top:' + y + 'px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;transform-origin:50% 60%;pointer-events:none';
+    const big = document.createElement('div'); big.textContent = word; big.style.cssText = "font-family:'Jersey 15',monospace;font-size:" + (size || 52) + 'px;line-height:.9;letter-spacing:2px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000';
+    el.appendChild(big);
+    if (sub) { const sm = document.createElement('div'); sm.textContent = sub; sm.style.cssText = "font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ffffff;background:#0a0821;border:2px solid " + col + ';border-radius:3px;padding:3px 6px;white-space:nowrap'; el.appendChild(sm); }
+    fx.appendChild(el);
+    if (!el.animate) return;
+    el.animate([{ transform: 'scale(2.6) rotate(-6deg)', opacity: 0 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .14 }, { transform: 'scale(1.04) rotate(-2deg)', opacity: 1, offset: .22 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .86 }, { transform: 'scale(.9) translateY(-14px) rotate(-2deg)', opacity: 0 }], { duration: 1900, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => el.remove();
+  }
+  endIn() { const el = this.endRef.current; if (el && el.animate) el.animate([{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.3,1.2)' }); }
+  // jaws: open frame → shut frame on contact → idle
+  chomp(fight, done) {
+    const im = (fight ? this.fHeadImg : this.headImg).current, b = (fight ? this.fBiteRef : this.biteRef).current, sh = fight ? null : this.shutRef.current;
+    if (im && b) { im.style.opacity = 0; b.style.opacity = 1; }
+    this.later(() => { if (b) b.style.opacity = 0; if (sh) sh.style.opacity = 1; else if (im) im.style.opacity = 1; this.shake(9, 300); this.sfx('chomp'); if (done) done(); }, 240);
+    this.later(() => { if (sh) sh.style.opacity = 0; if (im) im.style.opacity = 1; }, 520);
+  }
+  // ─── flow: intro → order the column → rounds ───
+  engage() { if (this.state.phase !== 'intro') return; this.ac(); const el = this.introRef.current; if (el && el.animate) el.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(20px)' }], { duration: 180, fill: 'forwards' }); this.later(() => this.setState({ phase: 'order' }), 170); }
+  decoy() { if (this.state.phase !== 'intro') return; this.setState(s => ({ phase: 'fled', gold: s.gold - this.DECOY_COST }), () => this.endIn()); }
+  launch() { if (this.state.phase !== 'order') return; this.sfx('roar'); this.shake(6, 400); const h = this.headRef.current; if (h && h.animate && !this.reduced) h.animate([{ transform: 'translateY(60px)' }, { transform: 'translateY(-14px)', offset: .6 }, { transform: 'none' }], { duration: 700, easing: 'cubic-bezier(.2,.8,.3,1)' }); this.setState({ phase: 'roll', sel: -1 }, () => this.later(() => this.startRound(), 400)); }
+  startRound() {
+    const S = this.state, L = this.lvl(), round = S.round + 1, chase = S.mode === 'chase';
+    const eyes = [0, 1, 2].map(() => ({ v: 1 + Math.floor(Math.random() * 6), die: 0 }));
+    this.setState({ phase: 'roll', round, surge: chase ? L.surge + (round - 1) * L.step : S.surge, eyes, ports: this.FLEET.map(f => Array(f.ports).fill(0)), dropped: false, sel: -1, pick: -1, dice: [], hint: '' });
+    this.later(() => this.roll(), 380);
+  }
+  roll() {
+    const n = this.DICE, dice = Array.from({ length: n }, () => ({ v: 1 + Math.floor(Math.random() * 6), faces: this.shuffle([1, 2, 3, 4, 5, 6]), settled: false, used: false, fly: false }));
+    const pre = 600, st = Math.min(200, 900 / n);
+    this.setState({ dice, pick: -1 }, () => requestAnimationFrame(() => requestAnimationFrame(() => dice.forEach((d, k) => { const el = this.drt[k].cube.current; if (!el) return; el.style.animation = 'none'; void el.offsetHeight; if (!this.reduced) el.style.animation = 'dice-tumble ' + Math.round(pre + k * st) + 'ms cubic-bezier(0.19,1,0.22,1) forwards'; }))));
+    this.later(() => this.setD(d => ({ ...d, faces: [d.v].concat(this.shuffle([1, 2, 3, 4, 5, 6].filter(x => x !== d.v))) })), 120);
+    dice.forEach((d, k) => this.later(() => this.setD((x, j) => j === k ? { ...x, settled: true } : x), pre + k * st));
+    this.later(() => this.setState({ phase: 'place', pick: -1 }), pre + (n - 1) * st + 140);
+  }
+  tapDie(i) { const S = this.state; if (S.phase !== 'place') return; const d = S.dice[i]; if (!d || d.used || d.fly) return; this.setState({ pick: S.pick === i ? -1 : i, sel: -1, hint: '' }); }
+  tapShip(k) {
+    const S = this.state;
+    if (S.phase === 'order') { // tap two ships to swap their places in the column
+      if (S.sel < 0) return this.setState({ sel: k });
+      if (S.sel === k) return this.setState({ sel: -1 });
+      const o = S.order.slice(), a = o.indexOf(S.sel), b = o.indexOf(k); [o[a], o[b]] = [o[b], o[a]];
+      this.sfx('fill'); return this.setState({ order: o, sel: -1 });
+    }
+    if (S.phase !== 'place' || S.mode !== 'chase' || S.dropped || S.order.length < 2) return;
+    this.setState({ sel: S.sel === k ? -1 : k, hint: '' });
+  }
+  spend(ok, key, el, wrong, none, pickBest, then) {
+    const S = this.state; let di = S.pick;
+    if (di >= 0 && !ok(S.dice[di].v)) return this.nope(el, wrong);
+    if (di < 0) di = pickBest();
+    if (di < 0) return this.nope(el, none);
+    const v = S.dice[di].v; this.pend.add(key);
+    this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, fly: true } : x), pick: -1, sel: -1, hint: '' }));
+    this.flyDie(di, el, v, () => { this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, fly: false, used: true } : x) })); this.pend.delete(key); then(v); });
+  }
+  tapPort(k, j) {
+    const S = this.state; if (S.phase !== 'place' || !S.order.includes(k) || S.ports[k][j] || this.pend.has('p' + k + j)) return;
+    const eyeVals = S.mode === 'chase' ? S.eyes.filter(e => !e.die).map(e => e.v) : [];
+    const best = () => { const fr = this.freeDice(S); if (!fr.length) return -1; const spare = fr.filter(i => !eyeVals.includes(S.dice[i].v)); return (spare.length ? spare : fr).sort((a, b) => S.dice[b].v - S.dice[a].v)[0]; }; // biggest die that no open eye wants
+    this.spend(() => true, 'p' + k + j, this.q('[data-port="' + k + '-' + j + '"]'), '', 'NO DICE LEFT', best, v => {
+      this.setState(s => ({ ports: s.ports.map((p, kk) => kk !== k ? p : p.map((x, jj) => jj === j ? v : x)) }));
+      const el = this.q('[data-port="' + k + '-' + j + '"]'), c = this.center(el), f = this.FLEET[k]; this.punch(el, 1.25); this.sfx('fill');
+      if (c) { this.sparks(c.x, c.y, [f.col, '#ffffff'], 8); this.pop(c.x + 26, c.y - 8, '+' + v * f.mult, f.mult > 1 ? '#ffd644' : '#ffffff', 22); }
+      this.fl[k].boost = performance.now();
+    });
+  }
+  tapEye(i) {
+    const S = this.state; if (S.phase !== 'place' || S.mode !== 'chase') return;
+    const e = S.eyes[i]; if (!e || e.die || this.pend.has('e' + i)) return;
+    const best = () => this.state.dice.findIndex(d => !d.used && !d.fly && d.v === e.v);
+    this.spend(v => v === e.v, 'e' + i, this.q('[data-eye="' + i + '"]'), 'THAT EYE NEEDS A ' + e.v, 'NO ' + e.v + ' IN THE TRAY', best, v => this.hitEye(i, v));
+  }
+  hitEye(i, v) {
+    const S = this.state, eyes = S.eyes.map((e, j) => j === i ? { ...e, die: v } : e), n = eyes.filter(e => e.die).length, el = this.q('[data-eye="' + i + '"]'), c = this.center(el);
+    this.setState({ eyes, eyeHits: S.eyeHits + 1 });
+    const h = this.headRef.current; if (h && h.animate && !this.reduced) h.animate([{ transform: 'none', filter: 'brightness(1)' }, { transform: 'translateY(10px) rotate(' + (i - 1) * 3 + 'deg)', filter: 'brightness(2.2)', offset: .3 }, { transform: 'none', filter: 'brightness(1)' }], { duration: 360, easing: 'ease-out' });
+    if (c) { this.sparks(c.x, c.y, ['#ffffff', '#ff4d4d', '#b8f070'], 14); this.burst(c.x, c.y, 1, 5, 300); this.pop(c.x, c.y - 30, n === 3 ? 'ALL 3!' : 'SLOW -' + this.EYE_SLOW, this.LADDER[Math.min(n + 2, 6)], 24 + n * 4); }
+    this.shake(3 + n * 2, 220); this.sfx('eye');
+    if (n === 3) this.later(() => this.blind(), 500);
+  }
+  flyDie(di, el, v, done) {
+    const g = this.gen, fin = () => { if (g === this.gen) done(); };
+    const from = this.rect(this.drt[di].box.current), to = this.rect(el), fx = this.fxRef.current;
+    if (!from || !to || !fx || this.reduced) return fin();
+    const sz = 26, x1 = to.x + to.w / 2 - sz / 2, y1 = to.y + to.h / 2 - sz / 2, dx = from.x + from.w / 2 - sz / 2 - x1, dy = from.y + from.h / 2 - sz / 2 - y1;
+    const im = document.createElement('img'); im.src = 'assets/flat_' + v + '_48.png';
+    im.style.cssText = 'position:absolute;left:' + x1 + 'px;top:' + y1 + 'px;width:' + sz + 'px;height:' + sz + 'px;display:block;image-rendering:pixelated;filter:drop-shadow(3px 3px 0 #240011)';
+    fx.appendChild(im);
+    im.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(1.4)' }, { transform: 'translate(' + dx * .45 + 'px,' + (dy * .45 - 40) + 'px) scale(1.6)', offset: .5 }, { transform: 'translate(0,0) scale(1)' }], { duration: 420, easing: 'cubic-bezier(.3,.7,.4,1)' }).onfinish = () => { im.remove(); fin(); };
+  }
+  // signature moment: throw it a ship. It stops to eat, and the fleet gets one more round
+  drop(k) {
+    const S = this.state; if (S.phase !== 'place' || S.mode !== 'chase' || S.dropped || S.order.length < 2 || this.pend.size) return;
+    const f = this.FLEET[k], c = this.shipC(k), m = this.maw(), fx = this.fxRef.current, g = this.gen;
+    this.pend.add('drop');
+    this.setState(s => ({ dropped: true, sel: -1, order: s.order.filter(x => x !== k), drops: s.drops + 1, lost: s.lost.concat([f.name]), ports: s.ports.map((p, kk) => kk === k ? p.map(() => 0) : p) }));
+    this.sfx('drop');
+    const fin = () => { if (g !== this.gen) return; this.pend.delete('drop'); };
+    if (!c || !fx || this.reduced) { this.chomp(false); this.stamp('FED TO THE MAW', 'NO SURGE THIS ROUND', '#ffd644', 150); return this.later(fin, 600); }
+    const im = document.createElement('img'); im.src = 'assets/' + f.ship + '.png';
+    im.style.cssText = 'position:absolute;left:' + (m.x - 15) + 'px;top:' + (m.y - 18) + 'px;width:30px;height:36px;display:block;z-index:4;image-rendering:pixelated;filter:drop-shadow(0 0 8px ' + f.col + ')';
+    fx.appendChild(im);
+    const dx = c.x - m.x, dy = c.y - m.y;
+    im.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(0deg) scale(1)' }, { transform: 'translate(' + dx * .6 + 'px,' + (dy * .6 - 30) + 'px) rotate(200deg) scale(1.1)', offset: .3 }, { transform: 'translate(0,0) rotate(540deg) scale(.5)', opacity: 1, offset: .92 }, { transform: 'translate(0,10px) rotate(560deg) scale(.1)', opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.5,0,.9,.6)' }).onfinish = () => im.remove();
+    this.later(() => this.chomp(false, () => { const mm = this.maw(); this.debris(mm.x, mm.y, [f.col, '#ffffff', '#b8f070', '#5a1a2a'], 22, 30); this.burst(mm.x, mm.y - 6, 2, 6, 320); this.flash('#b8f070', .2, 300); this.stamp('FED TO THE MAW', f.name + ' · NO SURGE THIS ROUND', '#ffd644', 150); }), 620);
+    this.later(fin, 1200);
+  }
+  advance() {
+    const S = this.state; if (S.phase !== 'place' || this.pend.size) return;
+    if (S.mode === 'fight') return this.fightFire();
+    const push = this.push(S), adj = this.adj(S), t1 = push > 0 ? 800 : 150;
+    this.setState({ phase: 'resolve', pick: -1, sel: -1, dice: S.dice.map(d => ({ ...d, used: true })) });
+    if (push > 0) {
+      this.setState(s => ({ P: s.P + push })); this.vel = 12 + push * 26; this.sfx('push');
+      S.order.forEach(k => { if (S.ports[k].some(v => v)) this.fl[k].boost = performance.now(); });
+      this.later(() => { const front = S.order.length ? this.shipC(S.order[0]) : null; if (front) this.pop(front.x, front.y - 34, '+' + push, this.LADDER[Math.min(2 + Math.floor(push / 8), 6)], 30 + Math.min(push, 30) / 2); }, 250);
+    }
+    this.later(() => {
+      const s = this.state; if (s.P >= s.G) return this.escape();
+      if (s.dropped) { const m = this.maw(); this.pop(m.x, m.y - 50, 'STILL EATING', '#b8f070', 28); return this.later(() => this.startRound(), 900); }
+      this.surge(adj);
+    }, t1);
+  }
+  surge(adj) {
+    const S = this.state, h = this.headRef.current;
+    this.sfx('roar'); this.shake(Math.min(12, 4 + adj / 3), 420);
+    if (h && h.animate && !this.reduced) h.animate([{ transform: 'none' }, { transform: 'translateY(-26px) scale(1.04)', offset: .5 }, { transform: 'none' }], { duration: 640, easing: 'cubic-bezier(.3,0,.2,1)' });
+    this.setState({ M: S.M + adj });
+    this.later(() => this.eatPassed(), 640);
+  }
+  // the maw passes ships back-first
+  eatPassed() {
+    const S = this.state, n = S.order.length, back = n ? S.order[n - 1] : -1;
+    if (back >= 0 && this.posOf(S, n - 1) <= S.M) {
+      const f = this.FLEET[back], c = this.shipC(back);
+      this.chomp(false, () => { if (c) { this.burst(c.x, c.y, 2); this.debris(c.x, c.y, [f.col, '#ffffff', '#5a1a2a'], 16); } this.stamp('EATEN', f.name, '#ff4d4d', 200, 46); this.flash('#ff1a1a', .25, 300); });
+      this.setState(s => ({ order: s.order.slice(0, -1), lost: s.lost.concat([f.name]) }));
+      return this.later(() => this.eatPassed(), 700);
+    }
+    if (!n) return this.lose();
+    this.later(() => this.startRound(), 300);
+  }
+  escape() {
+    this.setState({ phase: 'boom' }); this.vel = 600; this.sfx('push');
+    this.flash('#6af5d6', .45, 500); this.shake(6, 300);
+    this.later(() => { this.setState(s => ({ P: s.P + 60 })); this.stamp('ESCAPED', 'THROUGH THE GATE', '#6af5d6', 220); }, 200);
+    this.later(() => this.setState(s => ({ phase: 'won', gold: s.gold + this.BOUNTY }), () => this.endIn()), 2000);
+  }
+  // all three eyes out in one round: it sinks, the screen flips, turn and fight
+  blind() {
+    const h = this.headRef.current, tr = this.trackRef.current;
+    this.setState({ phase: 'boom', pick: -1, sel: -1 });
+    this.stamp('BLINDED', 'GARGANTA SINKS', '#ffd644', 180, 58); this.sfx('roar'); this.flash('#ffffff', .5, 360, 3); this.shake(12, 500);
+    if (h && h.animate && !this.reduced) h.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(240px) rotate(6deg)', opacity: .2 }], { duration: 1100, easing: 'cubic-bezier(.5,0,.8,.4)', fill: 'forwards' });
+    this.later(() => { if (tr && tr.animate && !this.reduced) tr.animate([{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(90deg)' }], { duration: 260, easing: 'ease-in', fill: 'forwards' }); }, 1150);
+    this.later(() => {
+      this.setState(s => ({ mode: 'fight', ii: 0, ports: this.FLEET.map(f => Array(f.ports).fill(0)), dice: [] }), () => {
+        if (tr && tr.animate) { tr.getAnimations().forEach(a => a.cancel()); if (!this.reduced) tr.animate([{ transform: 'rotateX(-90deg)' }, { transform: 'rotateX(0deg)' }], { duration: 320, easing: 'cubic-bezier(.2,.9,.3,1.2)' }); }
+        this.stamp('TURN AND FIGHT', 'KILL IT FOR ×2', '#ff9a3c', 300); this.shake(6, 300);
+        this.later(() => this.startRound(), 900);
+      });
+    }, 1420);
+  }
+  fightFire() {
+    const S = this.state, head = this.fHeadImg.current, hr = this.rect(this.fHeadRef.current);
+    this.setState({ phase: 'resolve', pick: -1, dice: S.dice.map(d => ({ ...d, used: true })) });
+    let t = 120, total = 0;
+    S.order.forEach(k => {
+      const sum = S.ports[k].reduce((a, v) => a + v, 0) * this.FLEET[k].mult; if (!sum) return; total += sum;
+      this.later(() => {
+        const f = this.FLEET[k], c = this.center(this.fShipRefs[k].current && this.fShipRefs[k].current.querySelector('img')), to = hr && { x: hr.x + hr.w / 2 + (Math.random() - .5) * 80, y: hr.y + hr.h * .55 + (Math.random() - .5) * 50 };
+        if (c && to) { const ang = Math.atan2(to.y - c.y, to.x - c.x) * 180 / Math.PI, len = Math.hypot(to.x - c.x, to.y - c.y); this.anim(this.fxEl('left:' + c.x + 'px;top:' + (c.y - 3) + 'px;width:' + len + 'px;height:6px;transform-origin:0 50%;background:linear-gradient(90deg,' + f.col + ',#ffffff);box-shadow:0 0 10px ' + f.col), [{ transform: 'rotate(' + ang + 'deg) scaleX(0)', opacity: 1 }, { transform: 'rotate(' + ang + 'deg) scaleX(1)', opacity: 1, offset: .5 }, { transform: 'rotate(' + ang + 'deg) scaleX(1)', opacity: 0 }], { duration: 300, easing: 'ease-out' }); }
+        this.later(() => { if (to) { this.sparks(to.x, to.y, [f.col, '#ffffff', '#b8f070'], 12); this.pop(to.x, to.y - 20, '-' + sum, '#ffffff', 30 + Math.min(sum, 12)); } if (head && head.animate && !this.reduced) head.animate([{ filter: 'brightness(1)' }, { filter: 'brightness(2.6) hue-rotate(-40deg)' }, { filter: 'brightness(1)' }], { duration: 220 }); this.shake(4, 200); this.sfx('shot'); this.setState(s => ({ hp: Math.max(0, s.hp - sum) })); }, 160);
+      }, t); t += 320;
+    });
+    this.later(() => {
+      if (this.state.hp <= 0) return this.kill();
+      const s = this.state, snap = s.ii % 2 === 1;
+      if (!snap) { if (hr) this.pop(hr.x + hr.w / 2, hr.y + hr.h * .8, 'FUMBLING', '#b8f070', 30); return this.setState({ ii: s.ii + 1 }, () => this.later(() => this.startRound(), 700)); }
+      const vk = s.order[Math.floor(Math.random() * s.order.length)], f = this.FLEET[vk];
+      this.chomp(true, () => { const c = this.center(this.fShipRefs[vk].current); if (c) { this.burst(c.x, c.y, 2); this.debris(c.x, c.y, [f.col, '#ffffff'], 16); } this.stamp('SNAPPED UP', f.name, '#ff4d4d', 300, 46); });
+      this.later(() => { this.setState(st => ({ order: st.order.filter(x => x !== vk), lost: st.lost.concat([f.name]), ii: st.ii + 1 })); this.later(() => this.state.order.length ? this.startRound() : this.lose(), 600); }, 300);
+    }, t + 300);
+  }
+  kill() {
+    const hr = this.rect(this.fHeadRef.current), head = this.fHeadRef.current;
+    this.setState({ phase: 'boom' }); this.sfx('roar');
+    if (hr) for (let q = 0; q < 7; q++) this.later(() => { this.burst(hr.x + hr.w * (.2 + Math.random() * .6), hr.y + hr.h * (.2 + Math.random() * .6), q % 2 ? 2 : 3); this.shake(5, 180); }, q * 140);
+    this.later(() => { if (head) head.style.opacity = 0; this.flash('#ffffff', .85, 360, 3); this.shake(14, 480); if (hr) this.debris(hr.x + hr.w / 2, hr.y + hr.h / 2, ['#ffffff', '#b8f070', '#6fbf3a', '#ff4d4d', '#ffd644'], 40, 60); this.stamp('GARGANTA SLAIN', 'DOUBLE BOUNTY', '#ffd644', 260); }, 7 * 140 + 60);
+    this.later(() => this.setState(s => ({ phase: 'slain', gold: s.gold + this.BOUNTY * 2 }), () => this.endIn()), 2600);
+  }
+  lose() {
+    this.setState({ phase: 'boom' });
+    this.later(() => { this.flash('#ff1a1a', .5, 520); this.shake(10, 420); }, 200);
+    this.later(() => this.setState({ phase: 'lost' }, () => this.endIn()), 1200);
+  }
+  tick() {
+    const now = performance.now(), dt = Math.min(64, now - this.tLast) / 1000, t = (now - this.t0) / 1000; this.tLast = now;
+    this.vel += (12 - this.vel) * Math.min(1, dt * 2.2); this.scroll += this.vel * dt;
+    const A = this.driftA.current, B = this.driftB.current;
+    if (A) A.style.backgroundPosition = '0px ' + (this.scroll % 900).toFixed(1) + 'px';
+    if (B) B.style.backgroundPosition = '120px ' + (300 + (this.scroll * 2.2) % 1350).toFixed(1) + 'px';
+    const h = this.headRef.current; if (h && !this.reduced && !(h.getAnimations && h.getAnimations().length)) h.style.transform = 'translateY(' + (Math.sin(t * 1.3) * 4).toFixed(2) + 'px) rotate(' + (Math.sin(t * .9) * 1.2).toFixed(2) + 'deg)';
+    this.flRefs.forEach((r, k) => { const el = r.current, p = this.fl[k]; if (!el) return; const b = Math.max(0, 1 - (now - p.boost) / 900), s = .7 + .3 * Math.sin(t * p.f + p.ph) + Math.random() * .2 + b * 1.6; el.style.transform = 'translateX(-50%) scaleY(' + s.toFixed(2) + ') scaleX(' + (1 + b * .4).toFixed(2) + ')'; el.style.opacity = (.55 + Math.random() * .4).toFixed(2); });
+    this.drt.forEach((r, i) => {
+      const fl = r.float.current, sh = r.shadow.current, d = this.state.dice[i]; if (!fl || !sh || !d) return;
+      const st = d.settled, a = r.angle, bob = st ? Math.sin(a) * 2 : 0, sway = st ? Math.cos(a * .7) : 0, rot = st ? Math.sin(a * .5) * 2 : 0;
+      fl.style.transform = 'translateX(' + sway + 'px) translateY(' + (-bob) + 'px) rotate(' + rot + 'deg)';
+      const k = 1 - bob / 20; sh.style.transform = 'translateX(' + (sway * .6) + 'px) scale(' + k + ')'; sh.style.opacity = st ? .35 + .35 * k : 0;
+      r.angle += .03;
+    });
+  }
+  renderVals() {
+    const S = this.state, ph = S.phase, L = this.lvl(), chase = S.mode === 'chase', placing = ph === 'place', active = placing || ph === 'roll';
+    const pd = S.pick >= 0 ? S.dice[S.pick] : null, free = this.freeDice(S), freeVals = free.map(j => S.dice[j].v);
+    const push = this.push(S), adj = this.adj(S), n = S.order.length, hits = this.hits(S);
+    const back = n ? this.posOf(S, n - 1) : S.P, gap = back - S.M, shift = Math.max(0, gap - this.MAXGAP);
+    const yOf = pos => Math.min(this.MAWY + 2, this.MAWY - (pos - S.M - shift) * this.K);
+    const port = (k, fight) => S.ports[k].map((v, j) => { const has = v > 0, on = S.order.includes(k), hl = placing && on && !has && (pd || free.length);
+      return { key: k + '-' + j, x: 224 + j * 34, tap: () => this.tapPort(k, j), has, no: !has, src: 'assets/flat_' + (v || 1) + '_32.png', arrow: hl ? '#48f320' : '#a9b0c0',
+        bs: has || hl ? 'solid' : 'dashed', bd: has ? this.FLEET[k].col : hl ? (pd ? '#48f320' : 'rgba(72,243,32,.6)') : 'rgba(242,242,242,.4)', bg: has ? 'rgba(10,8,33,.94)' : hl && pd ? 'rgba(20,60,14,.9)' : 'rgba(10,8,33,.85)',
+        glow: has ? '0 0 8px ' + this.FLEET[k].col : hl && pd ? '0 0 10px rgba(72,243,32,.55)' : 'none' }; });
+    const ships = this.FLEET.map((f, k) => {
+      const i = S.order.indexOf(k), on = i >= 0, pos = on ? this.posOf(S, i) : S.M, danger = chase && on && active && !S.dropped && pos + push <= S.M + adj, sel = S.sel === k;
+      const tag = ph === 'order' ? (i === 0 ? 'FRONT' : i === n - 1 ? 'BACK' : '') : danger ? 'EATEN' : f.mult > 1 ? '×2' : '';
+      return { ref: this.shipRefs[k], flRef: this.flRefs[k], tap: () => this.tapShip(k), drop: () => this.drop(k), y: Math.round(yOf(pos) - 20), op: on ? 1 : 0, pe: on ? 'auto' : 'none',
+        name: f.name, col: f.col, src: 'assets/' + f.ship + '.png', canDrop: chase && placing && sel && !S.dropped && n > 1,
+        ring: sel ? (ph === 'order' ? '#ffd644' : '#ff9a3c') : danger ? '#ff4d4d' : 'transparent', ringGlow: sel ? '0 0 12px rgba(255,154,60,.6)' : danger ? '0 0 12px rgba(255,77,77,.6)' : 'none',
+        ports: port(k), hasTag: !!tag, tag, tagX: 228 + f.ports * 34, tagCol: tag === 'EATEN' ? '#ff4d4d' : tag === '×2' ? '#ffd644' : tag === 'BACK' ? '#ff9a3c' : '#6af5d6', tagAnim: tag === 'EATEN' ? 'blink .7s steps(2) infinite' : 'none' };
+    });
+    const eyes = S.eyes.map((e, i) => { const has = e.die > 0, hl = placing && !has && (pd ? pd.v === e.v : freeVals.includes(e.v));
+      return { i, tap: () => this.tapEye(i), x: this.EYE_AT[i].x, y: this.EYE_AT[i].y, label: '' + e.v, has, no: !has, src: 'assets/flat_' + (e.die || 1) + '_32.png',
+        bd: has ? '#3a3a5a' : hl ? '#48f320' : '#ff4d4d', bg: has ? '#0a0821' : hl ? 'rgba(20,60,14,.95)' : 'rgba(42,10,18,.92)', txt: hl ? '#48f320' : '#ffffff', glow: has ? 'none' : hl ? '0 0 12px rgba(72,243,32,.7)' : '0 0 12px rgba(255,77,77,.8)' }; });
+    const reach = adj - push - shift, bandH = Math.max(0, reach) * this.K, frontY = n ? yOf(this.posOf(S, 0)) : this.MAWY, gateY = Math.round(frontY - (S.G - S.P) * this.K + 24);
+    const fn = S.order.length, fships = S.order.map((k, i) => { const f = this.FLEET[k]; return { ref: this.fShipRefs[k], x: Math.round(195 + (i - (fn - 1) / 2) * 86 - 42), op: 1, src: 'assets/' + f.ship + '.png', name: f.name, col: f.col, ports: port(k, true) }; });
+    const dmg = push;
+    let hint = S.hint, hintCol = S.hintCol || '#ff4d4d';
+    if (!hint) {
+      hintCol = '#a9b0c0';
+      const dangerShip = ships.find((s, k) => s.tag === 'EATEN');
+      if (ph === 'order') { hint = S.sel >= 0 ? 'TAP ANOTHER SHIP TO SWAP PLACES' : 'TAP TWO SHIPS TO SWAP · BACK GETS EATEN'; hintCol = S.sel >= 0 ? '#ffd644' : '#a9b0c0'; }
+      else if (ph === 'roll') hint = chase ? 'SURGE ' + S.surge + ' INCOMING' : 'GARGANTA THRASHES BLIND';
+      else if (placing && chase) {
+        if (S.sel >= 0) { hint = 'DROP IT AND GARGANTA STOPS TO EAT'; hintCol = '#ff9a3c'; }
+        else if (pd) { const eyeOk = S.eyes.some(e => !e.die && e.v === pd.v); hint = eyeOk ? 'THE ' + pd.v + ' FITS A PORT OR THE GREEN EYE' : 'PUT THE ' + pd.v + ' IN A PORT · PUSH +' + pd.v; hintCol = '#ffffff'; }
+        else if (S.dropped) { hint = 'IT FEEDS · NO SURGE THIS ROUND'; hintCol = '#48f320'; }
+        else if (dangerShip) { hint = 'SURGE HITS ' + dangerShip.name + ' · PUSH, EYES OR DROP'; hintCol = '#ff4d4d'; }
+        else if (free.length) { hint = 'PORTS PUSH · EYES SLOW THE SURGE'; hintCol = '#ffffff'; }
+        else { hint = 'ALL DICE PLACED · END ROUND'; hintCol = '#48f320'; }
+      } else if (placing) { hint = free.length ? 'EVERY PORT FIRES · KILL IT FOR ×2' : 'ALL GUNS LOADED · FIRE'; hintCol = free.length ? '#ffffff' : '#48f320'; }
+      else if (ph === 'resolve') hint = chase ? 'ENGINES · THEN THE SURGE' : 'FIRING';
+    }
+    const lost = S.lost, lostRow = { src: 'assets/spaceship_icon.png', label: lost.length ? 'LOST · ' + lost.join(', ') : 'SHIPS LOST', value: lost.length ? '-' + lost.length : 'NONE', col: lost.length ? '#b3201c' : '#2e8a12' };
+    const base = [{ src: 'assets/spaceship_icon.png', label: 'ROUNDS', value: '' + S.round, col: '#0a0821' }, lostRow, { src: 'assets/flat_6_32.png', label: 'SHIPS DROPPED', value: '' + S.drops, col: '#0a0821' }, { src: 'assets/flat_6_32.png', label: 'EYE HITS', value: '' + S.eyeHits, col: '#0a0821' }];
+    const end = ph === 'won' ? { title: 'ESCAPED', col: '#6af5d6', sub: 'THE GATE CLOSES BEHIND YOU', stamp: 'OUTRAN GARGANTA', hasTotal: true, rows: base.concat([{ src: 'assets/coin.png', label: 'BOUNTY', value: '+' + this.BOUNTY, col: '#0a0821' }, { src: 'assets/prestige.png', label: 'PRESTIGE', value: '+' + this.PRESTIGE, col: '#0a0821' }]) }
+      : ph === 'slain' ? { title: 'GARGANTA SLAIN', col: '#ffd644', sub: 'BLINDED, TURNED AND KILLED', stamp: 'DOUBLE REWARDS', hasTotal: true, rows: base.concat([{ src: 'assets/coin.png', label: 'BOUNTY ×2', value: '+' + this.BOUNTY * 2, col: '#2e8a12' }, { src: 'assets/prestige.png', label: 'PRESTIGE ×2', value: '+' + this.PRESTIGE * 2, col: '#2e8a12' }]) }
+      : ph === 'lost' ? { title: 'DEVOURED', col: '#ff4d4d', sub: 'THE WHOLE FLEET, SWALLOWED', stamp: 'ROUND ' + S.round, hasTotal: false, rows: base.concat([{ src: 'assets/prestige.png', label: 'PRESTIGE', value: 'LOST', col: '#b3201c' }]) }
+      : { title: 'SLIPPED AWAY', col: '#ffd644', sub: 'THE DECOY DRAWS IT OFF', stamp: 'NO CONTACT', hasTotal: true, rows: [{ src: 'assets/coin.png', label: 'DECOY', value: '-' + this.DECOY_COST, col: '#b3201c' }] };
+    return {
+      wrapRef: this.wrapRef, stageRef: this.stageRef, shakeRef: this.shakeRef, fxRef: this.fxRef, trackRef: this.trackRef, driftA: this.driftA, driftB: this.driftB,
+      headRef: this.headRef, headImg: this.headImg, biteRef: this.biteRef, shutRef: this.shutRef, fHeadRef: this.fHeadRef, fHeadImg: this.fHeadImg, fBiteRef: this.fBiteRef,
+      trayRef: this.trayRef, introRef: this.introRef, endRef: this.endRef,
+      hudTitle: chase ? 'BOSS · GARGANTA' : 'GARGANTA · TURNED', roundTxt: S.round || '-', gold: S.gold, diceN: this.DICE, bounty: '+' + this.BOUNTY, decoyCost: this.DECOY_COST, eyeSlow: this.EYE_SLOW, gateFull: S.G - S.P,
+      isChase: chase, isFight: !chase, isIntro: ph === 'intro', isEnd: ['won', 'slain', 'lost', 'fled'].includes(ph),
+      gate: { show: gateY > -40, y: gateY }, gateDist: Math.max(0, S.G - S.P),
+      band: { show: chase && active && !S.dropped && bandH > 0, top: Math.round(this.MAWY - bandH), h: Math.round(bandH) },
+      surgeTag: { show: chase && (active || ph === 'order'), y: Math.round(Math.max(56, Math.min(this.MAWY - 70, this.MAWY - bandH - 58))), label: S.dropped ? 'IT FEEDS' : hits ? 'SURGE · ' + hits + (hits > 1 ? ' EYES HIT' : ' EYE HIT') : 'SURGE', base: '' + S.surge, slowed: !S.dropped && hits > 0, txt: S.dropped ? '0' : '' + adj, col: S.dropped ? '#48f320' : '#ff4d4d' },
+      gapTag: { show: chase && n > 0 && ph !== 'intro', y: Math.round(yOf(back) - 10), v: '' + gap, col: gap <= adj - push ? '#ff4d4d' : gap <= adj ? '#ffd644' : '#48f320' },
+      eyes, ships, fships, blindEyes: this.BLIND_AT,
+      hpSegs: Array.from({ length: S.hpMax }, (_, i) => ({ bg: i < S.hp ? '#9dff5a' : '#14280a' })), hpTxt: '' + S.hp,
+      fIntent: S.ii % 2 ? { label: 'NEXT', text: 'SNAPS', col: '#ff4d4d' } : { label: 'BLIND', text: 'FUMBLING', col: '#b8f070' },
+      hint, hintCol,
+      trayNote: chase ? 'PUSH +' + push + ' · SURGE ' + adj : 'DAMAGE ' + dmg, trayCol: chase ? (push >= adj ? '#48f320' : '#ffd644') : '#ff9a3c',
+      trayEmpty: !S.dice.length, trayEmptyTxt: ph === 'order' ? 'ORDER YOUR COLUMN, THEN LAUNCH' : '',
+      rolled: S.dice.map((d, i) => { const r = this.drt[i], on = S.pick === i, o = { boxRef: r.box, floatRef: r.float, shadowRef: r.shadow, ref: r.cube, scale: on ? 'scale(1.15)' : d.settled ? 'scale(1)' : 'scale(.7)', show: d.used || d.fly ? 0 : 1, ring: on ? '#ffd644' : 'transparent', glow: on ? '0 0 14px 2px #ffd644' : 'none', tap: () => this.tapDie(i) }; d.faces.forEach((f, j) => { o['f' + j] = 'assets/flat_' + f + '_48.png'; }); return o; }),
+      btn: ph === 'order' ? { label: 'LAUNCH', op: 1 } : placing ? { label: chase ? 'END ROUND' : 'FIRE', op: 1 } : { label: ph === 'roll' ? 'ROLLING' : ph === 'resolve' ? (chase ? 'BURN' : 'FIRING') : ph === 'intro' ? 'FIGHT' : 'BRACE', op: .4 },
+      primary: () => { if (ph === 'order') this.launch(); else if (placing) this.advance(); },
+      engage: () => this.engage(), decoy: () => this.decoy(), restart: () => this.restart(), end
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breach · Boss SFX preview</title>
+<style>
+:root{--bg:#05040f;--panel:#0a0821;--line:#2a2752;--text:#f2f2f2;--dim:#a9b0c0;--red:#ff4d4d;--gold:#ffd644}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:16px;max-width:980px;margin:auto}
+h1{font-size:20px;letter-spacing:1px;margin:0 0 4px}p{color:var(--dim);margin:0 0 14px}
+h2{font-size:13px;letter-spacing:1px;color:var(--gold);margin:22px 0 8px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+button{all:unset;cursor:pointer;background:var(--panel);border:2px solid var(--line);border-radius:6px;padding:9px 10px;display:flex;flex-direction:column;gap:3px}
+button:hover{border-color:var(--text)}button:active{transform:translate(1px,1px)}button.on{border-color:var(--gold)}
+b{font-weight:700;font-size:13px}small{color:var(--dim);font-size:11px}
+.seq button{border-color:#5a1a2a}.bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+label{color:var(--dim);font-size:12px;display:flex;gap:6px;align-items:center}
+.t{display:inline-block;font-size:10px;padding:1px 5px;border-radius:3px;background:#1c1a3a;color:var(--dim);margin-left:6px}
+</style></head><body>
+<h1>BREACH · BOSS SFX v1</h1>
+<p>Tap to audition. Sequences replay the game’s own timings from the boss files. Variants rotate round-robin.</p>
+<div class="bar"><label><input type="checkbox" id="tiers" checked> apply mix tiers (big 0 · combat −6 · ui −9 dB)</label><label>master <input type="range" id="vol" min="0" max="1" step="0.01" value="0.8"></label></div>
+<h2>Sequences</h2><div class="grid seq" id="seq"></div>
+<div id="groups"></div>
+<script>
+const M = __MANIFEST__;
+const ext = new Audio().canPlayType('audio/ogg; codecs="vorbis"') ? 'ogg' : 'mp3';
+const byId = {}; M.clips.forEach(c => byId[c.id] = c);
+const rr = {};
+function play(id){
+  const c = byId[id]; if(!c) return;
+  const i = rr[id] = ((rr[id] ?? -1) + 1) % c.files.length, f = c.files[i];
+  const a = new Audio(f[ext]); const tier = document.getElementById('tiers').checked ? Math.pow(10, c.gain_db/20) : 1;
+  a.volume = Math.min(1, tier * +document.getElementById('vol').value);
+  if (c.loop) { a.loop = true; setTimeout(() => a.pause(), 2800); }
+  a.play();
+}
+let timers = [];
+function seq(steps){ timers.forEach(clearTimeout); timers = steps.map(([ms,id]) => setTimeout(() => play(id), ms)); }
+const S = [
+  ['Jump → alarm → Marauder', [[0,'gate_jump_charge'],[800,'gate_jump_exit'],[1180,'encounter_alarm'],[2280,'reveal_marauder']]],
+  ['Jump → alarm → Mother Core', [[0,'gate_jump_charge'],[800,'gate_jump_exit'],[1180,'encounter_alarm'],[2280,'reveal_mothercore']]],
+  ['Jump → alarm → Garganta', [[0,'gate_jump_charge'],[800,'gate_jump_exit'],[1180,'encounter_alarm'],[2280,'reveal_garganta']]],
+  ['Warp in → engage', [[0,'boss_warp_in'],[1500,'boss_engage']]],
+  ['Volley: 3 ships fire', [[0,'fleet_shot'],[240,'boss_hit'],[340,'fleet_shot'],[580,'boss_hit'],[680,'fleet_shot'],[920,'boss_hit_heavy']]],
+  ['Core opens → ×2 hits', [[0,'mothercore_core_open'],[1300,'fleet_shot'],[1540,'boss_hit_crit'],[1640,'fleet_shot'],[1880,'boss_hit_crit']]],
+  ['Mother Core beam turn', [[0,'boss_intent_danger'],...[0,1,2,3,4,5].map(q=>[1000+q*120,'mothercore_shot']),[1900,'hull_hit_heavy'],[2280,'mothercore_beam'],[2450,'ship_destroyed']]],
+  ['Shields hold vs Mother Core', [[0,'shield_up'],...[0,1,2].map(q=>[900+q*120,'mothercore_shot']),[1440,'shield_block']]],
+  ['Marauder charges, then fires 5', [[0,'marauder_charge'],...[0,1,2,3,4].map(q=>[1400+q*120,'marauder_shot']),[2180,'hull_hit_heavy']]],
+  ['Garganta: inhale → shut → bite', [[0,'garganta_inhale'],[1400,'garganta_maw_shut'],[2600,'garganta_bite'],[2985,'hull_hit_heavy'],[3505,'ship_destroyed']]],
+  ['Garganta hit + regrow', [[0,'fleet_shot'],[240,'boss_hit'],[250,'garganta_hurt'],[1000,'garganta_regrow']]],
+  ['Half HP: Overdrive / Frenzy', [[0,'boss_phase2_overdrive'],[1800,'boss_phase2_frenzy']]],
+  ['Boss death → victory', [[0,'boss_death'],[2600,'boss_victory']]],
+  ['Defeat', [[0,'fleet_defeat']]],
+];
+const sq = document.getElementById('seq');
+S.forEach(([n,st]) => { const b = document.createElement('button'); b.innerHTML = '<b>▶ '+n+'</b><small>'+st.length+' cues · '+(Math.max(...st.map(s=>s[0]))/1000).toFixed(2)+'s</small>'; b.onclick = () => seq(st); sq.appendChild(b); });
+const G = [['Encounter flow',/^(gate_|encounter_|reveal_|boss_engage)/],['Fight · shared',/^(boss_(warp|intent|hit|death|victory|phase)|fleet_|shield_|hull_|ship_)/],['Marauder',/^marauder_/],['Mother Core',/^mothercore_/],['Garganta',/^garganta_/]];
+const root = document.getElementById('groups');
+G.forEach(([title,re]) => { const h = document.createElement('h2'); h.textContent = title; root.appendChild(h); const g = document.createElement('div'); g.className = 'grid'; root.appendChild(g);
+  M.clips.filter(c => re.test(c.id)).forEach(c => { const b = document.createElement('button'); const n = c.files.length;
+    b.innerHTML = '<b>'+c.id+(n>1?'<span class="t">×'+n+'</span>':'')+(c.loop?'<span class="t">loop</span>':'')+'<span class="t">'+c.tier+'</span></b><small>'+c.event+'</small>';
+    b.onclick = () => play(c.id); g.appendChild(b); }); });
+</script></body></html>

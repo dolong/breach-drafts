@@ -1,0 +1,1755 @@
+{
+  "source_pack": "Helton Yan Pixel Combat (CC BY 4.0)",
+  "processing": "trimmed to onset (2ms pre-roll), length-capped per moment with cosine fade, normalised to per-id LUFS-M max, ≤ −1 dBTP, 44.1kHz 16-bit TPDF-dithered; OGG Vorbis q5 + MP3 V2",
+  "clips": [
+    {
+      "id": "gate_jump_charge",
+      "source": "DSGNMisc_MOVEMENT-Mecha Large Takeoff",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "Ships stream into the gate",
+      "trigger": "Jump Gate v2 · jump() at phase 'jump'",
+      "lufs_target": -14,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "gate_jump_charge_01",
+          "ogg": "ogg/gate_jump_charge_01.ogg",
+          "mp3": "mp3/gate_jump_charge_01.mp3",
+          "from": "DSGNMisc_MOVEMENT-Mecha Large Takeoff_HY_PC-001.wav",
+          "duration_ms": 1421,
+          "hit_ms": 14,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.2,
+          "capped": false
+        },
+        {
+          "name": "gate_jump_charge_02",
+          "ogg": "ogg/gate_jump_charge_02.ogg",
+          "mp3": "mp3/gate_jump_charge_02.mp3",
+          "from": "DSGNMisc_MOVEMENT-Mecha Large Takeoff_HY_PC-002.wav",
+          "duration_ms": 1424,
+          "hit_ms": 4,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.5,
+          "capped": false
+        },
+        {
+          "name": "gate_jump_charge_03",
+          "ogg": "ogg/gate_jump_charge_03.ogg",
+          "mp3": "mp3/gate_jump_charge_03.mp3",
+          "from": "DSGNMisc_MOVEMENT-Mecha Large Takeoff_HY_PC-003.wav",
+          "duration_ms": 1418,
+          "hit_ms": 37,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.5,
+          "capped": false
+        },
+        {
+          "name": "gate_jump_charge_04",
+          "ogg": "ogg/gate_jump_charge_04.ogg",
+          "mp3": "mp3/gate_jump_charge_04.mp3",
+          "from": "DSGNMisc_MOVEMENT-Mecha Large Takeoff_HY_PC-004.wav",
+          "duration_ms": 1385,
+          "hit_ms": 44,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.9,
+          "capped": false
+        },
+        {
+          "name": "gate_jump_charge_05",
+          "ogg": "ogg/gate_jump_charge_05.ogg",
+          "mp3": "mp3/gate_jump_charge_05.mp3",
+          "from": "DSGNMisc_MOVEMENT-Mecha Large Takeoff_HY_PC-005.wav",
+          "duration_ms": 1394,
+          "hit_ms": 48,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.1,
+          "capped": false
+        },
+        {
+          "name": "gate_jump_charge_06",
+          "ogg": "ogg/gate_jump_charge_06.ogg",
+          "mp3": "mp3/gate_jump_charge_06.mp3",
+          "from": "DSGNMisc_MOVEMENT-Mecha Large Takeoff_HY_PC-006.wav",
+          "duration_ms": 1438,
+          "hit_ms": 40,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.2,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "gate_jump_exit",
+      "source": "MAGSpel_CAST-Teleport Downer",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "White flash as the fleet exits the gate",
+      "trigger": "Jump Gate v2 · jump() with the white flash",
+      "lufs_target": -14,
+      "max_ms": 1500,
+      "files": [
+        {
+          "name": "gate_jump_exit_01",
+          "ogg": "ogg/gate_jump_exit_01.ogg",
+          "mp3": "mp3/gate_jump_exit_01.mp3",
+          "from": "MAGSpel_CAST-Teleport Downer_HY_PC-001.wav",
+          "duration_ms": 1500,
+          "hit_ms": 98,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.0,
+          "capped": true
+        },
+        {
+          "name": "gate_jump_exit_02",
+          "ogg": "ogg/gate_jump_exit_02.ogg",
+          "mp3": "mp3/gate_jump_exit_02.mp3",
+          "from": "MAGSpel_CAST-Teleport Downer_HY_PC-002.wav",
+          "duration_ms": 1500,
+          "hit_ms": 103,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.3,
+          "capped": true
+        },
+        {
+          "name": "gate_jump_exit_03",
+          "ogg": "ogg/gate_jump_exit_03.ogg",
+          "mp3": "mp3/gate_jump_exit_03.mp3",
+          "from": "MAGSpel_CAST-Teleport Downer_HY_PC-003.wav",
+          "duration_ms": 1500,
+          "hit_ms": 115,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.7,
+          "capped": true
+        },
+        {
+          "name": "gate_jump_exit_04",
+          "ogg": "ogg/gate_jump_exit_04.ogg",
+          "mp3": "mp3/gate_jump_exit_04.mp3",
+          "from": "MAGSpel_CAST-Teleport Downer_HY_PC-004.wav",
+          "duration_ms": 1500,
+          "hit_ms": 155,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.7,
+          "capped": true
+        },
+        {
+          "name": "gate_jump_exit_05",
+          "ogg": "ogg/gate_jump_exit_05.ogg",
+          "mp3": "mp3/gate_jump_exit_05.mp3",
+          "from": "MAGSpel_CAST-Teleport Downer_HY_PC-005.wav",
+          "duration_ms": 1500,
+          "hit_ms": 158,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.3,
+          "capped": true
+        },
+        {
+          "name": "gate_jump_exit_06",
+          "ogg": "ogg/gate_jump_exit_06.ogg",
+          "mp3": "mp3/gate_jump_exit_06.mp3",
+          "from": "MAGSpel_CAST-Teleport Downer_HY_PC-006.wav",
+          "duration_ms": 1500,
+          "hit_ms": 169,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.2,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "boss_engage",
+      "source": "DSGNSynth_BUFF-Mecha Lock In",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "FIGHT / ENGAGE confirm",
+      "trigger": "Jump Gate v2 · fight(); boss files · engage()",
+      "lufs_target": -14,
+      "max_ms": 900,
+      "files": [
+        {
+          "name": "boss_engage_01",
+          "ogg": "ogg/boss_engage_01.ogg",
+          "mp3": "mp3/boss_engage_01.mp3",
+          "from": "DSGNSynth_BUFF-Mecha Lock In_HY_PC-001.wav",
+          "duration_ms": 900,
+          "hit_ms": 9,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.7,
+          "capped": true
+        },
+        {
+          "name": "boss_engage_02",
+          "ogg": "ogg/boss_engage_02.ogg",
+          "mp3": "mp3/boss_engage_02.mp3",
+          "from": "DSGNSynth_BUFF-Mecha Lock In_HY_PC-002.wav",
+          "duration_ms": 797,
+          "hit_ms": 13,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.5,
+          "capped": false
+        },
+        {
+          "name": "boss_engage_03",
+          "ogg": "ogg/boss_engage_03.ogg",
+          "mp3": "mp3/boss_engage_03.mp3",
+          "from": "DSGNSynth_BUFF-Mecha Lock In_HY_PC-003.wav",
+          "duration_ms": 900,
+          "hit_ms": 22,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.4,
+          "capped": true
+        },
+        {
+          "name": "boss_engage_04",
+          "ogg": "ogg/boss_engage_04.ogg",
+          "mp3": "mp3/boss_engage_04.mp3",
+          "from": "DSGNSynth_BUFF-Mecha Lock In_HY_PC-004.wav",
+          "duration_ms": 763,
+          "hit_ms": 19,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.5,
+          "capped": false
+        },
+        {
+          "name": "boss_engage_05",
+          "ogg": "ogg/boss_engage_05.ogg",
+          "mp3": "mp3/boss_engage_05.mp3",
+          "from": "DSGNSynth_BUFF-Mecha Lock In_HY_PC-005.wav",
+          "duration_ms": 900,
+          "hit_ms": 13,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -6.5,
+          "capped": true
+        },
+        {
+          "name": "boss_engage_06",
+          "ogg": "ogg/boss_engage_06.ogg",
+          "mp3": "mp3/boss_engage_06.mp3",
+          "from": "DSGNSynth_BUFF-Mecha Lock In_HY_PC-006.wav",
+          "duration_ms": 900,
+          "hit_ms": 12,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.6,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "gate_decoy",
+      "source": "DSGNMisc_SKILL RELEASE-Flare Gun",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "DECOY flare launches",
+      "trigger": "Jump Gate v2 · decoy()",
+      "lufs_target": -14,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "gate_decoy_01",
+          "ogg": "ogg/gate_decoy_01.ogg",
+          "mp3": "mp3/gate_decoy_01.mp3",
+          "from": "DSGNMisc_SKILL RELEASE-Flare Gun_HY_PC-001.wav",
+          "duration_ms": 1430,
+          "hit_ms": 81,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -1.7,
+          "capped": false
+        },
+        {
+          "name": "gate_decoy_02",
+          "ogg": "ogg/gate_decoy_02.ogg",
+          "mp3": "mp3/gate_decoy_02.mp3",
+          "from": "DSGNMisc_SKILL RELEASE-Flare Gun_HY_PC-002.wav",
+          "duration_ms": 1460,
+          "hit_ms": 75,
+          "lufs_m_max": -14.4,
+          "true_peak_db": -1.0,
+          "capped": false
+        },
+        {
+          "name": "gate_decoy_03",
+          "ogg": "ogg/gate_decoy_03.ogg",
+          "mp3": "mp3/gate_decoy_03.mp3",
+          "from": "DSGNMisc_SKILL RELEASE-Flare Gun_HY_PC-003.wav",
+          "duration_ms": 1483,
+          "hit_ms": 105,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.2,
+          "capped": false
+        },
+        {
+          "name": "gate_decoy_04",
+          "ogg": "ogg/gate_decoy_04.ogg",
+          "mp3": "mp3/gate_decoy_04.mp3",
+          "from": "DSGNMisc_SKILL RELEASE-Flare Gun_HY_PC-004.wav",
+          "duration_ms": 1413,
+          "hit_ms": 78,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -1.5,
+          "capped": false
+        },
+        {
+          "name": "gate_decoy_05",
+          "ogg": "ogg/gate_decoy_05.ogg",
+          "mp3": "mp3/gate_decoy_05.mp3",
+          "from": "DSGNMisc_SKILL RELEASE-Flare Gun_HY_PC-005.wav",
+          "duration_ms": 1434,
+          "hit_ms": 62,
+          "lufs_m_max": -14.7,
+          "true_peak_db": -1.0,
+          "capped": false
+        },
+        {
+          "name": "gate_decoy_06",
+          "ogg": "ogg/gate_decoy_06.ogg",
+          "mp3": "mp3/gate_decoy_06.mp3",
+          "from": "DSGNMisc_SKILL RELEASE-Flare Gun_HY_PC-006.wav",
+          "duration_ms": 1455,
+          "hit_ms": 98,
+          "lufs_m_max": -14.1,
+          "true_peak_db": -1.0,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "fleet_shot",
+      "source": "DSGNMisc_PROJECTILE-Laser Shot",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "A 1-damage ship fires",
+      "trigger": "fireSeq() muzzle(), dmg 1",
+      "lufs_target": -17,
+      "max_ms": 600,
+      "files": [
+        {
+          "name": "fleet_shot_01",
+          "ogg": "ogg/fleet_shot_01.ogg",
+          "mp3": "mp3/fleet_shot_01.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Shot_HY_PC-001.wav",
+          "duration_ms": 600,
+          "hit_ms": 32,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -6.8,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_02",
+          "ogg": "ogg/fleet_shot_02.ogg",
+          "mp3": "mp3/fleet_shot_02.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Shot_HY_PC-002.wav",
+          "duration_ms": 600,
+          "hit_ms": 32,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -5.8,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_03",
+          "ogg": "ogg/fleet_shot_03.ogg",
+          "mp3": "mp3/fleet_shot_03.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Shot_HY_PC-003.wav",
+          "duration_ms": 600,
+          "hit_ms": 39,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -6.8,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_04",
+          "ogg": "ogg/fleet_shot_04.ogg",
+          "mp3": "mp3/fleet_shot_04.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Shot_HY_PC-004.wav",
+          "duration_ms": 600,
+          "hit_ms": 29,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -5.8,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_05",
+          "ogg": "ogg/fleet_shot_05.ogg",
+          "mp3": "mp3/fleet_shot_05.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Shot_HY_PC-005.wav",
+          "duration_ms": 600,
+          "hit_ms": 39,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -4.8,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_06",
+          "ogg": "ogg/fleet_shot_06.ogg",
+          "mp3": "mp3/fleet_shot_06.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Shot_HY_PC-006.wav",
+          "duration_ms": 600,
+          "hit_ms": 32,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -6.3,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "fleet_shot_mid",
+      "source": "DSGNMisc_PROJECTILE-Laser Bursts",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "A 2–3 damage ship fires",
+      "trigger": "fireSeq() muzzle(), dmg 2–3",
+      "lufs_target": -15.5,
+      "max_ms": 450,
+      "files": [
+        {
+          "name": "fleet_shot_mid_01",
+          "ogg": "ogg/fleet_shot_mid_01.ogg",
+          "mp3": "mp3/fleet_shot_mid_01.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Bursts_HY_PC-001.wav",
+          "duration_ms": 450,
+          "hit_ms": 11,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -4.5,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_mid_02",
+          "ogg": "ogg/fleet_shot_mid_02.ogg",
+          "mp3": "mp3/fleet_shot_mid_02.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Bursts_HY_PC-002.wav",
+          "duration_ms": 450,
+          "hit_ms": 13,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -7.8,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_mid_03",
+          "ogg": "ogg/fleet_shot_mid_03.ogg",
+          "mp3": "mp3/fleet_shot_mid_03.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Bursts_HY_PC-003.wav",
+          "duration_ms": 450,
+          "hit_ms": 12,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -5.2,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_mid_04",
+          "ogg": "ogg/fleet_shot_mid_04.ogg",
+          "mp3": "mp3/fleet_shot_mid_04.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Bursts_HY_PC-004.wav",
+          "duration_ms": 450,
+          "hit_ms": 14,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -7.0,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_mid_05",
+          "ogg": "ogg/fleet_shot_mid_05.ogg",
+          "mp3": "mp3/fleet_shot_mid_05.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Bursts_HY_PC-005.wav",
+          "duration_ms": 450,
+          "hit_ms": 9,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -3.5,
+          "capped": true
+        },
+        {
+          "name": "fleet_shot_mid_06",
+          "ogg": "ogg/fleet_shot_mid_06.ogg",
+          "mp3": "mp3/fleet_shot_mid_06.mp3",
+          "from": "DSGNMisc_PROJECTILE-Laser Bursts_HY_PC-006.wav",
+          "duration_ms": 450,
+          "hit_ms": 13,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -7.1,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "fleet_shot_big",
+      "source": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "A 4+ damage ship fires",
+      "trigger": "fireSeq() muzzle(), dmg 4+",
+      "lufs_target": -14,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "fleet_shot_big_01",
+          "ogg": "ogg/fleet_shot_big_01.ogg",
+          "mp3": "mp3/fleet_shot_big_01.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser_HY_PC-001.wav",
+          "duration_ms": 919,
+          "hit_ms": 22,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.0,
+          "capped": false
+        },
+        {
+          "name": "fleet_shot_big_02",
+          "ogg": "ogg/fleet_shot_big_02.ogg",
+          "mp3": "mp3/fleet_shot_big_02.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser_HY_PC-002.wav",
+          "duration_ms": 948,
+          "hit_ms": 16,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.7,
+          "capped": false
+        },
+        {
+          "name": "fleet_shot_big_03",
+          "ogg": "ogg/fleet_shot_big_03.ogg",
+          "mp3": "mp3/fleet_shot_big_03.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser_HY_PC-003.wav",
+          "duration_ms": 914,
+          "hit_ms": 12,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.7,
+          "capped": false
+        },
+        {
+          "name": "fleet_shot_big_04",
+          "ogg": "ogg/fleet_shot_big_04.ogg",
+          "mp3": "mp3/fleet_shot_big_04.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser_HY_PC-004.wav",
+          "duration_ms": 928,
+          "hit_ms": 67,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.1,
+          "capped": false
+        },
+        {
+          "name": "fleet_shot_big_05",
+          "ogg": "ogg/fleet_shot_big_05.ogg",
+          "mp3": "mp3/fleet_shot_big_05.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser_HY_PC-005.wav",
+          "duration_ms": 912,
+          "hit_ms": 12,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.0,
+          "capped": false
+        },
+        {
+          "name": "fleet_shot_big_06",
+          "ogg": "ogg/fleet_shot_big_06.ogg",
+          "mp3": "mp3/fleet_shot_big_06.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Purple Laser_HY_PC-006.wav",
+          "duration_ms": 927,
+          "hit_ms": 13,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.9,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "boss_hit",
+      "source": "DSGNMisc_HIT-Laser Hit",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Bolt hits the boss",
+      "trigger": "hitEnemy(), dmg < 4",
+      "lufs_target": -16,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "boss_hit_01",
+          "ogg": "ogg/boss_hit_01.ogg",
+          "mp3": "mp3/boss_hit_01.mp3",
+          "from": "DSGNMisc_HIT-Laser Hit_HY_PC-001.wav",
+          "duration_ms": 419,
+          "hit_ms": 28,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -2.1,
+          "capped": false
+        },
+        {
+          "name": "boss_hit_02",
+          "ogg": "ogg/boss_hit_02.ogg",
+          "mp3": "mp3/boss_hit_02.mp3",
+          "from": "DSGNMisc_HIT-Laser Hit_HY_PC-002.wav",
+          "duration_ms": 432,
+          "hit_ms": 29,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -1.8,
+          "capped": false
+        },
+        {
+          "name": "boss_hit_03",
+          "ogg": "ogg/boss_hit_03.ogg",
+          "mp3": "mp3/boss_hit_03.mp3",
+          "from": "DSGNMisc_HIT-Laser Hit_HY_PC-003.wav",
+          "duration_ms": 451,
+          "hit_ms": 20,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -4.3,
+          "capped": false
+        },
+        {
+          "name": "boss_hit_04",
+          "ogg": "ogg/boss_hit_04.ogg",
+          "mp3": "mp3/boss_hit_04.mp3",
+          "from": "DSGNMisc_HIT-Laser Hit_HY_PC-004.wav",
+          "duration_ms": 455,
+          "hit_ms": 30,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -3.0,
+          "capped": false
+        },
+        {
+          "name": "boss_hit_05",
+          "ogg": "ogg/boss_hit_05.ogg",
+          "mp3": "mp3/boss_hit_05.mp3",
+          "from": "DSGNMisc_HIT-Laser Hit_HY_PC-005.wav",
+          "duration_ms": 390,
+          "hit_ms": 26,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -4.0,
+          "capped": false
+        },
+        {
+          "name": "boss_hit_06",
+          "ogg": "ogg/boss_hit_06.ogg",
+          "mp3": "mp3/boss_hit_06.mp3",
+          "from": "DSGNMisc_HIT-Laser Hit_HY_PC-006.wav",
+          "duration_ms": 468,
+          "hit_ms": 24,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -3.6,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "boss_hit_heavy",
+      "source": "DSGNMisc_HIT-Mecha Armor Piercer",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Heavy hit on the boss",
+      "trigger": "hitEnemy(), dmg ≥ 4",
+      "lufs_target": -14,
+      "max_ms": 900,
+      "files": [
+        {
+          "name": "boss_hit_heavy_01",
+          "ogg": "ogg/boss_hit_heavy_01.ogg",
+          "mp3": "mp3/boss_hit_heavy_01.mp3",
+          "from": "DSGNMisc_HIT-Mecha Armor Piercer_HY_PC-001.wav",
+          "duration_ms": 900,
+          "hit_ms": 40,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.0,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_heavy_02",
+          "ogg": "ogg/boss_hit_heavy_02.ogg",
+          "mp3": "mp3/boss_hit_heavy_02.mp3",
+          "from": "DSGNMisc_HIT-Mecha Armor Piercer_HY_PC-002.wav",
+          "duration_ms": 900,
+          "hit_ms": 48,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.9,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_heavy_03",
+          "ogg": "ogg/boss_hit_heavy_03.ogg",
+          "mp3": "mp3/boss_hit_heavy_03.mp3",
+          "from": "DSGNMisc_HIT-Mecha Armor Piercer_HY_PC-003.wav",
+          "duration_ms": 900,
+          "hit_ms": 39,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.5,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_heavy_04",
+          "ogg": "ogg/boss_hit_heavy_04.ogg",
+          "mp3": "mp3/boss_hit_heavy_04.mp3",
+          "from": "DSGNMisc_HIT-Mecha Armor Piercer_HY_PC-004.wav",
+          "duration_ms": 900,
+          "hit_ms": 23,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.8,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_heavy_05",
+          "ogg": "ogg/boss_hit_heavy_05.ogg",
+          "mp3": "mp3/boss_hit_heavy_05.mp3",
+          "from": "DSGNMisc_HIT-Mecha Armor Piercer_HY_PC-005.wav",
+          "duration_ms": 900,
+          "hit_ms": 33,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.8,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_heavy_06",
+          "ogg": "ogg/boss_hit_heavy_06.ogg",
+          "mp3": "mp3/boss_hit_heavy_06.mp3",
+          "from": "DSGNMisc_HIT-Mecha Armor Piercer_HY_PC-006.wav",
+          "duration_ms": 900,
+          "hit_ms": 30,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.5,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "boss_hit_crit",
+      "source": "DSGNMisc_SKILL IMPACT-Critical Strike",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "×2 hit on an open core / inhaling maw",
+      "trigger": "hitEnemy() when exposed()",
+      "lufs_target": -13,
+      "max_ms": 1000,
+      "files": [
+        {
+          "name": "boss_hit_crit_01",
+          "ogg": "ogg/boss_hit_crit_01.ogg",
+          "mp3": "mp3/boss_hit_crit_01.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Critical Strike_HY_PC-001.wav",
+          "duration_ms": 1000,
+          "hit_ms": 26,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.1,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_crit_02",
+          "ogg": "ogg/boss_hit_crit_02.ogg",
+          "mp3": "mp3/boss_hit_crit_02.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Critical Strike_HY_PC-002.wav",
+          "duration_ms": 1000,
+          "hit_ms": 78,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -2.8,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_crit_03",
+          "ogg": "ogg/boss_hit_crit_03.ogg",
+          "mp3": "mp3/boss_hit_crit_03.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Critical Strike_HY_PC-003.wav",
+          "duration_ms": 1000,
+          "hit_ms": 38,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.4,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_crit_04",
+          "ogg": "ogg/boss_hit_crit_04.ogg",
+          "mp3": "mp3/boss_hit_crit_04.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Critical Strike_HY_PC-004.wav",
+          "duration_ms": 1000,
+          "hit_ms": 111,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.5,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_crit_05",
+          "ogg": "ogg/boss_hit_crit_05.ogg",
+          "mp3": "mp3/boss_hit_crit_05.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Critical Strike_HY_PC-005.wav",
+          "duration_ms": 1000,
+          "hit_ms": 12,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -1.6,
+          "capped": true
+        },
+        {
+          "name": "boss_hit_crit_06",
+          "ogg": "ogg/boss_hit_crit_06.ogg",
+          "mp3": "mp3/boss_hit_crit_06.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Critical Strike_HY_PC-006.wav",
+          "duration_ms": 1000,
+          "hit_ms": 19,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -2.7,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "shield_up",
+      "source": "DSGNSynth_BUFF-Bonus Max Shield",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Block added",
+      "trigger": "addBlock() / block ship fires",
+      "lufs_target": -15,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "shield_up_01",
+          "ogg": "ogg/shield_up_01.ogg",
+          "mp3": "mp3/shield_up_01.mp3",
+          "from": "DSGNSynth_BUFF-Bonus Max Shield_HY_PC-001.wav",
+          "duration_ms": 950,
+          "hit_ms": 5,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -7.6,
+          "capped": false
+        },
+        {
+          "name": "shield_up_02",
+          "ogg": "ogg/shield_up_02.ogg",
+          "mp3": "mp3/shield_up_02.mp3",
+          "from": "DSGNSynth_BUFF-Bonus Max Shield_HY_PC-002.wav",
+          "duration_ms": 929,
+          "hit_ms": 2,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -4.9,
+          "capped": false
+        },
+        {
+          "name": "shield_up_03",
+          "ogg": "ogg/shield_up_03.ogg",
+          "mp3": "mp3/shield_up_03.mp3",
+          "from": "DSGNSynth_BUFF-Bonus Max Shield_HY_PC-003.wav",
+          "duration_ms": 940,
+          "hit_ms": 3,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -7.8,
+          "capped": false
+        },
+        {
+          "name": "shield_up_04",
+          "ogg": "ogg/shield_up_04.ogg",
+          "mp3": "mp3/shield_up_04.mp3",
+          "from": "DSGNSynth_BUFF-Bonus Max Shield_HY_PC-004.wav",
+          "duration_ms": 940,
+          "hit_ms": 6,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -8.9,
+          "capped": false
+        },
+        {
+          "name": "shield_up_05",
+          "ogg": "ogg/shield_up_05.ogg",
+          "mp3": "mp3/shield_up_05.mp3",
+          "from": "DSGNSynth_BUFF-Bonus Max Shield_HY_PC-005.wav",
+          "duration_ms": 918,
+          "hit_ms": 16,
+          "lufs_m_max": -16.2,
+          "true_peak_db": -1.0,
+          "capped": false
+        },
+        {
+          "name": "shield_up_06",
+          "ogg": "ogg/shield_up_06.ogg",
+          "mp3": "mp3/shield_up_06.mp3",
+          "from": "DSGNSynth_BUFF-Bonus Max Shield_HY_PC-006.wav",
+          "duration_ms": 920,
+          "hit_ms": 3,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -8.5,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "shield_block",
+      "source": "DSGNTonl_SKILL IMPACT-Deflected Hit",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Incoming damage blocked",
+      "trigger": "resolveEnemy() when blocked > 0",
+      "lufs_target": -15,
+      "max_ms": 700,
+      "files": [
+        {
+          "name": "shield_block_01",
+          "ogg": "ogg/shield_block_01.ogg",
+          "mp3": "mp3/shield_block_01.mp3",
+          "from": "DSGNTonl_SKILL IMPACT-Deflected Hit_HY_PC-001.wav",
+          "duration_ms": 700,
+          "hit_ms": 92,
+          "lufs_m_max": -15.1,
+          "true_peak_db": -1.0,
+          "capped": true
+        },
+        {
+          "name": "shield_block_02",
+          "ogg": "ogg/shield_block_02.ogg",
+          "mp3": "mp3/shield_block_02.mp3",
+          "from": "DSGNTonl_SKILL IMPACT-Deflected Hit_HY_PC-002.wav",
+          "duration_ms": 700,
+          "hit_ms": 59,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -3.0,
+          "capped": true
+        },
+        {
+          "name": "shield_block_03",
+          "ogg": "ogg/shield_block_03.ogg",
+          "mp3": "mp3/shield_block_03.mp3",
+          "from": "DSGNTonl_SKILL IMPACT-Deflected Hit_HY_PC-003.wav",
+          "duration_ms": 700,
+          "hit_ms": 91,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -3.7,
+          "capped": true
+        },
+        {
+          "name": "shield_block_04",
+          "ogg": "ogg/shield_block_04.ogg",
+          "mp3": "mp3/shield_block_04.mp3",
+          "from": "DSGNTonl_SKILL IMPACT-Deflected Hit_HY_PC-004.wav",
+          "duration_ms": 700,
+          "hit_ms": 70,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -3.5,
+          "capped": true
+        },
+        {
+          "name": "shield_block_05",
+          "ogg": "ogg/shield_block_05.ogg",
+          "mp3": "mp3/shield_block_05.mp3",
+          "from": "DSGNTonl_SKILL IMPACT-Deflected Hit_HY_PC-005.wav",
+          "duration_ms": 700,
+          "hit_ms": 38,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -3.9,
+          "capped": true
+        },
+        {
+          "name": "shield_block_06",
+          "ogg": "ogg/shield_block_06.ogg",
+          "mp3": "mp3/shield_block_06.mp3",
+          "from": "DSGNTonl_SKILL IMPACT-Deflected Hit_HY_PC-006.wav",
+          "duration_ms": 700,
+          "hit_ms": 45,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -4.6,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "hull_hit",
+      "source": "DSGNImpt_EXPLOSION-Bass Hit",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Your hull takes 1–2",
+      "trigger": "hullHit() n < 3 (not MISS)",
+      "lufs_target": -15,
+      "max_ms": 900,
+      "files": [
+        {
+          "name": "hull_hit_01",
+          "ogg": "ogg/hull_hit_01.ogg",
+          "mp3": "mp3/hull_hit_01.mp3",
+          "from": "DSGNImpt_EXPLOSION-Bass Hit_HY_PC-001.wav",
+          "duration_ms": 900,
+          "hit_ms": 23,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -4.4,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_02",
+          "ogg": "ogg/hull_hit_02.ogg",
+          "mp3": "mp3/hull_hit_02.mp3",
+          "from": "DSGNImpt_EXPLOSION-Bass Hit_HY_PC-002.wav",
+          "duration_ms": 900,
+          "hit_ms": 18,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -5.0,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_03",
+          "ogg": "ogg/hull_hit_03.ogg",
+          "mp3": "mp3/hull_hit_03.mp3",
+          "from": "DSGNImpt_EXPLOSION-Bass Hit_HY_PC-003.wav",
+          "duration_ms": 900,
+          "hit_ms": 27,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -5.4,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_04",
+          "ogg": "ogg/hull_hit_04.ogg",
+          "mp3": "mp3/hull_hit_04.mp3",
+          "from": "DSGNImpt_EXPLOSION-Bass Hit_HY_PC-004.wav",
+          "duration_ms": 900,
+          "hit_ms": 17,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -2.4,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_05",
+          "ogg": "ogg/hull_hit_05.ogg",
+          "mp3": "mp3/hull_hit_05.mp3",
+          "from": "DSGNImpt_EXPLOSION-Bass Hit_HY_PC-005.wav",
+          "duration_ms": 900,
+          "hit_ms": 22,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -6.5,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "hull_hit_heavy",
+      "source": "DSGNImpt_EXPLOSION-Mecha Core Damage",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Your hull takes 3+",
+      "trigger": "hullHit() / biteDmg() n ≥ 3",
+      "lufs_target": -14.5,
+      "max_ms": 1200,
+      "files": [
+        {
+          "name": "hull_hit_heavy_01",
+          "ogg": "ogg/hull_hit_heavy_01.ogg",
+          "mp3": "mp3/hull_hit_heavy_01.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Core Damage_HY_PC-001.wav",
+          "duration_ms": 1200,
+          "hit_ms": 28,
+          "lufs_m_max": -14.5,
+          "true_peak_db": -3.5,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_heavy_02",
+          "ogg": "ogg/hull_hit_heavy_02.ogg",
+          "mp3": "mp3/hull_hit_heavy_02.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Core Damage_HY_PC-002.wav",
+          "duration_ms": 1200,
+          "hit_ms": 25,
+          "lufs_m_max": -14.5,
+          "true_peak_db": -2.5,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_heavy_03",
+          "ogg": "ogg/hull_hit_heavy_03.ogg",
+          "mp3": "mp3/hull_hit_heavy_03.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Core Damage_HY_PC-003.wav",
+          "duration_ms": 1200,
+          "hit_ms": 29,
+          "lufs_m_max": -15.6,
+          "true_peak_db": -1.0,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_heavy_04",
+          "ogg": "ogg/hull_hit_heavy_04.ogg",
+          "mp3": "mp3/hull_hit_heavy_04.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Core Damage_HY_PC-004.wav",
+          "duration_ms": 1200,
+          "hit_ms": 19,
+          "lufs_m_max": -14.5,
+          "true_peak_db": -1.5,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_heavy_05",
+          "ogg": "ogg/hull_hit_heavy_05.ogg",
+          "mp3": "mp3/hull_hit_heavy_05.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Core Damage_HY_PC-005.wav",
+          "duration_ms": 1200,
+          "hit_ms": 27,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -1.0,
+          "capped": true
+        },
+        {
+          "name": "hull_hit_heavy_06",
+          "ogg": "ogg/hull_hit_heavy_06.ogg",
+          "mp3": "mp3/hull_hit_heavy_06.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Core Damage_HY_PC-006.wav",
+          "duration_ms": 1200,
+          "hit_ms": 26,
+          "lufs_m_max": -15.9,
+          "true_peak_db": -1.0,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "ship_destroyed",
+      "source": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "A ship is eaten / vaporised",
+      "trigger": "sinkShip(); vaporize() +170ms",
+      "lufs_target": -14,
+      "max_ms": 1400,
+      "files": [
+        {
+          "name": "ship_destroyed_01",
+          "ogg": "ogg/ship_destroyed_01.ogg",
+          "mp3": "mp3/ship_destroyed_01.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs_HY_PC-001.wav",
+          "duration_ms": 1400,
+          "hit_ms": 29,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.9,
+          "capped": true
+        },
+        {
+          "name": "ship_destroyed_02",
+          "ogg": "ogg/ship_destroyed_02.ogg",
+          "mp3": "mp3/ship_destroyed_02.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs_HY_PC-002.wav",
+          "duration_ms": 1400,
+          "hit_ms": 15,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.4,
+          "capped": true
+        },
+        {
+          "name": "ship_destroyed_03",
+          "ogg": "ogg/ship_destroyed_03.ogg",
+          "mp3": "mp3/ship_destroyed_03.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs_HY_PC-003.wav",
+          "duration_ms": 1400,
+          "hit_ms": 20,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -4.6,
+          "capped": true
+        },
+        {
+          "name": "ship_destroyed_04",
+          "ogg": "ogg/ship_destroyed_04.ogg",
+          "mp3": "mp3/ship_destroyed_04.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs_HY_PC-004.wav",
+          "duration_ms": 1400,
+          "hit_ms": 12,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.2,
+          "capped": true
+        },
+        {
+          "name": "ship_destroyed_05",
+          "ogg": "ogg/ship_destroyed_05.ogg",
+          "mp3": "mp3/ship_destroyed_05.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs_HY_PC-005.wav",
+          "duration_ms": 1400,
+          "hit_ms": 14,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.0,
+          "capped": true
+        },
+        {
+          "name": "ship_destroyed_06",
+          "ogg": "ogg/ship_destroyed_06.ogg",
+          "mp3": "mp3/ship_destroyed_06.mp3",
+          "from": "DSGNImpt_EXPLOSION-Mecha Multiple Bangs_HY_PC-006.wav",
+          "duration_ms": 1400,
+          "hit_ms": 33,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.5,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "boss_phase2_overdrive",
+      "source": "DSGNSynth_CAST-Mecha Speeding",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "Mother Core OVERDRIVE",
+      "trigger": "Mother Core afterPlayer() OVERDRIVE",
+      "lufs_target": -14,
+      "max_ms": 2000,
+      "files": [
+        {
+          "name": "boss_phase2_overdrive_01",
+          "ogg": "ogg/boss_phase2_overdrive_01.ogg",
+          "mp3": "mp3/boss_phase2_overdrive_01.mp3",
+          "from": "DSGNSynth_CAST-Mecha Speeding_HY_PC-001.wav",
+          "duration_ms": 2000,
+          "hit_ms": 1,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.9,
+          "capped": true
+        },
+        {
+          "name": "boss_phase2_overdrive_02",
+          "ogg": "ogg/boss_phase2_overdrive_02.ogg",
+          "mp3": "mp3/boss_phase2_overdrive_02.mp3",
+          "from": "DSGNSynth_CAST-Mecha Speeding_HY_PC-002.wav",
+          "duration_ms": 2000,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.9,
+          "capped": true
+        },
+        {
+          "name": "boss_phase2_overdrive_03",
+          "ogg": "ogg/boss_phase2_overdrive_03.ogg",
+          "mp3": "mp3/boss_phase2_overdrive_03.mp3",
+          "from": "DSGNSynth_CAST-Mecha Speeding_HY_PC-003.wav",
+          "duration_ms": 2000,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.6,
+          "capped": true
+        },
+        {
+          "name": "boss_phase2_overdrive_04",
+          "ogg": "ogg/boss_phase2_overdrive_04.ogg",
+          "mp3": "mp3/boss_phase2_overdrive_04.mp3",
+          "from": "DSGNSynth_CAST-Mecha Speeding_HY_PC-004.wav",
+          "duration_ms": 2000,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -1.9,
+          "capped": true
+        },
+        {
+          "name": "boss_phase2_overdrive_05",
+          "ogg": "ogg/boss_phase2_overdrive_05.ogg",
+          "mp3": "mp3/boss_phase2_overdrive_05.mp3",
+          "from": "DSGNSynth_CAST-Mecha Speeding_HY_PC-005.wav",
+          "duration_ms": 2000,
+          "hit_ms": 3,
+          "lufs_m_max": -14.9,
+          "true_peak_db": -1.0,
+          "capped": true
+        },
+        {
+          "name": "boss_phase2_overdrive_06",
+          "ogg": "ogg/boss_phase2_overdrive_06.ogg",
+          "mp3": "mp3/boss_phase2_overdrive_06.mp3",
+          "from": "DSGNSynth_CAST-Mecha Speeding_HY_PC-006.wav",
+          "duration_ms": 2000,
+          "hit_ms": 3,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.9,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "marauder_shot",
+      "source": "DSGNMisc_HIT-Mecha Laser Pistol",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Marauder blaster shot",
+      "trigger": "Marauder enemyTurn() each muzzle()",
+      "lufs_target": -16,
+      "max_ms": 450,
+      "files": [
+        {
+          "name": "marauder_shot_01",
+          "ogg": "ogg/marauder_shot_01.ogg",
+          "mp3": "mp3/marauder_shot_01.mp3",
+          "from": "DSGNMisc_HIT-Mecha Laser Pistol_HY_PC-001.wav",
+          "duration_ms": 450,
+          "hit_ms": 32,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -4.8,
+          "capped": true
+        },
+        {
+          "name": "marauder_shot_02",
+          "ogg": "ogg/marauder_shot_02.ogg",
+          "mp3": "mp3/marauder_shot_02.mp3",
+          "from": "DSGNMisc_HIT-Mecha Laser Pistol_HY_PC-002.wav",
+          "duration_ms": 450,
+          "hit_ms": 26,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -4.9,
+          "capped": true
+        },
+        {
+          "name": "marauder_shot_03",
+          "ogg": "ogg/marauder_shot_03.ogg",
+          "mp3": "mp3/marauder_shot_03.mp3",
+          "from": "DSGNMisc_HIT-Mecha Laser Pistol_HY_PC-003.wav",
+          "duration_ms": 450,
+          "hit_ms": 28,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -5.2,
+          "capped": true
+        },
+        {
+          "name": "marauder_shot_04",
+          "ogg": "ogg/marauder_shot_04.ogg",
+          "mp3": "mp3/marauder_shot_04.mp3",
+          "from": "DSGNMisc_HIT-Mecha Laser Pistol_HY_PC-004.wav",
+          "duration_ms": 450,
+          "hit_ms": 40,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -3.0,
+          "capped": true
+        },
+        {
+          "name": "marauder_shot_05",
+          "ogg": "ogg/marauder_shot_05.ogg",
+          "mp3": "mp3/marauder_shot_05.mp3",
+          "from": "DSGNMisc_HIT-Mecha Laser Pistol_HY_PC-005.wav",
+          "duration_ms": 450,
+          "hit_ms": 67,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -3.2,
+          "capped": true
+        },
+        {
+          "name": "marauder_shot_06",
+          "ogg": "ogg/marauder_shot_06.ogg",
+          "mp3": "mp3/marauder_shot_06.mp3",
+          "from": "DSGNMisc_HIT-Mecha Laser Pistol_HY_PC-006.wav",
+          "duration_ms": 450,
+          "hit_ms": 46,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -6.1,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "marauder_charge",
+      "source": "DSGNSynth_CAST-Mecha Laser Prepare",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "Marauder CHARGING round",
+      "trigger": "Marauder enemyTurn() atk 0",
+      "lufs_target": -14,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "marauder_charge_01",
+          "ogg": "ogg/marauder_charge_01.ogg",
+          "mp3": "mp3/marauder_charge_01.mp3",
+          "from": "DSGNSynth_CAST-Mecha Laser Prepare_HY_PC-001.wav",
+          "duration_ms": 1388,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.3,
+          "capped": false
+        },
+        {
+          "name": "marauder_charge_02",
+          "ogg": "ogg/marauder_charge_02.ogg",
+          "mp3": "mp3/marauder_charge_02.mp3",
+          "from": "DSGNSynth_CAST-Mecha Laser Prepare_HY_PC-002.wav",
+          "duration_ms": 1426,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.7,
+          "capped": false
+        },
+        {
+          "name": "marauder_charge_03",
+          "ogg": "ogg/marauder_charge_03.ogg",
+          "mp3": "mp3/marauder_charge_03.mp3",
+          "from": "DSGNSynth_CAST-Mecha Laser Prepare_HY_PC-003.wav",
+          "duration_ms": 1402,
+          "hit_ms": 4,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -2.2,
+          "capped": false
+        },
+        {
+          "name": "marauder_charge_04",
+          "ogg": "ogg/marauder_charge_04.ogg",
+          "mp3": "mp3/marauder_charge_04.mp3",
+          "from": "DSGNSynth_CAST-Mecha Laser Prepare_HY_PC-004.wav",
+          "duration_ms": 1449,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.0,
+          "capped": false
+        },
+        {
+          "name": "marauder_charge_05",
+          "ogg": "ogg/marauder_charge_05.ogg",
+          "mp3": "mp3/marauder_charge_05.mp3",
+          "from": "DSGNSynth_CAST-Mecha Laser Prepare_HY_PC-005.wav",
+          "duration_ms": 1319,
+          "hit_ms": 5,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -3.4,
+          "capped": false
+        },
+        {
+          "name": "marauder_charge_06",
+          "ogg": "ogg/marauder_charge_06.ogg",
+          "mp3": "mp3/marauder_charge_06.mp3",
+          "from": "DSGNSynth_CAST-Mecha Laser Prepare_HY_PC-006.wav",
+          "duration_ms": 1421,
+          "hit_ms": 2,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -1.5,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "mothercore_shot",
+      "source": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Mother Core plasma shot",
+      "trigger": "Mother Core enemyTurn() each muzzle()",
+      "lufs_target": -17,
+      "max_ms": 240,
+      "files": [
+        {
+          "name": "mothercore_shot_01",
+          "ogg": "ogg/mothercore_shot_01.ogg",
+          "mp3": "mp3/mothercore_shot_01.mp3",
+          "from": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere_HY_PC-001.wav",
+          "duration_ms": 240,
+          "hit_ms": 25,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -7.2,
+          "capped": true
+        },
+        {
+          "name": "mothercore_shot_02",
+          "ogg": "ogg/mothercore_shot_02.ogg",
+          "mp3": "mp3/mothercore_shot_02.mp3",
+          "from": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere_HY_PC-002.wav",
+          "duration_ms": 240,
+          "hit_ms": 17,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -6.4,
+          "capped": true
+        },
+        {
+          "name": "mothercore_shot_03",
+          "ogg": "ogg/mothercore_shot_03.ogg",
+          "mp3": "mp3/mothercore_shot_03.mp3",
+          "from": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere_HY_PC-003.wav",
+          "duration_ms": 240,
+          "hit_ms": 35,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -6.6,
+          "capped": true
+        },
+        {
+          "name": "mothercore_shot_04",
+          "ogg": "ogg/mothercore_shot_04.ogg",
+          "mp3": "mp3/mothercore_shot_04.mp3",
+          "from": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere_HY_PC-004.wav",
+          "duration_ms": 240,
+          "hit_ms": 15,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -5.2,
+          "capped": true
+        },
+        {
+          "name": "mothercore_shot_05",
+          "ogg": "ogg/mothercore_shot_05.ogg",
+          "mp3": "mp3/mothercore_shot_05.mp3",
+          "from": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere_HY_PC-005.wav",
+          "duration_ms": 240,
+          "hit_ms": 17,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -6.9,
+          "capped": true
+        },
+        {
+          "name": "mothercore_shot_06",
+          "ogg": "ogg/mothercore_shot_06.ogg",
+          "mp3": "mp3/mothercore_shot_06.mp3",
+          "from": "DSGNTonl_SKILL RELEASE-Tiny Energy Sphere_HY_PC-006.wav",
+          "duration_ms": 240,
+          "hit_ms": 24,
+          "lufs_m_max": -17.0,
+          "true_peak_db": -5.7,
+          "capped": true
+        }
+      ]
+    },
+    {
+      "id": "mothercore_beam",
+      "source": "DSGNMisc_SKILL IMPACT-Mecha Black Laser",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "CORE BEAM fires",
+      "trigger": "Mother Core vaporize() at the start",
+      "lufs_target": -13,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "mothercore_beam_01",
+          "ogg": "ogg/mothercore_beam_01.ogg",
+          "mp3": "mp3/mothercore_beam_01.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Black Laser_HY_PC-001.wav",
+          "duration_ms": 1861,
+          "hit_ms": 17,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -5.9,
+          "capped": false
+        },
+        {
+          "name": "mothercore_beam_02",
+          "ogg": "ogg/mothercore_beam_02.ogg",
+          "mp3": "mp3/mothercore_beam_02.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Black Laser_HY_PC-002.wav",
+          "duration_ms": 1855,
+          "hit_ms": 10,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -5.1,
+          "capped": false
+        },
+        {
+          "name": "mothercore_beam_03",
+          "ogg": "ogg/mothercore_beam_03.ogg",
+          "mp3": "mp3/mothercore_beam_03.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Black Laser_HY_PC-003.wav",
+          "duration_ms": 1882,
+          "hit_ms": 23,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -5.7,
+          "capped": false
+        },
+        {
+          "name": "mothercore_beam_04",
+          "ogg": "ogg/mothercore_beam_04.ogg",
+          "mp3": "mp3/mothercore_beam_04.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Black Laser_HY_PC-004.wav",
+          "duration_ms": 1852,
+          "hit_ms": 10,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.9,
+          "capped": false
+        },
+        {
+          "name": "mothercore_beam_05",
+          "ogg": "ogg/mothercore_beam_05.ogg",
+          "mp3": "mp3/mothercore_beam_05.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Black Laser_HY_PC-005.wav",
+          "duration_ms": 1867,
+          "hit_ms": 37,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.8,
+          "capped": false
+        },
+        {
+          "name": "mothercore_beam_06",
+          "ogg": "ogg/mothercore_beam_06.ogg",
+          "mp3": "mp3/mothercore_beam_06.mp3",
+          "from": "DSGNMisc_SKILL IMPACT-Mecha Black Laser_HY_PC-006.wav",
+          "duration_ms": 1885,
+          "hit_ms": 14,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -5.5,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "garganta_regrow",
+      "source": "DSGNMisc_CAST-Slime Ball",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "+1 REGROWS",
+      "trigger": "Garganta endRound() regen",
+      "lufs_target": -15,
+      "max_ms": null,
+      "files": [
+        {
+          "name": "garganta_regrow_01",
+          "ogg": "ogg/garganta_regrow_01.ogg",
+          "mp3": "mp3/garganta_regrow_01.mp3",
+          "from": "DSGNMisc_CAST-Slime Ball_HY_PC-001.wav",
+          "duration_ms": 904,
+          "hit_ms": 149,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -6.1,
+          "capped": false
+        },
+        {
+          "name": "garganta_regrow_02",
+          "ogg": "ogg/garganta_regrow_02.ogg",
+          "mp3": "mp3/garganta_regrow_02.mp3",
+          "from": "DSGNMisc_CAST-Slime Ball_HY_PC-002.wav",
+          "duration_ms": 909,
+          "hit_ms": 140,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -6.3,
+          "capped": false
+        },
+        {
+          "name": "garganta_regrow_03",
+          "ogg": "ogg/garganta_regrow_03.ogg",
+          "mp3": "mp3/garganta_regrow_03.mp3",
+          "from": "DSGNMisc_CAST-Slime Ball_HY_PC-003.wav",
+          "duration_ms": 871,
+          "hit_ms": 170,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -3.0,
+          "capped": false
+        },
+        {
+          "name": "garganta_regrow_04",
+          "ogg": "ogg/garganta_regrow_04.ogg",
+          "mp3": "mp3/garganta_regrow_04.mp3",
+          "from": "DSGNMisc_CAST-Slime Ball_HY_PC-004.wav",
+          "duration_ms": 903,
+          "hit_ms": 122,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -5.0,
+          "capped": false
+        },
+        {
+          "name": "garganta_regrow_05",
+          "ogg": "ogg/garganta_regrow_05.ogg",
+          "mp3": "mp3/garganta_regrow_05.mp3",
+          "from": "DSGNMisc_CAST-Slime Ball_HY_PC-005.wav",
+          "duration_ms": 900,
+          "hit_ms": 110,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -6.0,
+          "capped": false
+        },
+        {
+          "name": "garganta_regrow_06",
+          "ogg": "ogg/garganta_regrow_06.ogg",
+          "mp3": "mp3/garganta_regrow_06.mp3",
+          "from": "DSGNMisc_CAST-Slime Ball_HY_PC-006.wav",
+          "duration_ms": 968,
+          "hit_ms": 158,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -5.1,
+          "capped": false
+        }
+      ]
+    },
+    {
+      "id": "garganta_bite_layer",
+      "source": "DSGNMisc_HIT-Mecha Gore Cruncher",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Meat layer on the jaw snap",
+      "trigger": "Garganta bite() +335ms, under garganta_bite",
+      "lufs_target": -16,
+      "max_ms": 600,
+      "files": [
+        {
+          "name": "garganta_bite_layer_01",
+          "ogg": "ogg/garganta_bite_layer_01.ogg",
+          "mp3": "mp3/garganta_bite_layer_01.mp3",
+          "from": "DSGNMisc_HIT-Mecha Gore Cruncher_HY_PC-001.wav",
+          "duration_ms": 600,
+          "hit_ms": 54,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -7.3,
+          "capped": true
+        },
+        {
+          "name": "garganta_bite_layer_02",
+          "ogg": "ogg/garganta_bite_layer_02.ogg",
+          "mp3": "mp3/garganta_bite_layer_02.mp3",
+          "from": "DSGNMisc_HIT-Mecha Gore Cruncher_HY_PC-002.wav",
+          "duration_ms": 600,
+          "hit_ms": 39,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -5.8,
+          "capped": true
+        },
+        {
+          "name": "garganta_bite_layer_03",
+          "ogg": "ogg/garganta_bite_layer_03.ogg",
+          "mp3": "mp3/garganta_bite_layer_03.mp3",
+          "from": "DSGNMisc_HIT-Mecha Gore Cruncher_HY_PC-003.wav",
+          "duration_ms": 600,
+          "hit_ms": 59,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -7.1,
+          "capped": true
+        },
+        {
+          "name": "garganta_bite_layer_04",
+          "ogg": "ogg/garganta_bite_layer_04.ogg",
+          "mp3": "mp3/garganta_bite_layer_04.mp3",
+          "from": "DSGNMisc_HIT-Mecha Gore Cruncher_HY_PC-004.wav",
+          "duration_ms": 600,
+          "hit_ms": 51,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -5.1,
+          "capped": true
+        },
+        {
+          "name": "garganta_bite_layer_05",
+          "ogg": "ogg/garganta_bite_layer_05.ogg",
+          "mp3": "mp3/garganta_bite_layer_05.mp3",
+          "from": "DSGNMisc_HIT-Mecha Gore Cruncher_HY_PC-005.wav",
+          "duration_ms": 600,
+          "hit_ms": 39,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -5.4,
+          "capped": true
+        },
+        {
+          "name": "garganta_bite_layer_06",
+          "ogg": "ogg/garganta_bite_layer_06.ogg",
+          "mp3": "mp3/garganta_bite_layer_06.mp3",
+          "from": "DSGNMisc_HIT-Mecha Gore Cruncher_HY_PC-006.wav",
+          "duration_ms": 600,
+          "hit_ms": 46,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -7.2,
+          "capped": true
+        }
+      ]
+    }
+  ]
+}

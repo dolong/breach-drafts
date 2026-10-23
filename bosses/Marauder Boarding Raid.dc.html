@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}a{color:#6af5d6}a:hover{color:#b8fff0}@keyframes dice-tumble{0%{transform:rotateX(0deg) rotateY(0deg)}100%{transform:rotateX(1080deg) rotateY(720deg)}}@keyframes blink{50%{opacity:.35}}</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden">
+<div ref="{{ stageRef }}" data-screen-label="Boarding Raid" style="position:relative;flex:none;width:390px;height:844px;overflow:hidden;background:#000;image-rendering:pixelated;color:#ffffff;transform-origin:center center;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div ref="{{ driftA }}" style="position:absolute;inset:0;background:#000 url(assets/space.png) 0 0/600px 900px repeat"></div>
+<div ref="{{ driftB }}" style="position:absolute;inset:0;background:url(assets/space.png) 120px 300px/900px 1350px repeat;opacity:.28;mix-blend-mode:screen"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(55% 32% at 100% 40%,rgba(255,77,77,.24) 0%,rgba(255,77,77,0) 100%)"></div>
+<div ref="{{ mothRef }}" style="position:absolute;left:290px;top:212px;width:200px;height:244px">
+<div ref="{{ mothIn }}" style="position:absolute;inset:0;opacity:.55"><img src="assets/kestrel_h11.png" alt="" style="width:200px;height:244px;display:block;transform:rotate(-90deg);filter:hue-rotate(75deg) saturate(1.3) brightness(.75) drop-shadow(0 0 18px rgba(255,77,77,.55))"></div>
+</div>
+</div>
+<div ref="{{ shakeRef }}" style="position:absolute;inset:0;display:flex;flex-direction:column">
+
+<div style="position:relative;flex:none;margin:12px 16px 0;height:44px;display:flex;align-items:stretch;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 10px;border-right:2px solid #3a3a5a"><div style="flex:none;width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#ff4d4d">BOARDING RAID</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:6px;padding:0 10px;border-right:2px solid #3a3a5a"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">ROUND</span><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1">{{ roundTxt }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px"><img src="assets/coin.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#ffd644">{{ gold }}</span></div>
+</div>
+
+<div style="flex:none;margin:10px 16px 0;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #ff4d4d;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#ff4d4d">MARAUDER</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ wSegs }}" as="s" hint-placeholder-count="9"><div style="flex:1;min-width:0;height:10px;background:{{ s.bg }};border:1px solid {{ s.bd }};box-sizing:border-box"></div></sc-for></div>
+<div style="flex:none;display:flex;align-items:baseline;gap:5px"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ left }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">LEFT</span></div>
+</div>
+
+<div ref="{{ fieldRef }}" style="position:relative;flex:none;margin:10px 16px 0;height:436px">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ lanes }}" as="ln" hint-placeholder-count="3">
+<div onClick="{{ ln.tap }}" style="position:relative;flex:none;height:140px;background:rgba(10,8,33,.84);border:3px solid {{ ln.bd }};border-radius:6px;box-shadow:{{ ln.glow }};box-sizing:border-box;overflow:hidden;cursor:{{ ln.cur }};transition:border-color .2s,box-shadow .2s">
+<div style="position:absolute;left:82px;right:0;top:0;bottom:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))">
+<div style="border-left:2px dashed rgba(242,242,242,.08)"></div>
+<div style="border-left:2px dashed rgba(242,242,242,.08)"></div>
+<div style="border-left:2px dashed rgba(242,242,242,.08)"></div>
+<div style="border-left:2px dashed rgba(242,242,242,.08);background:linear-gradient(90deg,rgba(255,77,77,0),rgba(255,77,77,.12))"></div>
+</div>
+<div style="position:absolute;left:82px;right:0;top:66px;height:2px;background:repeating-linear-gradient(90deg,{{ ln.rail }} 0 6px,transparent 6px 12px);opacity:{{ ln.railOp }}"></div>
+<div ref="{{ ln.dockRef }}" style="position:absolute;left:0;top:0;bottom:0;width:80px;border-right:2px solid #3a3a5a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(0,0,0,.25)">
+<sc-if value="{{ ln.hasShip }}" hint-placeholder-val="{{ false }}">
+<div style="height:18px;display:flex;align-items:center;padding:0 4px;border:2px solid {{ ln.roleCol }};border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ ln.roleCol }}">{{ ln.role }}</div>
+<div style="position:relative;width:44px;height:36px"><img src="{{ ln.src }}" alt="{{ ln.name }}" style="position:absolute;left:4px;top:-4px;width:36px;height:44px;display:block;transform:rotate(90deg);filter:drop-shadow(2px 2px 0 #000)"></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ ln.col }}">{{ ln.name }}</span>
+</sc-if>
+<sc-if value="{{ ln.isDock }}" hint-placeholder-val="{{ true }}">
+<div style="width:60px;height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px dashed {{ ln.dockBd }};border-radius:6px;box-sizing:border-box;transition:border-color .2s"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;letter-spacing:1px;color:{{ ln.dockTxt }}">DOCK</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ ln.num }}</span></div>
+</sc-if>
+<sc-if value="{{ ln.isOpen }}" hint-placeholder-val="{{ false }}">
+<span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#ff4d4d">OPEN</span>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.3;text-align:center;color:#a9b0c0">BOARD<br>-{{ breach }} HULL</span>
+</sc-if>
+<sc-if value="{{ ln.isGhost }}" hint-placeholder-val="{{ false }}">
+<div style="position:relative;width:44px;height:36px;opacity:.55"><img src="{{ ln.ghostSrc }}" alt="" style="position:absolute;left:4px;top:-4px;width:36px;height:44px;display:block;transform:rotate(90deg);filter:grayscale(1) brightness(.45)"></div>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px;color:{{ ln.ghostCol }};animation:{{ ln.ghostAnim }}">{{ ln.ghostTxt }}</span>
+</sc-if>
+</div>
+<sc-if value="{{ ln.shieldOn }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:72px;top:26px;width:16px;height:82px;border-right:3px solid #6ad0ff;border-radius:0 100% 100% 0/0 50% 50% 0;box-shadow:7px 0 12px -5px #6ad0ff;box-sizing:border-box;pointer-events:none"></div></sc-if>
+<sc-if value="{{ ln.hasTag }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:6px;bottom:6px;height:20px;display:flex;align-items:center;padding:0 6px;background:#0a0821;border:2px solid #ff4d4d;border-radius:4px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#ff4d4d">{{ ln.tag }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;inset:0;pointer-events:none;clip-path:inset(-24px 0 -24px 0)">
+<sc-for list="{{ tokens }}" as="t" hint-placeholder-count="0">
+<div ref="{{ t.ref }}" onClick="{{ t.tap }}" style="position:absolute;left:{{ t.x }}px;top:{{ t.y }}px;width:60px;height:66px;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:{{ t.op }};pointer-events:{{ t.pe }};cursor:pointer;z-index:{{ t.z }};transition:left .42s cubic-bezier(.5,0,.3,1),top .3s ease,opacity .25s">
+<div style="position:relative;flex:none;width:60px;height:30px">
+<sc-if value="{{ t.cap }}" hint-placeholder-val="{{ false }}"><img src="{{ t.carrySrc }}" alt="" style="position:absolute;left:0;top:1px;width:22px;height:27px;display:block;transform:rotate(90deg);filter:drop-shadow(0 0 5px #ffd644)"></sc-if>
+<img src="assets/kestrel_h11.png" alt="Raider" style="position:absolute;left:{{ t.sx }}px;top:-1px;width:26px;height:32px;display:block;transform:rotate({{ t.rot }}deg);transition:transform .3s,left .3s;filter:hue-rotate(75deg) saturate(1.3) drop-shadow(0 0 6px rgba(255,77,77,.6))">
+</div>
+<div data-slot="1" style="position:relative;flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:2px {{ t.bs }} {{ t.bd }};border-radius:6px;background:{{ t.bg }};box-shadow:{{ t.glow }};box-sizing:border-box;transition:border-color .15s,box-shadow .15s,background .15s">
+<sc-if value="{{ t.noDie }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:{{ t.col }}">{{ t.label }}</span></sc-if>
+<sc-if value="{{ t.hasDie }}" hint-placeholder-val="{{ false }}"><img src="{{ t.dieSrc }}" alt="" style="width:30px;height:30px;display:block"></sc-if>
+</div>
+<sc-if value="{{ t.hasTag }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;top:-18px;transform:translateX(-50%);height:16px;display:flex;align-items:center;padding:0 4px;background:#0a0821;border:2px solid {{ t.tagCol }};border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ t.tagCol }};animation:blink .8s steps(2) infinite">{{ t.tag }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="flex:none;margin:6px 24px 0;height:28px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.2;text-wrap:balance;color:{{ hintCol }}">{{ hint }}</div>
+
+<div style="position:relative;flex:none;margin:4px 16px 0;height:100px">
+<sc-if value="{{ isDeploy }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+<sc-for list="{{ roster }}" as="m" hint-placeholder-count="4">
+<div onClick="{{ m.tap }}" style="min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:#0a0821;border:3px solid {{ m.bd }};border-radius:6px;box-shadow:{{ m.glow }};box-sizing:border-box;cursor:pointer;opacity:{{ m.op }};transition:border-color .15s,opacity .15s,box-shadow .15s">
+<img src="{{ m.src }}" alt="{{ m.name }}" style="width:26px;height:32px;display:block;filter:drop-shadow(2px 2px 0 #000)">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:#ffffff">{{ m.name }}</span>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:{{ m.subCol }}">{{ m.sub }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ isBattle }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ trayRef }}" style="position:absolute;inset:0;display:flex;flex-direction:column;padding:8px 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap"><span style="color:#a9b0c0">DICE</span><span style="color:#a9b0c0">{{ trayNote }}</span></div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:8px">
+<sc-for list="{{ rolled }}" as="cube" hint-placeholder-count="0">
+<div onClick="{{ cube.tap }}" style="flex:none;width:54px;height:54px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+<div style="position:relative;width:40px;height:40px">
+<div style="position:absolute;inset:0;border:2px dashed rgba(242,242,242,.25);border-radius:6px"></div>
+<div ref="{{ cube.boxRef }}" style="position:absolute;inset:0;perspective:100px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .2s;transform:{{ cube.scale }};opacity:{{ cube.show }}">
+<div ref="{{ cube.shadowRef }}" style="position:absolute;left:5px;top:38px;width:30px;height:8px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(2px)"></div>
+<div ref="{{ cube.floatRef }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div ref="{{ cube.ref }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:translateZ(20px)"><img src="{{ cube.f0 }}" alt="" style="width:40px;height:40px;display:block"><div style="position:absolute;inset:-3px;border:2px solid {{ cube.ring }};box-shadow:{{ cube.glow }};border-radius:4px;pointer-events:none;transition:border-color .2s,box-shadow .2s"></div></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg) translateZ(20px);filter:brightness(.82)"><img src="{{ cube.f1 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(90deg) translateZ(20px);filter:brightness(.9)"><img src="{{ cube.f2 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(-90deg) translateZ(20px);filter:brightness(.74)"><img src="{{ cube.f3 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(90deg) translateZ(20px);filter:brightness(.86)"><img src="{{ cube.f4 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(-90deg) translateZ(20px);filter:brightness(.78)"><img src="{{ cube.f5 }}" alt="" style="width:40px;height:40px;display:block"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div ref="{{ hullRef }}" style="flex:none;margin:8px 16px 0;height:40px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px;color:#ffffff">HULL</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ hullSegs }}" as="s" hint-placeholder-count="8"><div style="flex:1;min-width:0;height:10px;background:{{ s.bg }};border:1px solid #f2f2f2;box-sizing:border-box"></div></sc-for></div>
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:{{ hullCol }}">{{ hullTxt }}</span>
+</div>
+
+<button onClick="{{ primary }}" style="flex:none;margin:10px 16px 0;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ btn.op }};transition:opacity .2s" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ btn.label }}</button>
+</div>
+
+<div ref="{{ fxRef }}" style="position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden"></div>
+
+<sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;right:0;top:108px;bottom:0;z-index:30;display:flex;flex-direction:column;padding:28px 16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(5,4,15,0) 0%,rgba(5,4,15,.94) 60px,rgba(5,4,15,.97) 100%)">
+<div ref="{{ introRef }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ff4d4d">HOSTILE CONTACT</span></div>
+<div style="font-family:'Jersey 15',monospace;font-size:58px;line-height:.86;letter-spacing:2px;text-align:center;color:#ffffff;text-shadow:4px 4px 0 #240011,-3px 0 0 rgba(255,77,77,.85),3px 0 0 rgba(106,245,214,.85)">BOARDING<br>RAID</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;color:#a9b0c0">MARAUDER SKIFFS ARE COMING FOR YOUR SHIPS.</span>
+<div style="display:flex;gap:8px">
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #ff4d4d;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">RAIDERS</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ff4d4d">{{ total }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #f2f2f2;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">DICE</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ diceN }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #ffd644;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">BOUNTY</span><img src="assets/coin.png" alt="" style="width:14px;height:14px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffd644">{{ bounty }}</span></div>
+</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px;padding:10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:2px dashed #ff4d4d;border-radius:6px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;color:#ffffff">4</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">PUT A MATCHING DIE ON A RAIDER TO DESTROY IT</span>
+</div>
+<div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 5px;border:2px solid #ff9a3c;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ff9a3c">GUN</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">ITS LANE TAKES THAT NUMBER OR HIGHER · 4 BECOMES 4+</span>
+</div>
+<div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 4px;border:2px solid #6ad0ff;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;color:#6ad0ff">SHIELD</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">STOPS THE FIRST RAIDER THAT REACHES IT</span>
+</div>
+<div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 5px;border:2px solid #ffd644;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffd644">TAKEN</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">A RAIDER THAT REACHES A SHIP DRAGS IT OFF. SHOOT IT BEFORE IT ESCAPES.</span>
+</div>
+</div>
+<div style="flex:1"></div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ engage }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">FIGHT</button>
+<button onClick="{{ decoy }}" style="height:48px;display:flex;align-items:center;justify-content:center;gap:8px;background:#0a0821;border:3px solid #f2f2f2;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:2px;color:#ffffff;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">DECOY · -{{ decoyCost }} GOLD</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;padding:0 16px;box-sizing:border-box;background:rgba(5,4,15,.9)">
+<div ref="{{ endRef }}" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#a9b0c0">MARAUDER · BOARDING RAID</span>
+<div style="font-family:'Jersey 15',monospace;font-size:56px;line-height:.9;letter-spacing:2px;text-align:center;color:{{ end.col }};text-shadow:4px 4px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000">{{ end.title }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ end.sub }}</span>
+<div style="width:100%;display:flex;flex-direction:column">
+<div style="height:8px;background:linear-gradient(to top right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+<div style="background:#f2f2f2 repeating-linear-gradient(0deg,rgba(10,8,33,.05) 0 1px,transparent 1px 4px);color:#0a0821;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px">
+<div style="text-align:center;font-family:'Jersey 15',monospace;font-size:28px;line-height:1;letter-spacing:2px">RAID REPORT</div>
+<div style="text-align:center;font-family:'Silkscreen',monospace;font-size:12px;color:#3a3a5a">{{ end.stamp }}</div>
+<div style="border-top:2px dashed #0a0821;margin:2px 0"></div>
+<sc-for list="{{ end.rows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;min-height:28px">
+<div style="width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center"><img src="{{ r.src }}" alt="" style="width:18px;height:18px;display:block"></div>
+<span style="flex:1;min-width:0;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px">{{ r.label }}</span>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;white-space:nowrap;color:{{ r.col }}">{{ r.value }}</span>
+</div>
+</sc-for>
+<sc-if value="{{ end.hasTotal }}" hint-placeholder-val="{{ false }}">
+<div style="border-top:3px solid #0a0821;margin-top:2px"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:1px"><span>GOLD</span><span style="display:flex;align-items:center;gap:6px"><img src="assets/coin.png" alt="" style="width:20px;height:20px;display:block">{{ gold }}</span></div>
+</sc-if>
+</div>
+<div style="height:8px;background:linear-gradient(to bottom right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+</div>
+<button onClick="{{ restart }}" style="width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">PLAY AGAIN</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;difficulty&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;easy&quot;,&quot;normal&quot;,&quot;hard&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;'easy' | 'normal' | 'hard'&quot;,&quot;section&quot;:&quot;Encounter&quot;},&quot;captorSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;2&quot;],&quot;default&quot;:&quot;2&quot;,&quot;tsType&quot;:&quot;'1' | '2'&quot;,&quot;section&quot;:&quot;Encounter&quot;},&quot;skipIntro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Encounter&quot;}}">
+class Component extends DCLogic {
+  FLEET = [
+    { name: 'WARDEN', ship: 'ship_teal', col: '#6af5d6', role: 'SHIELD', gun: false, shield: true },
+    { name: 'HERALD', ship: 'ship_blue', col: '#7ab8ff', role: 'GUN', gun: true, shield: false },
+    { name: 'KESTREL', ship: 'ship_violet', col: '#c79bff', role: 'GUN', gun: true, shield: false },
+    { name: 'SOVEREIGN', ship: 'ship_gold', col: '#ffd644', role: 'SHIELD', gun: false, shield: true }
+  ];
+  ROLE = { GUN: '#ff9a3c', SHIELD: '#6ad0ff' };
+  // wave: one entry per round, listing the lanes a raider launches into that round
+  LEVELS = {
+    easy: { dice: 5, lo: 1, wave: [[0, 2], [1], [0], [2], [1], [0]] },
+    normal: { dice: 4, lo: 1, wave: [[0, 2], [1], [0, 2], [0], [1, 2], [0]] },
+    hard: { dice: 4, lo: 2, wave: [[0, 2], [0, 1], [2], [0, 1], [1, 2], [0, 2]] }
+  };
+  LADDER = ['#ffffff', '#ffffff', '#48f320', '#ffd644', '#ff9a3c', '#ff4d4d', '#ff5cd6'];
+  HULL_MAX = 8; BREACH = 2; BOUNTY = 40; RESCUE_PAY = 10; PRESTIGE = 20; DECOY_COST = 20; GOLD0 = 120;
+  LANE_H = 140; LANE_GAP = 8; TRACK_X = 85; COL_W = 67.5; TOK_W = 60; TOK_H = 66; OFF = 4.8;
+  wrapRef = React.createRef(); stageRef = React.createRef(); shakeRef = React.createRef(); fxRef = React.createRef();
+  driftA = React.createRef(); driftB = React.createRef(); mothRef = React.createRef(); mothIn = React.createRef(); fieldRef = React.createRef();
+  hullRef = React.createRef(); trayRef = React.createRef(); introRef = React.createRef(); endRef = React.createRef();
+  dockRefs = [0, 1, 2].map(() => React.createRef());
+  tokRefs = Array.from({ length: 16 }, () => React.createRef());
+  drt = [0, 1, 2, 3, 4].map(i => ({ box: React.createRef(), float: React.createRef(), shadow: React.createRef(), cube: React.createRef(), angle: i * 2.1 }));
+  ts = []; gen = 0; pend = new Set(); t0 = performance.now();
+  lvl() { const p = this.props || {}; return this.LEVELS[p.difficulty] || this.LEVELS.normal; }
+  speed() { return String((this.props || {}).captorSpeed) === '1' ? 1 : 2; }
+  fresh() {
+    const L = this.lvl(), p = this.props || {}, raiders = [];
+    L.wave.forEach((ls, ri) => ls.forEach(l => raiders.push({ lane: l, v: L.lo + Math.floor(Math.random() * (7 - L.lo)), at: ri + 1, col: this.OFF, st: 'wait', carry: -1, die: 0, rot: -90 })));
+    return { phase: p.skipIntro ? 'deploy' : 'intro', round: 0, hull: this.HULL_MAX, gold: this.GOLD0, lanes: [-1, -1, -1], sel: -1, shield: this.FLEET.map(f => f.shield), lost: [false, false, false, false], laneLost: [-1, -1, -1], homing: null, raiders, dice: [], pick: -1, rk: 0, kills: 0, rescues: 0, grabs: 0, hint: '', hintCol: '' };
+  }
+  state = this.fresh();
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.onResize = () => this.fit(); window.addEventListener('resize', this.onResize);
+    if (window.ResizeObserver && this.wrapRef.current) { this.ro = new ResizeObserver(this.onResize); this.ro.observe(this.wrapRef.current); }
+    this.fit(); this.begin();
+  }
+  componentDidUpdate(pp) { if (pp && (pp.difficulty !== this.props.difficulty || pp.skipIntro !== this.props.skipIntro)) this.restart(); }
+  componentWillUnmount() { this.clearAll(); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); if (this.ro) this.ro.disconnect(); }
+  fit() { const w = this.wrapRef.current, st = this.stageRef.current; if (!w || !st) return; st.style.transform = 'scale(' + Math.min(w.clientWidth / 390, w.clientHeight / 844) + ')'; }
+  begin() {
+    const m = this.mothIn.current; if (m && m.animate && !this.reduced) m.animate([{ transform: 'translateX(180px)', opacity: 0 }, { transform: 'none', opacity: .55 }], { duration: 900, easing: 'cubic-bezier(.2,.9,.3,1)' });
+    const el = this.introRef.current; if (el && el.animate && !this.reduced) el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: 200, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' });
+  }
+  restart() { this.clearAll(); this.setState(this.fresh(), () => this.begin()); }
+  later(f, ms) { const g = this.gen; this.ts.push(setTimeout(() => { if (g === this.gen) f(); }, ms)); }
+  clearAll() { this.gen++; this.ts.forEach(clearTimeout); this.ts = []; this.pend.clear(); clearTimeout(this.sayT); const fx = this.fxRef.current; if (fx) fx.innerHTML = ''; }
+  shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  setD(f) { this.setState(s => ({ dice: s.dice.map(f) })); }
+  setR(i, o) { this.setState(s => ({ raiders: s.raiders.map((r, j) => j === i ? { ...r, ...o } : r) })); }
+  live(r) { return r.st === 'in' || r.st === 'cap'; }
+  gunLane(s, l) { const k = s.lanes[l]; return k >= 0 && this.FLEET[k].gun; }
+  ok(s, r, v) { if (r.st === 'cap') return v === r.v; if (r.st !== 'in') return false; return this.gunLane(s, r.lane) ? v >= r.v : v === r.v; }
+  need(s, r) { return r.st !== 'cap' && this.gunLane(s, r.lane) ? r.v + '+' : '' + r.v; }
+  allDone(s) { return s.raiders.every(r => r.st === 'dead' || r.st === 'gone'); }
+  // ─── geometry + fx (shared kit) ───
+  rect(el) { const st = this.stageRef.current; if (!st || !el) return null; const S = st.getBoundingClientRect(), k = S.width / st.offsetWidth || 1, r = el.getBoundingClientRect(); return { x: (r.left - S.left) / k, y: (r.top - S.top) / k, w: r.width / k, h: r.height / k }; }
+  center(el) { const r = this.rect(el); return r ? { x: r.x + r.w / 2, y: r.y + r.h / 2 } : null; }
+  laneY(l) { const f = this.rect(this.fieldRef.current); return f ? f.y + l * (this.LANE_H + this.LANE_GAP) + this.LANE_H / 2 : 300; }
+  slotEl(i) { const t = this.tokRefs[i].current; return t && t.querySelector('[data-slot]'); }
+  fxEl(css, txt) { const fx = this.fxRef.current; if (!fx) return null; const d = document.createElement('div'); d.style.cssText = 'position:absolute;' + css; if (txt != null) d.textContent = txt; fx.appendChild(d); return d; }
+  anim(d, kf, o) { if (!d) return; if (!d.animate) { d.remove(); return; } d.animate(kf, o).onfinish = () => d.remove(); }
+  pop(x, y, txt, col, sz) { this.anim(this.fxEl('left:' + x + 'px;top:' + y + 'px;z-index:2;font-family:"Jersey 15",monospace;font-size:' + (sz || 34) + 'px;line-height:1;letter-spacing:1px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000', txt), [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { transform: 'translate(-50%,-70%) scale(1.15)', opacity: 1, offset: .18 }, { transform: 'translate(-50%,-90%) scale(1)', opacity: 1, offset: .7 }, { transform: 'translate(-50%,-130%) scale(.95)', opacity: 0 }], { duration: 1000, easing: 'cubic-bezier(.2,.8,.3,1)' }); }
+  sparks(x, y, cols, n) { for (let i = 0; i < (n || 10); i++) { const s = 3 + Math.round(Math.random() * 3), a = Math.random() * Math.PI * 2, r = 16 + Math.random() * 34; this.anim(this.fxEl('left:' + (x - s / 2) + 'px;top:' + (y - s / 2) + 'px;width:' + s + 'px;height:' + s + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + (Math.cos(a) * r).toFixed(1) + 'px,' + (Math.sin(a) * r).toFixed(1) + 'px)', opacity: 0 }], { duration: 360 + Math.random() * 280, easing: 'cubic-bezier(.2,.8,.4,1)' }); } }
+  boomSheet() {
+    if (this._boom) return this._boom;
+    const G = 32, N = 9, cv = document.createElement('canvas'); cv.width = G * N; cv.height = G;
+    const g = cv.getContext('2d'); let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const lobes = Array.from({ length: 12 }, () => .72 + rnd() * .5), noise = Array.from({ length: G * G }, () => rnd());
+    const pal = ['#ffffff', '#fff3b0', '#ffd644', '#ff9a3c', '#e8522c', '#b3201c', '#5a1a2a', '#2a1426'];
+    for (let f = 0; f < N; f++) {
+      const p = f / (N - 1), R = 3 + p * 12.5, hole = p < .4 ? 0 : (p - .4) / .6 * R * .85;
+      for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
+        const dx = x + .5 - G / 2, dy = y + .5 - G / 2, d = Math.hypot(dx, dy), a = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI) * 12, i0 = Math.floor(a) % 12, t = a - Math.floor(a), lb = lobes[i0] * (1 - t) + lobes[(i0 + 1) % 12] * t;
+        const r = R * lb, h = hole * lb, n = noise[(y >> 1) * G + (x >> 1)];
+        if (d > r || d < h || (p > .55 && n < (p - .55) / .45 * .85)) continue;
+        const q = (d - h) / Math.max(1, r - h), heat = Math.max(0, Math.min(1, (1 - p) * 1.15 - q * .4 + (n - .5) * .3));
+        g.fillStyle = pal[Math.round((1 - heat) * (pal.length - 1))]; g.fillRect(f * G + x, y, 1, 1);
+      }
+    }
+    return (this._boom = { url: cv.toDataURL(), N, G });
+  }
+  burst(x, y, k, frames, ms) {
+    const B = this.boomSheet(), S = B.G * k, n = frames || B.N, rot = 90 * Math.floor(Math.random() * 4), fl = Math.random() < .5 ? -1 : 1;
+    const d = this.fxEl('left:' + Math.round(x - S / 2) + 'px;top:' + Math.round(y - S / 2) + 'px;width:' + S + 'px;height:' + S + 'px;image-rendering:pixelated;background:url(' + B.url + ') 0 0/' + (B.N * S) + 'px ' + S + 'px no-repeat;transform:rotate(' + rot + 'deg) scaleX(' + fl + ')');
+    this.anim(d, [{ backgroundPosition: '0px 0px' }, { backgroundPosition: (-n * S) + 'px 0px' }], { duration: ms || n * 65, easing: 'steps(' + n + ')' });
+  }
+  debris(x, y, cols, n) { for (let i = 0; i < n; i++) { const sz = 3 * (1 + Math.floor(Math.random() * 2)), a = Math.random() * Math.PI * 2, r = 30 + Math.random() * 56; this.anim(this.fxEl('left:' + Math.round(x) + 'px;top:' + Math.round(y) + 'px;width:' + sz + 'px;height:' + sz + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + Math.round(Math.cos(a) * r) + 'px,' + Math.round(Math.sin(a) * r) + 'px)', opacity: 0 }], { duration: 520 + Math.random() * 320, easing: 'steps(7)' }); } }
+  shake(p, ms) { const el = this.shakeRef.current; if (!el || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + (-p) + 'px,' + (p * .5) + 'px)' }, { transform: 'translate(' + p + 'px,' + (-p * .4) + 'px)' }, { transform: 'translate(' + (-p * .6) + 'px,' + (p * .3) + 'px)' }, { transform: 'translate(' + (p * .3) + 'px,0)' }, { transform: 'translate(0,0)' }], { duration: ms || 260 }); }
+  flash(col, a, ms, st) { if (this.reduced) return; this.anim(this.fxEl('inset:0;background:' + col + ';opacity:0'), [{ opacity: a }, { opacity: 0 }], { duration: ms || 320, easing: st ? 'steps(' + st + ')' : 'ease-out' }); }
+  punch(el, k) { if (el && el.animate && !this.reduced) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(' + (k || 1.08) + ')' }, { transform: 'scale(1)' }], { duration: 220, easing: 'ease-out' }); }
+  say(msg, col) { this.setState({ hint: msg, hintCol: col || '#ffd644' }); clearTimeout(this.sayT); this.sayT = setTimeout(() => this.setState({ hint: '' }), 1400); }
+  stamp(word, sub, col, y) {
+    const fx = this.fxRef.current; if (!fx) return;
+    const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;right:0;top:' + y + 'px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;transform-origin:50% 60%;pointer-events:none';
+    const big = document.createElement('div'); big.textContent = word; big.style.cssText = "font-family:'Jersey 15',monospace;font-size:52px;line-height:.9;letter-spacing:2px;white-space:nowrap;color:" + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000';
+    el.appendChild(big);
+    if (sub) { const sm = document.createElement('div'); sm.textContent = sub; sm.style.cssText = "font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ffffff;background:#0a0821;border:2px solid " + col + ';border-radius:3px;padding:3px 6px;white-space:nowrap'; el.appendChild(sm); }
+    fx.appendChild(el);
+    if (!el.animate) return;
+    el.animate([{ transform: 'scale(2.6) rotate(-6deg)', opacity: 0 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .14 }, { transform: 'scale(1.04) rotate(-2deg)', opacity: 1, offset: .22 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .86 }, { transform: 'scale(.9) translateY(-14px) rotate(-2deg)', opacity: 0 }], { duration: 1900, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => el.remove();
+  }
+  endIn() { const el = this.endRef.current; if (el && el.animate) el.animate([{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.3,1.2)' }); }
+  // ─── intro → deploy ───
+  engage() { if (this.state.phase !== 'intro') return; const el = this.introRef.current; if (el && el.animate) el.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(20px)' }], { duration: 180, fill: 'forwards' }); this.later(() => this.setState({ phase: 'deploy' }), 170); }
+  decoy() { if (this.state.phase !== 'intro') return; this.setState(s => ({ phase: 'fled', gold: s.gold - this.DECOY_COST }), () => this.endIn()); }
+  tapRoster(k) {
+    const S = this.state; if (S.phase !== 'deploy') return;
+    const at = S.lanes.indexOf(k);
+    if (at >= 0) { const lanes = S.lanes.slice(); lanes[at] = -1; return this.setState({ lanes, sel: k, hint: '' }); }
+    if (S.sel === k) { const l = S.lanes.indexOf(-1); return l >= 0 ? this.dock(k, l) : this.setState({ sel: -1 }); }
+    this.setState({ sel: k, hint: '' });
+  }
+  tapLane(l) {
+    const S = this.state; if (S.phase !== 'deploy') return;
+    if (S.sel >= 0) return this.dock(S.sel, l);
+    if (S.lanes[l] >= 0) { const lanes = S.lanes.slice(), k = lanes[l]; lanes[l] = -1; return this.setState({ lanes, sel: k }); }
+    this.say('TAP A SHIP FIRST');
+  }
+  dock(k, l) {
+    const lanes = this.state.lanes.map(x => x === k ? -1 : x); lanes[l] = k;
+    this.setState({ lanes, sel: -1, hint: '' }, () => { const d = this.dockRefs[l].current, c = this.center(d); this.punch(d, 1.08); if (c) this.sparks(c.x, c.y, [this.FLEET[k].col, '#ffffff'], 10); });
+  }
+  launch() {
+    const S = this.state; if (S.phase !== 'deploy') return;
+    if (!S.lanes.some(k => k >= 0)) return this.say('DOCK AT LEAST ONE SHIP', '#ff4d4d');
+    this.setState({ phase: 'roll', sel: -1 }, () => this.later(() => this.startRound(), 120));
+  }
+  // ─── round: raiders launch → roll → shoot → end round → raiders move ───
+  startRound() {
+    const S = this.state, round = S.round + 1, spawn = [];
+    S.raiders.forEach((r, i) => { if (r.st === 'wait' && r.at === round) spawn.push(i); });
+    this.setState(s => ({ phase: 'roll', round, rk: 0, pick: -1, dice: [], hint: '', raiders: s.raiders.map(r => r.st === 'wait' && r.at === round ? { ...r, st: 'in', col: 3 } : r) }));
+    const fr = this.rect(this.fieldRef.current);
+    if (fr) spawn.forEach((i, q) => this.later(() => this.burst(fr.x + fr.w - 6, this.laneY(S.raiders[i].lane), 1, 4, 240), 40 + q * 70));
+    if (spawn.length) this.later(() => this.shake(2, 160), 380);
+    this.later(() => this.roll(), spawn.length ? 560 : 160);
+  }
+  roll() {
+    const n = this.lvl().dice, dice = Array.from({ length: n }, () => ({ v: 1 + Math.floor(Math.random() * 6), faces: this.shuffle([1, 2, 3, 4, 5, 6]), settled: false, used: false, fly: false }));
+    const pre = 600, st = n > 1 ? Math.min(220, 900 / n) : 0;
+    this.setState({ dice, pick: -1 }, () => requestAnimationFrame(() => requestAnimationFrame(() => dice.forEach((d, k) => { const el = this.drt[k].cube.current; if (!el) return; el.style.animation = 'none'; void el.offsetHeight; if (!this.reduced) el.style.animation = 'dice-tumble ' + Math.round(pre + k * st) + 'ms cubic-bezier(0.19,1,0.22,1) forwards'; }))));
+    this.later(() => this.setD(d => ({ ...d, faces: [d.v].concat(this.shuffle([1, 2, 3, 4, 5, 6].filter(x => x !== d.v))) })), 120);
+    dice.forEach((d, k) => this.later(() => this.setD((x, j) => j === k ? { ...x, settled: true } : x), pre + k * st));
+    this.later(() => this.setState({ phase: 'place', pick: -1 }), pre + (n - 1) * st + 140);
+  }
+  tapDie(i) { const S = this.state; if (S.phase !== 'place') return; const d = S.dice[i]; if (!d || d.used || d.fly) return; this.setState({ pick: S.pick === i ? -1 : i, hint: '' }); }
+  tapRaider(ri) {
+    const S = this.state; if (S.phase !== 'place') return;
+    const r = S.raiders[ri]; if (!r || !this.live(r) || this.pend.has('r' + ri)) return;
+    let di = S.pick;
+    if (di >= 0 && !this.ok(S, r, S.dice[di].v)) return this.nopeR(ri, 'A ' + S.dice[di].v + " CAN'T STOP A " + this.need(S, r));
+    if (di < 0) S.dice.forEach((d, j) => { if (d.used || d.fly || !this.ok(S, r, d.v)) return; if (di < 0 || d.v < S.dice[di].v) di = j; }); // no die picked: spend the cheapest one that fits
+    if (di < 0) return this.nopeR(ri, 'NO DIE STOPS A ' + this.need(S, r));
+    const v = S.dice[di].v; this.pend.add('r' + ri);
+    this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, fly: true } : x), pick: -1, hint: '' }));
+    this.flyDie(di, ri, v, () => this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, fly: false, used: true } : x), raiders: s.raiders.map((x, j) => j === ri ? { ...x, die: v } : x) }), () => { this.punch(this.slotEl(ri), 1.25); this.later(() => this.kill(ri), 150); }));
+  }
+  nopeR(ri, msg) { const el = this.tokRefs[ri].current; if (el && el.animate && !this.reduced) el.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(-2px)' }, { transform: 'translateX(0)' }], { duration: 240 }); this.say(msg, '#ff4d4d'); }
+  flyDie(di, ri, v, done) {
+    const g = this.gen, fin = () => { if (g === this.gen) done(); };
+    const from = this.rect(this.drt[di].box.current), to = this.rect(this.slotEl(ri)), fx = this.fxRef.current;
+    if (!from || !to || !fx || this.reduced) return fin();
+    const sz = 30, x1 = to.x + to.w / 2 - sz / 2, y1 = to.y + to.h / 2 - sz / 2, dx = from.x + from.w / 2 - sz / 2 - x1, dy = from.y + from.h / 2 - sz / 2 - y1;
+    const im = document.createElement('img'); im.src = 'assets/flat_' + v + '_48.png';
+    im.style.cssText = 'position:absolute;left:' + x1 + 'px;top:' + y1 + 'px;width:' + sz + 'px;height:' + sz + 'px;display:block;image-rendering:pixelated;filter:drop-shadow(3px 3px 0 #240011)';
+    fx.appendChild(im);
+    im.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(1.3)' }, { transform: 'translate(' + dx * .45 + 'px,' + (dy * .45 - 40) + 'px) scale(1.5)', offset: .5 }, { transform: 'translate(0,0) scale(1)' }], { duration: 400, easing: 'cubic-bezier(.3,.7,.4,1)' }).onfinish = () => { im.remove(); fin(); };
+  }
+  kill(ri) {
+    this.pend.delete('r' + ri);
+    const S = this.state, r = S.raiders[ri]; if (!r || !this.live(r)) return;
+    const c = this.center(this.tokRefs[ri].current), rescue = r.st === 'cap', rk = S.rk + 1;
+    this.setState(s => ({ rk, kills: s.kills + 1, raiders: s.raiders.map((x, j) => j === ri ? { ...x, st: 'dead' } : x) }));
+    if (c) { this.burst(c.x, c.y, rescue ? 3 : 2); this.debris(c.x, c.y, ['#ffffff', '#ffd644', '#ff9a3c', '#e8522c', '#5a1a2a'], rescue ? 22 : 12); this.sparks(c.x, c.y, ['#ff4d4d', '#ffffff', '#ffd644'], 10); }
+    this.shake(rescue ? 9 : 4, rescue ? 360 : 220);
+    if (rescue) return this.rescue(r, c);
+    if (c && rk >= 2) this.pop(c.x, c.y - 34, '×' + rk, this.LADDER[Math.min(rk, 6)], 26 + rk * 4);
+    if (rk >= 3) this.stamp(rk === 3 ? 'TRIPLE' : rk + ' DOWN', 'IN ONE ROUND', this.LADDER[Math.min(rk, 6)], 300);
+    this.later(() => this.checkWin(), 450);
+  }
+  // signature moment: the die that blows up the raider dragging your ship away
+  rescue(r, c) {
+    const k = r.carry, f = this.FLEET[k], l = r.lane, g = this.gen;
+    this.pend.add('home'); this.setState({ homing: { lane: l, k } });
+    this.flash('#ffffff', .6, 380, 3);
+    this.stamp('RESCUE SHOT', f.name + ' RECOVERED', '#ffd644', 236);
+    const done = () => {
+      if (g !== this.gen) return;
+      this.pend.delete('home');
+      this.setState(s => { const lanes = s.lanes.slice(); lanes[l] = k; return { lanes, homing: null, rescues: s.rescues + 1 }; }, () => {
+        const d = this.dockRefs[l].current, p = this.center(d); this.punch(d, 1.14);
+        if (p) { this.sparks(p.x, p.y, ['#48f320', f.col, '#ffffff'], 16); this.pop(p.x + 40, p.y - 26, 'HOME', '#48f320', 28); }
+        this.later(() => this.checkWin(), 400);
+      });
+    };
+    const to = this.center(this.dockRefs[l].current), fx = this.fxRef.current;
+    if (!c || !to || !fx || this.reduced) return this.later(done, 400);
+    const im = document.createElement('img'); im.src = 'assets/' + f.ship + '.png';
+    im.style.cssText = 'position:absolute;left:' + (to.x - 18) + 'px;top:' + (to.y - 22) + 'px;width:36px;height:44px;display:block;z-index:4;image-rendering:pixelated;filter:drop-shadow(0 0 8px ' + f.col + ') drop-shadow(2px 2px 0 #000)';
+    fx.appendChild(im);
+    const dx = c.x - to.x, dy = c.y - to.y;
+    im.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(90deg) scale(.6)' }, { transform: 'translate(' + dx * .5 + 'px,' + (dy * .5 - 46) + 'px) rotate(90deg) scale(1.6)', offset: .45 }, { transform: 'translate(0,0) rotate(90deg) scale(1)' }], { duration: 760, delay: 300, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'backwards' }).onfinish = () => { im.remove(); done(); };
+    for (let q = 1; q < 8; q++) this.later(() => { const t = q / 8, x = to.x + dx * (1 - t), y = to.y + dy * (1 - t) - Math.sin(t * Math.PI) * 46; this.sparks(x, y, [f.col, '#ffffff'], 3); }, 300 + q * 90);
+  }
+  checkWin() { const S = this.state; if (S.phase !== 'place' || this.pend.size) return; if (this.allDone(S)) this.win(); }
+  advance() {
+    const S = this.state; if (S.phase !== 'place' || this.pend.size) return;
+    const sp = this.speed(), esc = [], arr = [];
+    const raiders = S.raiders.map((r, i) => {
+      if (r.st === 'cap') { const col = r.col + sp; if (col > 3) { esc.push(i); return { ...r, col: this.OFF }; } return { ...r, col }; }
+      if (r.st === 'in') { const col = r.col - 1; if (col < 0) { arr.push(i); return { ...r, col: -.45 }; } return { ...r, col }; }
+      return r;
+    });
+    this.setState({ phase: 'advance', pick: -1, hint: '', raiders, dice: S.dice.map(d => ({ ...d, used: true })) });
+    this.later(() => { esc.forEach(i => this.escape(i)); arr.forEach(i => this.arrive(i)); }, 440);
+    this.later(() => this.afterAdvance(), 440 + (esc.length || arr.length ? 1250 : 260));
+  }
+  escape(i) {
+    const r = this.state.raiders[i], k = r.carry, f = this.FLEET[k];
+    this.setState(s => { const lost = s.lost.slice(), laneLost = s.laneLost.slice(); lost[k] = true; laneLost[r.lane] = k; return { lost, laneLost, raiders: s.raiders.map((x, j) => j === i ? { ...x, st: 'gone' } : x) }; });
+    this.flash('#ff1a1a', .25, 360); this.shake(6, 300);
+    this.stamp('SHIP LOST', f.name + ' DRAGGED AWAY', '#ff4d4d', 236);
+  }
+  arrive(i) {
+    const S = this.state, r = S.raiders[i], l = r.lane, k = S.lanes[l], c = this.center(this.tokRefs[i].current), y = this.laneY(l);
+    if (k >= 0 && S.shield[k]) { // shield takes the hit and the raider with it
+      this.setState(s => { const shield = s.shield.slice(); shield[k] = false; return { shield, kills: s.kills + 1, raiders: s.raiders.map((x, j) => j === i ? { ...x, st: 'dead' } : x) }; });
+      if (c) { this.burst(c.x, c.y, 2); this.sparks(c.x - 16, c.y, ['#6ad0ff', '#ffffff'], 16); }
+      const fr = this.rect(this.fieldRef.current); if (fr) this.anim(this.fxEl('left:' + (fr.x + 70) + 'px;top:' + (y - 44) + 'px;width:24px;height:88px;border-right:4px solid #6ad0ff;border-radius:0 100% 100% 0/0 50% 50% 0;box-sizing:border-box;box-shadow:8px 0 16px -4px #6ad0ff'), [{ opacity: 1, transform: 'scaleY(1)' }, { opacity: 0, transform: 'scaleY(1.5) translateX(10px)' }], { duration: 520, easing: 'steps(6)' });
+      this.pop(195, y - 36, 'SHIELD STOP', '#6ad0ff', 30); this.shake(5, 240);
+    } else if (k >= 0) { // grabbed: the raider turns back with your ship in tow
+      this.setState(s => { const lanes = s.lanes.slice(); lanes[l] = -1; return { lanes, grabs: s.grabs + 1, raiders: s.raiders.map((x, j) => j === i ? { ...x, st: 'cap', carry: k, rot: 90 } : x) }; });
+      this.flash('#ff1a1a', .22, 300); this.shake(7, 300);
+      this.pop(195, y - 36, this.FLEET[k].name + ' GRABBED', '#ff4d4d', 30);
+      this.later(() => this.setR(i, { col: 0 }), 300);
+    } else { // open lane: the raider boards the mothership
+      this.setState(s => ({ hull: Math.max(0, s.hull - this.BREACH), raiders: s.raiders.map((x, j) => j === i ? { ...x, st: 'gone' } : x) }));
+      if (c) this.burst(c.x - 20, c.y, 2);
+      this.pop(195, y - 36, 'BOARDED -' + this.BREACH + ' HULL', '#ff4d4d', 30);
+      const h = this.center(this.hullRef.current); if (h) this.sparks(h.x, h.y, ['#ff4d4d', '#ffffff', '#7a1a0e'], 12);
+      this.flash('#ff1a1a', .3, 320); this.shake(8, 300); this.punch(this.hullRef.current, 1.05);
+    }
+  }
+  afterAdvance() {
+    if (this.state.hull <= 0) return this.lose();
+    if (this.allDone(this.state)) return this.win();
+    this.startRound();
+  }
+  win() {
+    if (['boom', 'won', 'lost'].includes(this.state.phase)) return;
+    this.setState({ phase: 'boom' });
+    this.stamp('RAID REPELLED', 'THE MARAUDER PULLS BACK', '#48f320', 300);
+    const m = this.mothIn.current; if (m && m.animate && !this.reduced) m.animate([{ transform: 'none', opacity: .55 }, { transform: 'translateX(220px)', opacity: 0 }], { duration: 1100, delay: 400, easing: 'cubic-bezier(.6,0,.8,.4)', fill: 'forwards' });
+    this.later(() => this.setState(s => ({ phase: 'won', gold: s.gold + this.BOUNTY + s.rescues * this.RESCUE_PAY }), () => this.endIn()), 1700);
+  }
+  lose() {
+    this.setState({ phase: 'boom' });
+    const hr = this.rect(this.hullRef.current); if (hr) for (let q = 0; q < 5; q++) this.later(() => this.burst(hr.x + Math.random() * hr.w, hr.y + hr.h / 2, 2), q * 120);
+    this.later(() => { this.flash('#ff1a1a', .6, 520); this.shake(10, 420); }, 620);
+    this.later(() => this.setState({ phase: 'lost' }, () => this.endIn()), 1400);
+  }
+  tick() {
+    const t = (performance.now() - this.t0) / 1000, A = this.driftA.current, B = this.driftB.current, M = this.mothRef.current;
+    if (A) A.style.backgroundPosition = ((-t * 14) % 600).toFixed(1) + 'px 0px';
+    if (B) B.style.backgroundPosition = (120 - (t * 30) % 900).toFixed(1) + 'px 300px';
+    if (M) M.style.transform = 'translate(' + (Math.sin(t * .7) * 5).toFixed(2) + 'px,' + (Math.sin(t * 1.3) * 6).toFixed(2) + 'px)';
+    this.drt.forEach((r, i) => {
+      const fl = r.float.current, sh = r.shadow.current, d = this.state.dice[i]; if (!fl || !sh || !d) return;
+      const st = d.settled, a = r.angle, bob = st ? Math.sin(a) * 2 : 0, sway = st ? Math.cos(a * .7) : 0, rot = st ? Math.sin(a * .5) * 2 : 0;
+      fl.style.transform = 'translateX(' + sway + 'px) translateY(' + (-bob) + 'px) rotate(' + rot + 'deg)';
+      const k = 1 - bob / 20; sh.style.transform = 'translateX(' + (sway * .6) + 'px) scale(' + k + ')'; sh.style.opacity = st ? .35 + .35 * k : 0;
+      r.angle += .03;
+    });
+  }
+  renderVals() {
+    const S = this.state, ph = S.phase, L = this.lvl(), sp = this.speed();
+    const deploy = ph === 'deploy', pre = deploy || ph === 'intro', placing = ph === 'place', battle = ['roll', 'place', 'advance', 'boom'].includes(ph);
+    const pd = S.pick >= 0 ? S.dice[S.pick] : null;
+    const free = S.dice.map((d, j) => j).filter(j => !S.dice[j].used && !S.dice[j].fly);
+    const canHit = r => this.live(r) && !this.pend.has('r' + S.raiders.indexOf(r)) && (pd ? this.ok(S, r, pd.v) : free.some(j => this.ok(S, r, S.dice[j].v)));
+    const lanes = [0, 1, 2].map(l => {
+      const k = S.lanes[l], f = k >= 0 ? this.FLEET[k] : null, cap = S.raiders.find(r => r.st === 'cap' && r.lane === l);
+      const home = S.homing && S.homing.lane === l ? S.homing.k : -1, gk = home >= 0 ? home : cap ? cap.carry : S.laneLost[l];
+      const warn = battle && S.raiders.some(r => r.st === 'in' && r.lane === l && r.col === 0), target = deploy && S.sel >= 0;
+      const tag = pre ? S.raiders.filter(r => r.lane === l).length + ' INBOUND' : battle && S.raiders.some(r => r.st === 'wait' && r.lane === l && r.at === S.round + 1) ? 'INCOMING' : '';
+      return {
+        dockRef: this.dockRefs[l], tap: () => this.tapLane(l), num: 'LANE ' + (l + 1),
+        bd: target ? '#48f320' : warn ? '#ff4d4d' : cap ? '#ffd644' : '#3a3a5a',
+        glow: target ? '0 0 14px rgba(72,243,32,.45),3px 3px 0 #240011' : warn ? '0 0 14px rgba(255,77,77,.45),3px 3px 0 #240011' : '3px 3px 0 #240011',
+        cur: deploy ? 'pointer' : 'default', rail: f && f.gun ? '#ff9a3c' : '#3a3a5a', railOp: f && f.gun ? .75 : .6,
+        hasShip: !!f, name: f ? f.name : '', col: f ? f.col : '#ffffff', src: f ? 'assets/' + f.ship + '.png' : 'assets/ship_teal.png', role: f ? f.role : '', roleCol: f ? this.ROLE[f.role] : '#ffffff',
+        isDock: !f && pre, dockBd: target ? '#48f320' : 'rgba(242,242,242,.35)', dockTxt: target ? '#48f320' : '#a9b0c0',
+        isOpen: !f && !pre && gk < 0, isGhost: !f && !pre && gk >= 0,
+        ghostSrc: 'assets/' + this.FLEET[gk >= 0 ? gk : 0].ship + '.png', ghostTxt: home >= 0 ? 'RETURN' : cap ? 'TAKEN' : 'LOST', ghostCol: home >= 0 ? '#48f320' : cap ? '#ffd644' : '#ff4d4d', ghostAnim: cap && home < 0 ? 'blink .9s steps(2) infinite' : 'none',
+        shieldOn: !!f && S.shield[k], hasTag: !!tag, tag
+      };
+    });
+    const tokens = S.raiders.map((r, i) => {
+      const live = this.live(r), cap = r.st === 'cap';
+      const share = live && S.raiders.some((o, j) => j !== i && this.live(o) && o.lane === r.lane && Math.abs(o.col - r.col) < .5);
+      const gun = !cap && this.gunLane(S, r.lane), hl = placing && canHit(r), dim = placing && !!pd && live && !hl;
+      const tag = !live ? '' : cap ? (r.col + sp > 3 ? 'LAST SHOT' : 'ESCAPING') : r.col === 0 && battle ? 'BOARDING' : '';
+      return {
+        ref: this.tokRefs[i], tap: () => this.tapRaider(i),
+        x: Math.round(this.TRACK_X + this.COL_W * (r.col + .5) - this.TOK_W / 2), y: Math.round(r.lane * (this.LANE_H + this.LANE_GAP) + (this.LANE_H - this.TOK_H) / 2 + (share ? (cap ? 34 : -34) : 0)),
+        op: !live ? 0 : dim ? .45 : 1, pe: live && placing ? 'auto' : 'none', z: cap ? 3 : 2,
+        rot: r.rot, cap, sx: cap ? 30 : 17, carrySrc: 'assets/' + this.FLEET[cap ? r.carry : 0].ship + '.png',
+        label: gun ? r.v + '+' : '' + r.v, col: hl ? '#48f320' : cap ? '#ffd644' : '#ffffff',
+        bd: hl ? '#48f320' : cap ? '#ffd644' : '#ff4d4d', bs: hl ? 'solid' : 'dashed', bg: hl ? 'rgba(72,243,32,.2)' : 'rgba(10,8,33,.92)',
+        glow: hl ? '0 0 12px rgba(72,243,32,.6)' : cap ? '0 0 10px rgba(255,214,68,.45)' : 'none',
+        hasDie: r.die > 0, noDie: !(r.die > 0), dieSrc: 'assets/flat_' + (r.die || 1) + '_32.png',
+        hasTag: !!tag && !dim, tag, tagCol: cap ? '#ffd644' : '#ff4d4d'
+      };
+    });
+    let hint = S.hint, hintCol = S.hintCol || '#ffd644';
+    if (!hint) {
+      hintCol = '#a9b0c0';
+      const capR = S.raiders.find(r => r.st === 'cap');
+      if (deploy) {
+        const n = S.lanes.filter(k => k >= 0).length;
+        if (S.sel >= 0) { hint = 'TAP A LANE TO DOCK THE ' + this.FLEET[S.sel].name; hintCol = '#ffffff'; }
+        else if (!n) hint = 'DOCK UP TO 3 SHIPS · TAP A SHIP, THEN A LANE';
+        else if (n < 3) { hint = 'RAIDERS IN AN EMPTY LANE BOARD YOU · -' + this.BREACH + ' HULL'; hintCol = '#ffd644'; }
+        else { hint = 'FLEET IN POSITION · LAUNCH'; hintCol = '#48f320'; }
+      } else if (ph === 'roll') hint = 'ROLLING';
+      else if (placing) {
+        if (pd) { const any = S.raiders.some(canHit); hint = any ? 'TAP A GREEN RAIDER TO FIRE THE ' + pd.v : 'NO RAIDER TAKES A ' + pd.v; hintCol = any ? '#ffffff' : '#ff4d4d'; }
+        else if (capR && canHit(capR)) { hint = 'SHOOT THE RAIDER DRAGGING YOUR ' + this.FLEET[capR.carry].name; hintCol = '#ffd644'; }
+        else if (S.raiders.some(canHit)) { hint = 'TAP A RAIDER TO FIRE · OR PICK A DIE FIRST'; hintCol = '#ffffff'; }
+        else if (!S.raiders.some(r => this.live(r))) { hint = 'LANES CLEAR · END ROUND'; hintCol = '#48f320'; }
+        else if (capR) { hint = 'NO DIE MATCHES THE ' + capR.v + ' · YOUR ' + this.FLEET[capR.carry].name + ' SLIPS AWAY'; hintCol = '#ff4d4d'; }
+        else hint = 'NO DIE FITS · END ROUND';
+      } else if (ph === 'advance') hint = 'RAIDERS MOVE';
+    }
+    const hull = S.hull, hc = hull <= 3 ? '#ff4d4d' : hull <= 5 ? '#ffd644' : '#48f320';
+    const lostNames = this.FLEET.filter((f, k) => S.lost[k]).map(f => f.name), total = S.raiders.length;
+    const end = ph === 'won' ? { title: 'RAID REPELLED', col: '#48f320', sub: lostNames.length ? 'NOT EVERY SHIP MADE IT HOME' : 'EVERY SHIP ACCOUNTED FOR', stamp: 'ROUND ' + S.round + ' · HULL ' + hull + '/' + this.HULL_MAX, hasTotal: true,
+      rows: [{ src: 'assets/flat_6_32.png', label: 'RAIDERS DOWN', value: S.kills + '/' + total, col: '#0a0821' }, { src: 'assets/spaceship_icon.png', label: 'RESCUES', value: '' + S.rescues, col: S.rescues ? '#2e8a12' : '#0a0821' }, { src: 'assets/spaceship_icon.png', label: lostNames.length ? 'LOST · ' + lostNames.join(', ') : 'SHIPS LOST', value: lostNames.length ? '-' + lostNames.length : 'NONE', col: lostNames.length ? '#b3201c' : '#2e8a12' }, { src: 'assets/coin.png', label: 'BOUNTY', value: '+' + this.BOUNTY, col: '#0a0821' }].concat(S.rescues ? [{ src: 'assets/coin.png', label: 'RESCUE BONUS', value: '+' + S.rescues * this.RESCUE_PAY, col: '#0a0821' }] : [], [{ src: 'assets/prestige.png', label: 'PRESTIGE', value: '+' + this.PRESTIGE, col: '#0a0821' }]) }
+      : ph === 'lost' ? { title: 'BOARDED', col: '#ff4d4d', sub: 'THE MARAUDERS TAKE THE MOTHERSHIP', stamp: 'ROUND ' + S.round + ' · HULL BREACHED', hasTotal: false,
+        rows: [{ src: 'assets/flat_6_32.png', label: 'RAIDERS DOWN', value: S.kills + '/' + total, col: '#0a0821' }, { src: 'assets/spaceship_icon.png', label: lostNames.length ? 'LOST · ' + lostNames.join(', ') : 'SHIPS LOST', value: lostNames.length ? '-' + lostNames.length : 'NONE', col: lostNames.length ? '#b3201c' : '#0a0821' }, { src: 'assets/prestige.png', label: 'PRESTIGE', value: 'LOST', col: '#b3201c' }] }
+      : { title: 'SLIPPED AWAY', col: '#ffd644', sub: 'THE DECOY DRAWS THEM OFF', stamp: 'NO CONTACT', hasTotal: true, rows: [{ src: 'assets/coin.png', label: 'DECOY', value: '-' + this.DECOY_COST, col: '#b3201c' }] };
+    return {
+      wrapRef: this.wrapRef, stageRef: this.stageRef, shakeRef: this.shakeRef, fxRef: this.fxRef, driftA: this.driftA, driftB: this.driftB, mothRef: this.mothRef, mothIn: this.mothIn, fieldRef: this.fieldRef,
+      hullRef: this.hullRef, trayRef: this.trayRef, introRef: this.introRef, endRef: this.endRef,
+      roundTxt: S.round || '-', gold: S.gold, total, diceN: L.dice, bounty: '+' + this.BOUNTY, decoyCost: this.DECOY_COST, breach: this.BREACH,
+      wSegs: S.raiders.map(r => this.live(r) ? { bg: '#ff4d4d', bd: '#f2f2f2' } : r.st === 'wait' ? { bg: '#5a1a2a', bd: '#a9b0c0' } : { bg: '#0a0821', bd: '#3a3a5a' }),
+      left: S.raiders.filter(r => r.st !== 'dead' && r.st !== 'gone').length,
+      lanes, tokens, hint, hintCol,
+      isIntro: ph === 'intro', isDeploy: deploy, isBattle: battle, isEnd: ph === 'won' || ph === 'lost' || ph === 'fled',
+      roster: this.FLEET.map((f, k) => { const at = S.lanes.indexOf(k), on = S.sel === k; return { tap: () => this.tapRoster(k), src: 'assets/' + f.ship + '.png', name: f.name, sub: at >= 0 ? 'LANE ' + (at + 1) : f.role, subCol: at >= 0 ? '#a9b0c0' : this.ROLE[f.role], bd: on ? '#48f320' : at >= 0 ? f.col : '#3a3a5a', glow: on ? '0 0 14px rgba(72,243,32,.55),3px 3px 0 #240011' : '3px 3px 0 #240011', op: at >= 0 ? .5 : 1 }; }),
+      trayNote: placing ? free.length + ' LEFT · UNUSED DICE ARE LOST' : ph === 'roll' ? 'ROLLING' : '',
+      rolled: S.dice.map((d, i) => { const r = this.drt[i], on = S.pick === i, o = { boxRef: r.box, floatRef: r.float, shadowRef: r.shadow, ref: r.cube, scale: on ? 'scale(1.15)' : d.settled ? 'scale(1)' : 'scale(.7)', show: d.used || d.fly ? 0 : 1, ring: on ? '#ffd644' : 'transparent', glow: on ? '0 0 14px 2px #ffd644' : 'none', tap: () => this.tapDie(i) }; d.faces.forEach((f, j) => { o['f' + j] = 'assets/flat_' + f + '_48.png'; }); return o; }),
+      hullSegs: Array.from({ length: this.HULL_MAX }, (_, i) => ({ bg: i < hull ? hc : '#0a0821' })), hullTxt: hull + '/' + this.HULL_MAX, hullCol: hc,
+      btn: deploy ? { label: 'LAUNCH', op: S.lanes.some(k => k >= 0) ? 1 : .4 } : placing ? { label: 'END ROUND', op: 1 } : { label: ph === 'roll' ? 'ROLLING' : ph === 'advance' ? 'RAIDERS MOVE' : ph === 'intro' ? 'FIGHT' : 'BRACE', op: .4 },
+      primary: () => { if (deploy) this.launch(); else if (placing) this.advance(); },
+      engage: () => this.engage(), decoy: () => this.decoy(), restart: () => this.restart(), end
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}a{color:#6af5d6}a:hover{color:#b8fff0}@keyframes blink{50%{opacity:.3}}</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden">
+<div ref="{{ stageRef }}" data-screen-label="Gate Encounter" style="position:relative;flex:none;width:390px;height:844px;overflow:hidden;background:#000;image-rendering:pixelated;color:#ffffff;transform-origin:center center;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div ref="{{ driftA }}" style="position:absolute;inset:0;background:#000 url(assets/space.png) 0 0/600px 900px repeat"></div>
+<div ref="{{ driftB }}" style="position:absolute;inset:0;background:url(assets/space.png) 120px 300px/900px 1350px repeat;opacity:.28;mix-blend-mode:screen"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(75% 34% at 50% 24%,{{ glow }} 0%,rgba(0,0,0,0) 100%);transition:background .4s"></div>
+</div>
+<div ref="{{ shakeRef }}" style="position:absolute;inset:0">
+
+<sc-if value="{{ isAlarm }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px">
+<div ref="{{ gateRef }}" style="width:140px;height:140px;border-radius:50%;box-sizing:border-box;border:8px solid #ff4d4d;box-shadow:0 0 30px 8px rgba(255,77,77,.6),inset 0 0 26px 6px rgba(255,77,77,.5);background:radial-gradient(circle,#4a0f14 0,#05040f 70%)"></div>
+<div style="font-family:'Jersey 15',monospace;font-size:68px;line-height:.9;letter-spacing:4px;color:#ff4d4d;text-shadow:4px 4px 0 #240011;animation:blink .5s steps(2) infinite">AMBUSH</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBoss }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0">
+<div style="position:absolute;left:0;right:0;top:34px;display:flex;justify-content:center;align-items:center;gap:8px"><div style="width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;animation:blink .6s steps(2) infinite"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ff4d4d">SURPRISE ENCOUNTER</span></div>
+<div style="position:absolute;left:0;right:0;top:58px;height:226px;display:flex;align-items:center;justify-content:center;pointer-events:none">
+<div style="position:absolute;width:320px;height:220px;background:radial-gradient(closest-side,{{ boss.halo }},rgba(0,0,0,0))"></div>
+<div ref="{{ bossRef }}" style="position:relative"><img src="{{ boss.src }}" alt="{{ boss.name }}" style="width:{{ boss.w }}px;height:{{ boss.h }}px;display:block;transform:rotate({{ boss.rot }}deg);filter:drop-shadow(0 0 16px {{ boss.halo }})"></div>
+</div>
+<div ref="{{ nameRef }}" style="position:absolute;left:0;right:0;top:294px;text-align:center;font-family:'Jersey 15',monospace;font-size:66px;line-height:.86;letter-spacing:2px;white-space:nowrap;color:{{ boss.col }};text-shadow:4px 4px 0 #240011,-3px 0 0 rgba(255,77,77,.85),3px 0 0 rgba(106,245,214,.85)">{{ boss.name }}</div>
+<div ref="{{ blurbRef }}" style="position:absolute;left:24px;right:24px;top:356px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:2px;color:{{ boss.col }}">{{ boss.title }}</span><span style="font-family:'Jersey 15',monospace;font-size:21px;line-height:1.1;letter-spacing:.5px;text-wrap:balance;color:#ffffff">{{ boss.quote }}</span></div>
+<div ref="{{ ctrlRef }}" style="position:absolute;left:16px;right:16px;top:466px;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:12px">
+<sc-if value="{{ hasTwist }}" hint-placeholder-val="{{ false }}"><div style="width:100%;display:flex;flex-direction:column;gap:6px;padding:9px 12px;background:#0a0821;border:2px solid {{ twist.col }};border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:{{ twist.col }}">{{ twist.tag }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.35;text-wrap:pretty;color:#ffffff">{{ twist.sub }}</span></div></sc-if>
+<div style="display:flex;justify-content:center;gap:8px">
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid {{ boss.col }};border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">HP</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ boss.hp }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #48f320;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">HULL</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#48f320">{{ boss.hull }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #ffd644;border-radius:6px;box-sizing:border-box"><img src="assets/coin.png" alt="" style="width:14px;height:14px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffd644">{{ boss.bounty }}</span></div>
+</div>
+<sc-if value="{{ hasShips }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;justify-content:center;gap:14px">
+<sc-for list="{{ tiles }}" as="tl" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;align-items:center;gap:5px"><img src="{{ tl.src }}" alt="{{ tl.name }}" style="width:32px;height:39px;display:block;filter:drop-shadow(2px 2px 0 #000)"><span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;color:{{ tl.col }}">{{ tl.need }}</span></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ noShips }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ff4d4d">NO SHIPS TO FIGHT WITH</span></sc-if>
+<div style="flex:1"></div>
+<button onClick="{{ fight }}" style="width:100%;flex:none;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ fightOp }}" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">FIGHT</button>
+<div style="width:100%;flex:none;display:flex;gap:8px">
+<sc-if value="{{ canParley }}" hint-placeholder-val="{{ false }}"><button onClick="{{ parley }}" style="flex:1;min-width:0;height:48px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #ffd644;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:22px;letter-spacing:1px;white-space:nowrap;color:#ffd644;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">{{ parleyLbl }}</button></sc-if>
+<button onClick="{{ decoy }}" style="flex:1;min-width:0;height:48px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #f2f2f2;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:22px;letter-spacing:1px;white-space:nowrap;color:#ffffff;cursor:pointer;opacity:{{ decoyOp }}" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">{{ decoyLbl }}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:16px;right:16px;top:24px;bottom:18px;display:flex;flex-direction:column;justify-content:center">
+<div ref="{{ endRef }}" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#a9b0c0">{{ end.kicker }}</span>
+<div style="font-family:'Jersey 15',monospace;font-size:54px;line-height:.9;letter-spacing:2px;text-align:center;color:{{ end.col }};text-shadow:4px 4px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000">{{ end.title }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ end.sub }}</span>
+<div style="width:100%;display:flex;flex-direction:column">
+<div style="height:8px;background:linear-gradient(to top right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+<div style="background:#f2f2f2 repeating-linear-gradient(0deg,rgba(10,8,33,.05) 0 1px,transparent 1px 4px);color:#0a0821;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px">
+<div style="text-align:center;font-family:'Jersey 15',monospace;font-size:28px;line-height:1;letter-spacing:2px">GATE REPORT</div>
+<div style="text-align:center;font-family:'Silkscreen',monospace;font-size:12px;color:#3a3a5a">{{ end.stamp }}</div>
+<div style="border-top:2px dashed #0a0821;margin:2px 0"></div>
+<sc-for list="{{ end.rows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;min-height:28px">
+<div style="width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center"><img src="{{ r.src }}" alt="" style="width:18px;height:18px;display:block"></div>
+<span style="flex:1;min-width:0;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px">{{ r.label }}</span>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;white-space:nowrap;color:{{ r.col }}">{{ r.value }}</span>
+</div>
+</sc-for>
+</div>
+<div style="height:8px;background:linear-gradient(to bottom right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+</div>
+<button onClick="{{ finish }}" style="width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:{{ end.btnBg }};border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.3),4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:28px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 rgba(0,0,0,.4);cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 rgba(0,0,0,.3),2px 2px 0 #240011">{{ end.btn }}</button>
+</div>
+</div>
+</sc-if>
+</div>
+<div ref="{{ fxRef }}" style="position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden"></div>
+
+<sc-if value="{{ isFight }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:100;background:#000">
+<sc-if value="{{ fx.isM }}" hint-placeholder-val="{{ false }}"><dc-import name="Marauder Gate" fleet="{{ fx.fleet }}" hull="{{ fx.hull }}" hp="{{ fx.hp }}" atk-bonus="{{ fx.atkBonus }}" bounty="{{ fx.bounty }}" prestige="{{ fx.prestige }}" gold="{{ gold }}" difficulty="{{ fx.diff }}" skip-intro="{{ true }}" ii0="{{ fx.ii0 }}" frenzy0="{{ fx.frenzy0 }}" no-eat="{{ fx.noEat }}" on-done="{{ onFightDone }}" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ fx.isC }}" hint-placeholder-val="{{ false }}"><dc-import name="Mother Core Gate v2" fleet="{{ fx.fleet }}" hull="{{ fx.hull }}" hp="{{ fx.hp }}" atk-bonus="{{ fx.atkBonus }}" bounty="{{ fx.bounty }}" prestige="{{ fx.prestige }}" gold="{{ gold }}" difficulty="{{ fx.diff }}" skip-intro="{{ true }}" ii0="{{ fx.ii0 }}" frenzy0="{{ fx.frenzy0 }}" no-eat="{{ fx.noEat }}" on-done="{{ onFightDone }}" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ fx.isG }}" hint-placeholder-val="{{ false }}"><dc-import name="Garganta Gate" fleet="{{ fx.fleet }}" hull="{{ fx.hull }}" hp="{{ fx.hp }}" atk-bonus="{{ fx.atkBonus }}" bounty="{{ fx.bounty }}" prestige="{{ fx.prestige }}" gold="{{ gold }}" difficulty="{{ fx.diff }}" skip-intro="{{ true }}" ii0="{{ fx.ii0 }}" frenzy0="{{ fx.frenzy0 }}" no-eat="{{ fx.noEat }}" on-done="{{ onFightDone }}" hint-size="100%,100%"></dc-import></sc-if>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  // embedded at every jump gate in Space Dice Run: props launched (ship type ids, oldest first), sector, gold, onDone(result)
+  ROLES = {
+    herald: { name: 'HERALD', ship: 'ship_blue', col: '#7ab8ff', lo: 3, hi: 6, need: '3+', dmg: 1 },
+    warden: { name: 'WARDEN', ship: 'ship_teal', col: '#6af5d6', lo: 1, hi: 2, need: '1-2', block: 2 },
+    kestrel: { name: 'KESTREL', ship: 'ship_violet', col: '#c79bff', lo: 5, hi: 6, need: '5+', dmg: 2 },
+    sovereign: { name: 'SOVEREIGN', ship: 'ship_gold', col: '#ffd644', lo: 6, hi: 6, need: '6', dmg: 4 },
+    barnacle: { name: 'BARNACLE', ship: 'ship_amber', col: '#ffb36a', lo: 1, hi: 3, need: '1-3', repair: 1 },
+    siren: { name: 'SIREN', ship: 'ship_magenta', col: '#ff5cd6', lo: 2, hi: 4, need: '2-4', block: 1 },
+    wraith: { name: 'WRAITH', ship: 'ship_ice', col: '#bfe8ff', lo: 3, hi: 4, need: '3-4', dmg: 2 },
+    obsidian: { name: 'OBSIDIAN', ship: 'ship_obsidian', col: '#a99cff', lo: 4, hi: 4, need: '4', dmg: 3 }
+  };
+  ORDER = ['marauder', 'mothercore', 'garganta'];
+  // run-scale economy: bounty/prestige/decoy in the same units as the run's gold and prestige
+  BOSSES = {
+    marauder: { name: 'MARAUDER', src: 'assets/kestrel_h11.png', rot: 180, w: 132, h: 160, col: '#ff4d4d', halo: 'rgba(255,77,77,.4)', title: 'CORSAIR OF THE OUTER LANES', quote: 'Its hull is stitched together from the ships it has taken. Yours would make a fine patch.', hp: { easy: 8, normal: 10, hard: 14 }, per: 2, bounty: 4, prestige: 2, decoy: 2,
+      short: { max: 1, tag: 'EASY PREY', sub: 'One ship alone makes it greedy. Every attack hits 1 harder.', atk: 1 }, big: { min: 4, tag: 'PARLEY', sub: 'It knows it is outgunned, and would rather pay you than bleed for it.', parley: true } },
+    mothercore: { name: 'MOTHER CORE', src: 'assets/mother_core.png', rot: 0, w: 240, h: 174, col: '#8fc0ff', halo: 'rgba(63,123,255,.45)', title: 'THE SLEEPLESS FOUNDRY', quote: 'A machine that outlived its makers, still building the war they lost.', hp: { easy: 16, normal: 20, hard: 26 }, per: 3, bounty: 8, prestige: 4, decoy: 4,
+      short: { max: 2, tag: 'UNDERESTIMATED', sub: 'It does not rate you as a threat, and opens its core to scan you. Your first volley hits double.', ii0: 2 }, big: { min: 5, tag: 'PRIORITY TARGET', sub: 'Your fleet reads as a real threat. It overclocks: every attack hits 1 harder.', atk: 1 } },
+    garganta: { name: 'GARGANTA', src: 'assets/garganta_v4.png', rot: 0, w: 224, h: 200, col: '#9dff5a', halo: 'rgba(120,220,70,.35)', title: 'THE HUNGER BETWEEN STARS', quote: 'Every legend about it ends the same way: with static.', hp: { easy: 18, normal: 22, hard: 28 }, per: 3, bounty: 12, prestige: 6, decoy: 6,
+      short: { max: 3, tag: 'NOT WORTH A BITE', sub: 'Too few ships to bother swallowing. It will gnaw your hull, but every ship comes home.', noEat: true }, big: { min: 6, tag: 'FEEDING FRENZY', sub: 'A fleet this size is a feast. It is frenzied from the first round: every bite hits 1 harder.', frenzy0: true } }
+  };
+  ODDS = { 1: [70, 25, 5], 2: [40, 40, 20], 3: [15, 40, 45] };
+  DIFF = { 1: 'easy', 2: 'normal', 3: 'hard' };
+  wrapRef = React.createRef(); stageRef = React.createRef(); shakeRef = React.createRef(); fxRef = React.createRef(); driftA = React.createRef(); driftB = React.createRef();
+  gateRef = React.createRef(); bossRef = React.createRef(); nameRef = React.createRef(); blurbRef = React.createRef(); ctrlRef = React.createRef(); endRef = React.createRef();
+  ts = []; gen = 0; t0 = performance.now();
+  fresh() {
+    const p = this.props || {}, L = (Array.isArray(p.launched) ? p.launched : ['herald', 'warden', 'kestrel', 'sovereign']).filter(id => this.ROLES[id]);
+    return { phase: 'alarm', sector: [1, 2, 3].includes(+p.sector) ? +p.sector : 1, launched: L, gold: +p.gold || 0, boss: null, ready: false, res: null };
+  }
+  state = this.fresh();
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.onResize = () => this.fit(); window.addEventListener('resize', this.onResize);
+    if (window.ResizeObserver && this.wrapRef.current) { this.ro = new ResizeObserver(this.onResize); this.ro.observe(this.wrapRef.current); }
+    this.fit(); this.alarm();
+  }
+  componentWillUnmount() { this.gen++; this.ts.forEach(clearTimeout); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); if (this.ro) this.ro.disconnect(); }
+  fit() { const w = this.wrapRef.current, st = this.stageRef.current; if (!w || !st) return; st.style.transform = 'scale(' + Math.min(w.clientWidth / 390, w.clientHeight / 844) + ')'; }
+  later(f, ms) { const g = this.gen; this.ts.push(setTimeout(() => { if (g === this.gen) f(); }, ms)); }
+  calc(S) {
+    const fighting = S.launched.slice(-6), N = fighting.length, B = this.BOSSES[S.boss || 'marauder'], diff = this.DIFF[S.sector], base = B.hp[diff];
+    const hp = Math.max(4, base + B.per * (N - 4)), hull = Math.max(4, 2 * N), band = N === 0 ? 'none' : N <= B.short.max ? 'short' : N >= B.big.min ? 'big' : 'even';
+    const m = band === 'short' ? B.short : band === 'big' ? B.big : {};
+    return { fighting, N, B, diff, hp, hull, band, m, bounty: Math.max(1, Math.round(B.bounty * hp / base)) };
+  }
+  // ─── fx ───
+  rect(el) { const st = this.stageRef.current; if (!st || !el) return null; const S = st.getBoundingClientRect(), k = S.width / st.offsetWidth || 1, r = el.getBoundingClientRect(); return { x: (r.left - S.left) / k, y: (r.top - S.top) / k, w: r.width / k, h: r.height / k }; }
+  center(el) { const r = this.rect(el); return r ? { x: r.x + r.w / 2, y: r.y + r.h / 2 } : null; }
+  fxEl(css) { const fx = this.fxRef.current; if (!fx) return null; const d = document.createElement('div'); d.style.cssText = 'position:absolute;' + css; fx.appendChild(d); return d; }
+  anim(d, kf, o) { if (!d) return; if (!d.animate) { d.remove(); return; } d.animate(kf, o).onfinish = () => d.remove(); }
+  shake(p, ms) { const el = this.shakeRef.current; if (!el || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + (-p) + 'px,' + (p * .5) + 'px)' }, { transform: 'translate(' + p + 'px,' + (-p * .4) + 'px)' }, { transform: 'translate(' + (-p * .6) + 'px,' + (p * .3) + 'px)' }, { transform: 'translate(0,0)' }], { duration: ms || 260 }); }
+  flash(col, a, ms, st) { if (this.reduced) return; this.anim(this.fxEl('inset:0;background:' + col + ';opacity:0'), [{ opacity: a }, { opacity: 0 }], { duration: ms || 320, easing: st ? 'steps(' + st + ')' : 'ease-out' }); }
+  streaks(c, col) { for (let i = 0; i < 12; i++) { const x = c.x + (Math.random() - .5) * 300, h = 40 + Math.random() * 100; this.anim(this.fxEl('left:' + x + 'px;top:' + (c.y - h) + 'px;width:2px;height:' + h + 'px;background:linear-gradient(rgba(255,255,255,0),' + col + ')'), [{ transform: 'translateY(-60px) scaleY(.4)', opacity: 0 }, { transform: 'translateY(0) scaleY(1)', opacity: .9, offset: .4 }, { transform: 'translateY(40px) scaleY(.2)', opacity: 0 }], { duration: 420 + Math.random() * 220, easing: 'ease-out' }); } }
+  // ─── flow: ambush → boss reveal → fight / parley / decoy → gate report → onDone ───
+  alarm() {
+    this.flash('#ff1a1a', .45, 380); this.shake(9, 400);
+    const g = this.gateRef.current; if (g && g.animate && !this.reduced) g.animate([{ transform: 'scale(.6)', filter: 'brightness(3)' }, { transform: 'scale(1.08)', filter: 'brightness(1.4)', offset: .5 }, { transform: 'none', filter: 'none' }], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1)' });
+    this.later(() => this.shake(6, 300), 520);
+    this.later(() => this.reveal(), this.reduced ? 300 : 1300);
+  }
+  reveal() {
+    const S = this.state, forced = this.ORDER.indexOf((this.props || {}).encounter);
+    let w = forced; if (w < 0) { const o = this.ODDS[S.sector]; let r = Math.random() * 100; w = 0; while (w < 2 && r >= o[w]) { r -= o[w]; w++; } }
+    const key = this.ORDER[w], B = this.BOSSES[key];
+    this.setState({ phase: 'boss', boss: key, ready: false }, () => {
+      const b = this.bossRef.current, nm = this.nameRef.current, bl = this.blurbRef.current, ct = this.ctrlRef.current;
+      this.flash('#000000', .9, 260); this.later(() => { this.flash(B.col, .45, 420); this.shake(12, 460); const c = this.center(b); if (c) this.streaks(c, B.col); }, 220);
+      if (!this.reduced) {
+        if (b && b.animate) b.animate([{ transform: 'scale(.15)', opacity: 0, filter: 'brightness(0)' }, { transform: 'scale(.15)', opacity: 0, filter: 'brightness(0)', offset: .3 }, { transform: 'scale(1.18)', opacity: 1, filter: 'brightness(3)', offset: .75 }, { transform: 'none', opacity: 1, filter: 'none' }], { duration: 760, easing: 'cubic-bezier(.2,.9,.3,1)', fill: 'backwards' });
+        if (nm && nm.animate) nm.animate([{ transform: 'scale(3) rotate(-6deg)', opacity: 0 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .55 }, { transform: 'none', opacity: 1 }], { duration: 420, delay: 720, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' });
+        if (bl && bl.animate) bl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 1150, fill: 'backwards' });
+        if (ct && ct.animate) ct.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 380, delay: 1500, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' });
+      }
+      this.later(() => this.shake(9, 300), 960);
+      this.later(() => this.setState({ ready: true }), this.reduced ? 0 : 1700);
+    });
+  }
+  fight() { const S = this.state; if (S.phase !== 'boss' || !S.ready || !this.calc(S).N) return; this.setState({ phase: 'fight' }); }
+  parley() { const S = this.state, C = this.calc(S); if (S.phase !== 'boss' || !S.ready || !C.m.parley) return; this.settle({ kind: 'parley', gold: Math.ceil(C.bounty / 2), prestige: 0, lost: [] }); }
+  decoy() { const S = this.state, C = this.calc(S); if (S.phase !== 'boss' || !S.ready || S.gold < C.B.decoy) return; this.settle({ kind: 'decoy', gold: -C.B.decoy, prestige: 0, lost: [] }); }
+  onFightDone(r) {
+    const S = this.state, C = this.calc(S), off = S.launched.length - C.N;
+    if (!(r && r.outcome === 'won')) return this.settle({ kind: 'lost', gold: 0, prestige: 0, lost: [], rounds: r && r.rounds });
+    this.settle({ kind: 'won', gold: C.bounty, prestige: C.B.prestige, lost: (r.lost || []).map(k => k + off), rounds: r.rounds });
+  }
+  settle(res) {
+    const S = this.state, C = this.calc(S), names = res.lost.map(i => this.ROLES[S.launched[i]].name);
+    this.setState({ phase: 'result', res: { ...res, names, boss: C.B.name, N: C.N, left: S.launched.length - res.lost.length } }, () => { const el = this.endRef.current; if (el && el.animate && !this.reduced) el.animate([{ opacity: 0, transform: 'scale(.94)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.3,1.2)' }); });
+  }
+  finish() { const R = this.state.res; if (!R) return; const p = this.props || {}; if (p.onDone) p.onDone({ kind: R.kind, gold: R.gold, prestige: R.prestige, lost: R.lost, boss: R.boss }); else this.setState(this.fresh(), () => this.alarm()); }
+  tick() {
+    const t = (performance.now() - this.t0) / 1000, A = this.driftA.current, B = this.driftB.current;
+    if (A) A.style.backgroundPosition = '0px ' + ((t * 14) % 900).toFixed(1) + 'px';
+    if (B) B.style.backgroundPosition = '120px ' + (300 + (t * 30) % 1350).toFixed(1) + 'px';
+    const b = this.bossRef.current; if (b && !this.reduced && this.state.phase === 'boss' && this.state.ready) b.style.translate = (Math.sin(t * .8) * 6).toFixed(1) + 'px ' + (Math.sin(t * 1.5) * 4).toFixed(1) + 'px';
+  }
+  renderVals() {
+    const S = this.state, ph = S.phase, C = this.calc(S), B = C.B, R = S.res, tw = C.band === 'short' || C.band === 'big', half = Math.ceil(C.bounty / 2);
+    const fleetRow = R && { src: 'assets/spaceship_icon.png', label: 'FLEET NOW', value: R.left + (R.left === 1 ? ' SHIP' : ' SHIPS'), col: '#0a0821' };
+    const lostRow = R && { src: 'assets/spaceship_icon.png', label: R.names.length ? 'LOST · ' + R.names.join(', ') : 'SHIPS LOST', value: R.names.length ? '-' + R.names.length : 'NONE', col: R.names.length ? '#b3201c' : '#2e8a12' };
+    const kick = 'SECTOR ' + S.sector + ' · JUMP GATE', go = S.sector >= 3 ? 'CONTINUE ›' : 'ENTER SECTOR ' + (S.sector + 1) + ' ›';
+    const end = !R ? { kicker: '', title: '', col: '#ffffff', sub: '', stamp: '', rows: [], btn: '', btnBg: '#486c05' }
+      : R.kind === 'won' ? { kicker: kick, title: R.boss + ' DOWN', col: '#48f320', sub: 'THE GATE IS YOURS', stamp: R.N + ' SHIPS FOUGHT · ' + (R.rounds || 0) + ' ROUNDS', btn: go, btnBg: '#486c05',
+        rows: [{ src: 'assets/coin.png', label: 'BOUNTY', value: '+' + R.gold, col: '#0a0821' }, { src: 'assets/prestige.png', label: 'PRESTIGE AT RISK', value: '+' + R.prestige, col: '#0a0821' }, lostRow, fleetRow] }
+      : R.kind === 'parley' ? { kicker: kick, title: 'PARLEY', col: '#ffd644', sub: 'IT PAYS YOU TO LET IT GO', stamp: R.N + ' SHIPS WAS ENOUGH', btn: go, btnBg: '#486c05', rows: [{ src: 'assets/coin.png', label: 'PARLEY', value: '+' + R.gold, col: '#0a0821' }, fleetRow] }
+      : R.kind === 'decoy' ? { kicker: kick, title: 'SLIPPED THROUGH', col: '#ffd644', sub: 'THE DECOY TAKES THE HEAT', stamp: 'NO CONTACT', btn: go, btnBg: '#486c05', rows: [{ src: 'assets/coin.png', label: 'DECOY', value: '' + R.gold, col: '#b3201c' }, fleetRow] }
+      : { kicker: kick, title: 'BREACHED', col: '#ff4d4d', sub: 'THE RUN ENDS AT THE GATE', stamp: R.boss + ' · ROUND ' + (R.rounds || 0), btn: 'CONTINUE ›', btnBg: '#8a1c1c', rows: [{ src: 'assets/prestige.png', label: 'PRESTIGE AT RISK', value: 'LOST', col: '#b3201c' }] };
+    return {
+      wrapRef: this.wrapRef, stageRef: this.stageRef, shakeRef: this.shakeRef, fxRef: this.fxRef, driftA: this.driftA, driftB: this.driftB,
+      gateRef: this.gateRef, bossRef: this.bossRef, nameRef: this.nameRef, blurbRef: this.blurbRef, ctrlRef: this.ctrlRef, endRef: this.endRef,
+      gold: S.gold, glow: ph === 'boss' ? B.halo : 'rgba(255,77,77,.3)',
+      isAlarm: ph === 'alarm', isBoss: ph === 'boss', isResult: ph === 'result', isFight: ph === 'fight',
+      boss: { src: B.src, rot: B.rot, w: B.w, h: B.h, name: B.name, col: B.col, halo: B.halo, title: B.title, quote: B.quote, hp: C.hp, hull: C.hull, bounty: C.bounty },
+      hasTwist: tw, twist: tw ? { tag: C.m.parley ? 'PARLEY OFFERED FOR ' + half + ' GOLD' : C.m.tag, sub: C.m.sub, col: C.band === 'short' ? '#ff4d4d' : '#6af5d6' } : { tag: '', sub: '', col: '#f2f2f2' },
+      tiles: C.fighting.map(id => { const r = this.ROLES[id]; return { src: 'assets/' + r.ship + '.png', name: r.name, need: r.need, col: r.col }; }),
+      hasShips: C.N > 0, noShips: C.N === 0,
+      fightOp: C.N ? 1 : .35, canParley: !!C.m.parley, parleyLbl: 'PARLEY · +' + half, decoyLbl: 'DECOY · -' + B.decoy + ' GOLD', decoyOp: S.gold >= B.decoy ? 1 : .35,
+      fight: () => this.fight(), parley: () => this.parley(), decoy: () => this.decoy(),
+      fx: { isM: S.boss === 'marauder', isC: S.boss === 'mothercore', isG: S.boss === 'garganta', fleet: C.fighting.map(id => this.ROLES[id]), hull: C.hull, hp: C.hp, atkBonus: C.m.atk || 0, bounty: C.bounty, prestige: B.prestige, diff: C.diff, ii0: C.m.ii0 || 0, frenzy0: !!C.m.frenzy0, noEat: !!C.m.noEat },
+      onFightDone: r => this.onFightDone(r),
+      end, finish: () => this.finish()
+    };
+  }
+}
+</script>
+</body>
+</html>

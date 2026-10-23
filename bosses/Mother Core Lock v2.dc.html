@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}a{color:#6af5d6}a:hover{color:#b8fff0}@keyframes dice-tumble{0%{transform:rotateX(0deg) rotateY(0deg)}100%{transform:rotateX(1080deg) rotateY(720deg)}}@keyframes blink{50%{opacity:.35}}</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden">
+<div ref="{{ stageRef }}" data-screen-label="Mother Core · The Lock v2" style="position:relative;flex:none;width:390px;height:844px;overflow:hidden;background:#000;image-rendering:pixelated;color:#ffffff;transform-origin:center center;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div ref="{{ driftA }}" style="position:absolute;inset:0;background:#000 url(assets/space.png) 0 0/600px 900px repeat"></div>
+<div ref="{{ driftB }}" style="position:absolute;inset:0;background:url(assets/space.png) 120px 300px/900px 1350px repeat;opacity:.28;mix-blend-mode:screen"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(60% 22% at 50% 20%,rgba(63,123,255,.26) 0%,rgba(63,123,255,0) 100%)"></div>
+</div>
+<div ref="{{ shakeRef }}" style="position:absolute;inset:0;display:flex;flex-direction:column">
+
+<div style="position:relative;flex:none;margin:12px 16px 0;height:44px;display:flex;align-items:stretch;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 10px;border-right:2px solid #3a3a5a"><div style="flex:none;width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#ff4d4d">BOSS · SECTOR {{ sectorN }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:6px;padding:0 10px;border-right:2px solid #3a3a5a"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">ROUND</span><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1">{{ roundTxt }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px"><img src="assets/coin.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#ffd644">{{ gold }}</span></div>
+</div>
+
+<div style="flex:none;margin:8px 16px 0;height:36px;display:flex;align-items:center;justify-content:center;gap:10px;background:#0a0821;border:3px solid #3f7bff;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#8fc0ff">MOTHER CORE</span>
+<span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#3a3a5a">·</span>
+<span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:{{ progCol }}">{{ progTxt }}</span>
+</div>
+
+<div style="position:relative;flex:none;margin:4px 0 0;height:124px">
+<sc-for list="{{ coreBeams }}" as="cb" hint-placeholder-count="0"><div style="position:absolute;left:{{ cb.x }}px;top:62px;width:8px;height:62px;background:linear-gradient(180deg,rgba(255,77,77,0),#ff4d4d);box-shadow:0 0 12px #ff4d4d;animation:blink .9s steps(2) infinite"></div></sc-for>
+<div ref="{{ coreRef }}" style="position:absolute;left:115px;top:4px;width:160px;height:116px"><img src="assets/mother_core.png" alt="Mother Core" style="width:160px;height:116px;display:block;image-rendering:auto;filter:drop-shadow(0 0 12px rgba(63,123,255,.6))"></div>
+<sc-if value="{{ core.open }}" hint-placeholder-val="{{ false }}">
+<div data-core="1" onClick="{{ core.tap }}" style="position:absolute;left:167px;top:34px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border:3px solid {{ core.bd }};border-radius:8px;background:{{ core.bg }};box-shadow:{{ core.glow }};box-sizing:border-box;cursor:pointer;z-index:2;transition:border-color .15s,box-shadow .15s">
+<sc-if value="{{ core.noDie }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Jersey 15',monospace;font-size:34px;line-height:1;color:{{ core.col }}">{{ core.v }}</span></sc-if>
+<sc-if value="{{ core.hasDie }}" hint-placeholder-val="{{ false }}"><img src="{{ core.dieSrc }}" alt="" style="width:38px;height:38px;display:block"></sc-if>
+</div>
+</sc-if>
+</div>
+
+<div ref="{{ boardRef }}" style="position:relative;flex:none;margin:0 16px;height:380px">
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+<sc-for list="{{ lanes }}" as="ln" hint-placeholder-count="4">
+<div ref="{{ ln.ref }}" style="position:relative;min-width:0;background:{{ ln.bg }};border:2px {{ ln.bs }} {{ ln.bd }};border-radius:6px;box-shadow:{{ ln.glow }};box-sizing:border-box;transition:background .25s,border-color .25s,box-shadow .25s">
+<sc-if value="{{ ln.lit }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:6px;right:6px;top:5px;height:8px;background:#2a0a12;border:1px solid #ff4d4d;box-sizing:border-box"><div style="width:{{ ln.charge }}%;height:100%;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;transition:width .45s cubic-bezier(.2,.8,.3,1)"></div></div></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;top:20px;height:232px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px">
+<sc-for list="{{ rows }}" as="rw" hint-placeholder-count="3">
+<div data-row="{{ rw.r }}" style="flex:none;height:52px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;opacity:{{ rw.op }};transition:opacity .35s">
+<sc-for list="{{ rw.cells }}" as="cl" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;align-items:center;justify-content:center">
+<sc-if value="{{ cl.has }}" hint-placeholder-val="{{ true }}">
+<div data-slot="{{ cl.key }}" onClick="{{ cl.tap }}" style="position:relative;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:{{ cl.bw }}px {{ cl.bs }} {{ cl.bd }};border-radius:6px;background:{{ cl.bg }};box-shadow:{{ cl.glow }};box-sizing:border-box;cursor:pointer;pointer-events:{{ cl.pe }};transition:border-color .15s,box-shadow .15s,background .15s">
+<sc-if value="{{ cl.noDie }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Jersey 15',monospace;font-size:28px;line-height:1;color:{{ cl.txt }}">{{ cl.label }}</span></sc-if>
+<sc-if value="{{ cl.hasDie }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:3px;top:3px;width:6px;height:6px;background:{{ cl.notch }}"></div><img src="{{ cl.dieSrc }}" alt="" style="width:30px;height:30px;display:block;filter:drop-shadow(0 0 4px {{ cl.notch }})"></sc-if>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:6px;height:118px">
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+<sc-for list="{{ cols }}" as="co" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;padding:0 3px;box-sizing:border-box">
+<div style="flex:1;width:100%;display:flex;align-items:center;justify-content:center"><sc-if value="{{ co.empty }}" hint-placeholder-val="{{ false }}"><div style="width:52px;height:56px;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(242,242,242,.25);border-radius:6px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;color:#6b7187">EMPTY</div></sc-if></div>
+<div style="width:100%;height:40px;display:flex;gap:4px">
+<div onClick="{{ co.tapL }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;background:#0a0821;border:2px solid {{ co.abd }};border-radius:5px;box-shadow:{{ co.aglow }};box-sizing:border-box;cursor:pointer;visibility:{{ co.visL }};transition:border-color .15s,box-shadow .15s"><div style="width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:10px solid {{ co.acol }}"></div></div>
+<div onClick="{{ co.tapR }}" style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;background:#0a0821;border:2px solid {{ co.abd }};border-radius:5px;box-shadow:{{ co.aglow }};box-sizing:border-box;cursor:pointer;visibility:{{ co.visR }};transition:border-color .15s,box-shadow .15s"><div style="width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:10px solid {{ co.acol }}"></div></div>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-for list="{{ ships }}" as="sh" hint-placeholder-count="4">
+<div ref="{{ sh.ref }}" style="position:absolute;left:{{ sh.x }}px;top:0;width:83.5px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:{{ sh.op }};pointer-events:none;transition:left .35s cubic-bezier(.4,0,.2,1),opacity .3s">
+<div style="position:relative;width:56px;height:52px;display:flex;align-items:center;justify-content:center">
+<sc-if value="{{ sh.shieldOn }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;top:-2px;width:56px;height:56px;border:2px solid #6ad0ff;border-radius:50%;background:radial-gradient(circle,rgba(106,208,255,0) 55%,rgba(106,208,255,.28) 100%);box-shadow:0 0 12px rgba(106,208,255,.6);box-sizing:border-box"></div></sc-if>
+<sc-if value="{{ sh.danger }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:4px;top:2px;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,77,.55),rgba(255,77,77,0) 70%);animation:blink .9s steps(2) infinite"></div></sc-if>
+<img src="{{ sh.src }}" alt="{{ sh.name }}" style="position:relative;width:36px;height:44px;display:block;filter:drop-shadow(2px 2px 0 #000)">
+</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ sh.col }}">{{ sh.name }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="flex:none;margin:6px 24px 0;height:22px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.2;color:{{ hintCol }}">{{ hint }}</div>
+
+<div style="flex:none;margin:6px 16px 0;height:100px;display:flex;gap:8px">
+<div ref="{{ trayRef }}" style="flex:1;min-width:0;display:flex;flex-direction:column;padding:8px 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<div style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#a9b0c0">DICE</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:6px">
+<sc-for list="{{ rolled }}" as="cube" hint-placeholder-count="0">
+<div onClick="{{ cube.tap }}" style="flex:none;width:52px;height:54px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+<div style="position:relative;width:40px;height:40px">
+<div style="position:absolute;inset:0;border:2px dashed rgba(242,242,242,.25);border-radius:6px"></div>
+<div ref="{{ cube.boxRef }}" style="position:absolute;inset:0;perspective:100px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .2s;transform:{{ cube.scale }};opacity:{{ cube.show }}">
+<div ref="{{ cube.shadowRef }}" style="position:absolute;left:5px;top:38px;width:30px;height:8px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(2px)"></div>
+<div ref="{{ cube.floatRef }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div ref="{{ cube.ref }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:translateZ(20px)"><img src="{{ cube.f0 }}" alt="" style="width:40px;height:40px;display:block"><div style="position:absolute;inset:-3px;border:2px solid {{ cube.ring }};box-shadow:{{ cube.glow }};border-radius:4px;pointer-events:none;transition:border-color .2s,box-shadow .2s"></div></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg) translateZ(20px);filter:brightness(.82)"><img src="{{ cube.f1 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(90deg) translateZ(20px);filter:brightness(.9)"><img src="{{ cube.f2 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(-90deg) translateZ(20px);filter:brightness(.74)"><img src="{{ cube.f3 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(90deg) translateZ(20px);filter:brightness(.86)"><img src="{{ cube.f4 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(-90deg) translateZ(20px);filter:brightness(.78)"><img src="{{ cube.f5 }}" alt="" style="width:40px;height:40px;display:block"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div ref="{{ resRef }}" style="flex:none;width:88px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 6px;background:#0a0821;border:3px solid #3a3a5a;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;color:#a9b0c0">RESERVE</span>
+<div style="flex:1;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:6px">
+<sc-for list="{{ reserve }}" as="rv" hint-placeholder-count="1"><img src="{{ rv.src }}" alt="{{ rv.name }}" style="width:26px;height:32px;display:block;filter:drop-shadow(2px 2px 0 #000)"></sc-for>
+<sc-if value="{{ noReserve }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#6b7187">NONE</span></sc-if>
+</div>
+</div>
+</div>
+
+<button onClick="{{ primary }}" style="flex:none;margin:10px 16px 0;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ btn.op }};transition:opacity .2s" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ btn.label }}</button>
+</div>
+
+<div ref="{{ fxRef }}" style="position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden"></div>
+
+<sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;right:0;top:230px;bottom:0;z-index:30;display:flex;flex-direction:column;padding:24px 16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(5,4,15,0) 0%,rgba(5,4,15,.94) 50px,rgba(5,4,15,.97) 100%)">
+<div ref="{{ introRef }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ff4d4d">BOSS CONTACT</span></div>
+<div style="font-family:'Jersey 15',monospace;font-size:58px;line-height:.86;letter-spacing:2px;text-align:center;color:#ffffff;text-shadow:4px 4px 0 #240011,-3px 0 0 rgba(255,77,77,.85),3px 0 0 rgba(106,245,214,.85)">THE LOCK</div>
+<div style="display:flex;gap:8px">
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #3f7bff;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">LAYERS</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#8fc0ff">{{ layerN }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #f2f2f2;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">SHIPS</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ fleetN }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #ffd644;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">BOUNTY</span><img src="assets/coin.png" alt="" style="width:14px;height:14px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffd644">{{ bounty }}</span></div>
+</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px;padding:10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:2px solid #3f7bff;border-radius:6px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;color:#ffffff">4</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">A SHIP DRILLS THE SLOT ABOVE IT. MATCH THE NUMBER.</span>
+</div>
+<div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 4px;border:2px solid #8fc0ff;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;color:#8fc0ff">LAYER</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">FILL THE WHOLE ROW TO BREAK IT. FILLED SLOTS STAY.</span>
+</div>
+<div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 5px;border:2px solid #ff4d4d;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ff4d4d">BEAM</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">LIT COLUMNS FIRE AT END OF ROUND. A SHIP IN ONE IS DESTROYED.</span>
+</div>
+<div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center">
+<div style="display:flex;justify-content:center"><div style="height:20px;display:flex;align-items:center;padding:0 5px;border:2px solid #48f320;border-radius:3px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#48f320">MOVE</div></div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#ffffff">ANY DIE MOVES A SHIP ONE COLUMN. SHIPS IN THE WAY SWAP.</span>
+</div>
+</div>
+<div style="flex:1"></div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ engage }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">FIGHT</button>
+<button onClick="{{ decoy }}" style="height:48px;display:flex;align-items:center;justify-content:center;gap:8px;background:#0a0821;border:3px solid #f2f2f2;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:2px;color:#ffffff;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">DECOY · -{{ decoyCost }} GOLD</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;padding:0 16px;box-sizing:border-box;background:rgba(5,4,15,.9)">
+<div ref="{{ endRef }}" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#a9b0c0">MOTHER CORE · THE LOCK</span>
+<div style="font-family:'Jersey 15',monospace;font-size:56px;line-height:.9;letter-spacing:2px;text-align:center;color:{{ end.col }};text-shadow:4px 4px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000">{{ end.title }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ end.sub }}</span>
+<div style="width:100%;display:flex;flex-direction:column">
+<div style="height:8px;background:linear-gradient(to top right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+<div style="background:#f2f2f2 repeating-linear-gradient(0deg,rgba(10,8,33,.05) 0 1px,transparent 1px 4px);color:#0a0821;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px">
+<div style="text-align:center;font-family:'Jersey 15',monospace;font-size:28px;line-height:1;letter-spacing:2px">LOCK REPORT</div>
+<div style="text-align:center;font-family:'Silkscreen',monospace;font-size:12px;color:#3a3a5a">{{ end.stamp }}</div>
+<div style="border-top:2px dashed #0a0821;margin:2px 0"></div>
+<sc-for list="{{ end.rows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;min-height:28px">
+<div style="width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center"><img src="{{ r.src }}" alt="" style="width:18px;height:18px;display:block"></div>
+<span style="flex:1;min-width:0;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px">{{ r.label }}</span>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;white-space:nowrap;color:{{ r.col }}">{{ r.value }}</span>
+</div>
+</sc-for>
+<sc-if value="{{ end.hasTotal }}" hint-placeholder-val="{{ false }}">
+<div style="border-top:3px solid #0a0821;margin-top:2px"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:1px"><span>GOLD</span><span style="display:flex;align-items:center;gap:6px"><img src="assets/coin.png" alt="" style="width:20px;height:20px;display:block">{{ gold }}</span></div>
+</sc-if>
+</div>
+<div style="height:8px;background:linear-gradient(to bottom right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+</div>
+<button onClick="{{ restart }}" style="width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">PLAY AGAIN</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;sector&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;2&quot;,&quot;3&quot;],&quot;default&quot;:&quot;2&quot;,&quot;tsType&quot;:&quot;'2' | '3'&quot;,&quot;section&quot;:&quot;Encounter&quot;},&quot;fleetSize&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;4&quot;,&quot;5&quot;,&quot;6&quot;],&quot;default&quot;:&quot;5&quot;,&quot;tsType&quot;:&quot;'4' | '5' | '6'&quot;,&quot;section&quot;:&quot;Encounter&quot;},&quot;skipIntro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Encounter&quot;}}">
+class Component extends DCLogic {
+  FLEET = [
+    { name: 'WARDEN', ship: 'ship_teal', col: '#6af5d6', shield: true },
+    { name: 'HERALD', ship: 'ship_blue', col: '#7ab8ff' },
+    { name: 'KESTREL', ship: 'ship_violet', col: '#c79bff' },
+    { name: 'SOVEREIGN', ship: 'ship_gold', col: '#ffd644', shield: true },
+    { name: 'BARNACLE', ship: 'ship_amber', col: '#ffb36a' },
+    { name: 'SIREN', ship: 'ship_magenta', col: '#ff5cd6' }
+  ];
+  // shield layers, bottom row first: how many of the 4 columns carry a slot
+  SECTORS = { 2: { rows: [4, 3, 2], bounty: 120, prestige: 60 }, 3: { rows: [4, 4, 3, 2], bounty: 180, prestige: 90 } };
+  LAYER_COL = ['#3f7bff', '#6ad0ff', '#c79bff', '#ff5cd6'];
+  LADDER = ['#48f320', '#ffd644', '#ff9a3c', '#ff5cd6', '#fffbe6'];
+  DICE = 4; CW = 83.5; GAP = 8; DECOY_COST = 40; GOLD0 = 120;
+  HINT = 'LIT COLUMNS FIRE AT END OF ROUND.';
+  wrapRef = React.createRef(); stageRef = React.createRef(); shakeRef = React.createRef(); fxRef = React.createRef();
+  driftA = React.createRef(); driftB = React.createRef(); boardRef = React.createRef(); coreRef = React.createRef();
+  trayRef = React.createRef(); resRef = React.createRef(); introRef = React.createRef(); endRef = React.createRef();
+  laneRefs = [0, 1, 2, 3].map(() => React.createRef());
+  shipRefs = [0, 1, 2, 3, 4, 5].map(() => React.createRef());
+  drt = [0, 1, 2, 3, 4].map(i => ({ box: React.createRef(), float: React.createRef(), shadow: React.createRef(), cube: React.createRef(), angle: i * 2.1 }));
+  ts = []; gen = 0; pend = new Set(); t0 = performance.now();
+  sec() { const p = this.props || {}; return this.SECTORS[String(p.sector) === '3' ? 3 : 2]; }
+  fresh() {
+    const p = this.props || {}, S = this.sec(), n = Math.max(4, Math.min(6, parseInt(p.fleetSize, 10) || 5)), rnd = () => 1 + Math.floor(Math.random() * 6);
+    const rows = S.rows.map(k => { const on = this.shuffle([0, 1, 2, 3]).slice(0, k); return { broken: false, slots: [0, 1, 2, 3].map(c => on.includes(c) ? { v: rnd(), die: 0 } : null) }; });
+    return { phase: p.skipIntro ? 'roll' : 'intro', round: 0, gold: this.GOLD0, rows,
+      ships: this.FLEET.slice(0, n).map((f, k) => ({ k, col: k < 4 ? k : -1, alive: true, shield: !!f.shield, hid: false })),
+      core: { v: rnd(), die: 0, open: false }, lit: [], dice: [], pick: -1, filled: 0, broke: 0, hint: '', hintCol: '' };
+  }
+  state = this.fresh();
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.onResize = () => this.fit(); window.addEventListener('resize', this.onResize);
+    if (window.ResizeObserver && this.wrapRef.current) { this.ro = new ResizeObserver(this.onResize); this.ro.observe(this.wrapRef.current); }
+    this.fit(); this.begin();
+  }
+  componentDidUpdate(pp) { if (pp && (pp.sector !== this.props.sector || pp.fleetSize !== this.props.fleetSize || pp.skipIntro !== this.props.skipIntro)) this.restart(); }
+  componentWillUnmount() { this.clearAll(); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); if (this.ro) this.ro.disconnect(); }
+  fit() { const w = this.wrapRef.current, st = this.stageRef.current; if (!w || !st) return; st.style.transform = 'scale(' + Math.min(w.clientWidth / 390, w.clientHeight / 844) + ')'; }
+  begin() {
+    if (this.state.phase !== 'intro') return this.later(() => this.startRound(), 200);
+    const el = this.introRef.current; if (el && el.animate && !this.reduced) el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: 200, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' });
+  }
+  restart() { this.clearAll(); const c = this.coreRef.current; if (c) c.style.opacity = ''; this.setState(this.fresh(), () => this.begin()); }
+  later(f, ms) { const g = this.gen; this.ts.push(setTimeout(() => { if (g === this.gen) f(); }, ms)); }
+  clearAll() { this.gen++; this.ts.forEach(clearTimeout); this.ts = []; this.pend.clear(); clearTimeout(this.sayT); const fx = this.fxRef.current; if (fx) fx.innerHTML = ''; }
+  shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  setD(f) { this.setState(s => ({ dice: s.dice.map(f) })); }
+  hexA(h, a) { return 'rgba(' + parseInt(h.slice(1, 3), 16) + ',' + parseInt(h.slice(3, 5), 16) + ',' + parseInt(h.slice(5, 7), 16) + ',' + a + ')'; }
+  active(s) { return s.rows.findIndex(r => !r.broken); }
+  shipIn(s, c) { return s.ships.findIndex(sh => sh.alive && sh.col === c); }
+  onBoard(s) { return s.ships.some(sh => sh.alive && sh.col >= 0); }
+  freeDice(s) { return s.dice.map((d, j) => j).filter(j => !s.dice[j].used && !s.dice[j].fly); }
+  fits(s, v) {
+    const out = [], ar = this.active(s);
+    if (ar >= 0) s.rows[ar].slots.forEach((sl, c) => { if (sl && !sl.die && sl.v === v && this.shipIn(s, c) >= 0 && !this.pend.has(ar + '-' + c)) out.push(ar + '-' + c); });
+    else if (s.core.open && !s.core.die && s.core.v === v && this.onBoard(s) && !this.pend.has('core')) out.push('core');
+    return out;
+  }
+  // ─── geometry + fx (shared kit) ───
+  rect(el) { const st = this.stageRef.current; if (!st || !el) return null; const S = st.getBoundingClientRect(), k = S.width / st.offsetWidth || 1, r = el.getBoundingClientRect(); return { x: (r.left - S.left) / k, y: (r.top - S.top) / k, w: r.width / k, h: r.height / k }; }
+  center(el) { const r = this.rect(el); return r ? { x: r.x + r.w / 2, y: r.y + r.h / 2 } : null; }
+  q(sel) { const st = this.stageRef.current; return st && st.querySelector(sel); }
+  fxEl(css, txt) { const fx = this.fxRef.current; if (!fx) return null; const d = document.createElement('div'); d.style.cssText = 'position:absolute;' + css; if (txt != null) d.textContent = txt; fx.appendChild(d); return d; }
+  anim(d, kf, o) { if (!d) return; if (!d.animate) { d.remove(); return; } d.animate(kf, o).onfinish = () => d.remove(); }
+  pop(x, y, txt, col, sz) { this.anim(this.fxEl('left:' + x + 'px;top:' + y + 'px;z-index:2;font-family:"Jersey 15",monospace;font-size:' + (sz || 34) + 'px;line-height:1;letter-spacing:1px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000', txt), [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { transform: 'translate(-50%,-70%) scale(1.15)', opacity: 1, offset: .18 }, { transform: 'translate(-50%,-90%) scale(1)', opacity: 1, offset: .7 }, { transform: 'translate(-50%,-130%) scale(.95)', opacity: 0 }], { duration: 1000, easing: 'cubic-bezier(.2,.8,.3,1)' }); }
+  sparks(x, y, cols, n) { for (let i = 0; i < (n || 10); i++) { const s = 3 + Math.round(Math.random() * 3), a = Math.random() * Math.PI * 2, r = 16 + Math.random() * 34; this.anim(this.fxEl('left:' + (x - s / 2) + 'px;top:' + (y - s / 2) + 'px;width:' + s + 'px;height:' + s + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + (Math.cos(a) * r).toFixed(1) + 'px,' + (Math.sin(a) * r).toFixed(1) + 'px)', opacity: 0 }], { duration: 360 + Math.random() * 280, easing: 'cubic-bezier(.2,.8,.4,1)' }); } }
+  boomSheet() {
+    if (this._boom) return this._boom;
+    const G = 32, N = 9, cv = document.createElement('canvas'); cv.width = G * N; cv.height = G;
+    const g = cv.getContext('2d'); let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const lobes = Array.from({ length: 12 }, () => .72 + rnd() * .5), noise = Array.from({ length: G * G }, () => rnd());
+    const pal = ['#ffffff', '#fff3b0', '#ffd644', '#ff9a3c', '#e8522c', '#b3201c', '#5a1a2a', '#2a1426'];
+    for (let f = 0; f < N; f++) {
+      const p = f / (N - 1), R = 3 + p * 12.5, hole = p < .4 ? 0 : (p - .4) / .6 * R * .85;
+      for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
+        const dx = x + .5 - G / 2, dy = y + .5 - G / 2, d = Math.hypot(dx, dy), a = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI) * 12, i0 = Math.floor(a) % 12, t = a - Math.floor(a), lb = lobes[i0] * (1 - t) + lobes[(i0 + 1) % 12] * t;
+        const r = R * lb, h = hole * lb, n = noise[(y >> 1) * G + (x >> 1)];
+        if (d > r || d < h || (p > .55 && n < (p - .55) / .45 * .85)) continue;
+        const q = (d - h) / Math.max(1, r - h), heat = Math.max(0, Math.min(1, (1 - p) * 1.15 - q * .4 + (n - .5) * .3));
+        g.fillStyle = pal[Math.round((1 - heat) * (pal.length - 1))]; g.fillRect(f * G + x, y, 1, 1);
+      }
+    }
+    return (this._boom = { url: cv.toDataURL(), N, G });
+  }
+  burst(x, y, k, frames, ms) {
+    const B = this.boomSheet(), S = B.G * k, n = frames || B.N, rot = 90 * Math.floor(Math.random() * 4), fl = Math.random() < .5 ? -1 : 1;
+    const d = this.fxEl('left:' + Math.round(x - S / 2) + 'px;top:' + Math.round(y - S / 2) + 'px;width:' + S + 'px;height:' + S + 'px;image-rendering:pixelated;background:url(' + B.url + ') 0 0/' + (B.N * S) + 'px ' + S + 'px no-repeat;transform:rotate(' + rot + 'deg) scaleX(' + fl + ')');
+    this.anim(d, [{ backgroundPosition: '0px 0px' }, { backgroundPosition: (-n * S) + 'px 0px' }], { duration: ms || n * 65, easing: 'steps(' + n + ')' });
+  }
+  debris(x, y, cols, n, far) { for (let i = 0; i < n; i++) { const sz = 3 * (1 + Math.floor(Math.random() * 2)), a = Math.random() * Math.PI * 2, r = (far || 30) + Math.random() * 56; this.anim(this.fxEl('left:' + Math.round(x) + 'px;top:' + Math.round(y) + 'px;width:' + sz + 'px;height:' + sz + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + Math.round(Math.cos(a) * r) + 'px,' + Math.round(Math.sin(a) * r) + 'px)', opacity: 0 }], { duration: 520 + Math.random() * 320, easing: 'steps(7)' }); } }
+  shake(p, ms) { const el = this.shakeRef.current; if (!el || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + (-p) + 'px,' + (p * .5) + 'px)' }, { transform: 'translate(' + p + 'px,' + (-p * .4) + 'px)' }, { transform: 'translate(' + (-p * .6) + 'px,' + (p * .3) + 'px)' }, { transform: 'translate(' + (p * .3) + 'px,0)' }, { transform: 'translate(0,0)' }], { duration: ms || 260 }); }
+  flash(col, a, ms, st) { if (this.reduced) return; this.anim(this.fxEl('inset:0;background:' + col + ';opacity:0'), [{ opacity: a }, { opacity: 0 }], { duration: ms || 320, easing: st ? 'steps(' + st + ')' : 'ease-out' }); }
+  punch(el, k) { if (el && el.animate && !this.reduced) el.animate([{ scale: '1' }, { scale: '' + (k || 1.08) }, { scale: '1' }], { duration: 220, easing: 'ease-out' }); }
+  say(msg, col) { this.setState({ hint: msg, hintCol: col || '#ff4d4d' }); clearTimeout(this.sayT); this.sayT = setTimeout(() => this.setState({ hint: '' }), 1400); }
+  nope(el, msg) { if (el && el.animate && !this.reduced) el.animate([{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '-2px 0' }, { translate: '0 0' }], { duration: 240 }); this.say(msg); }
+  stamp(word, sub, col, y, size) {
+    const fx = this.fxRef.current; if (!fx) return;
+    const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;right:0;top:' + y + 'px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;transform-origin:50% 60%;pointer-events:none';
+    const big = document.createElement('div'); big.textContent = word; big.style.cssText = "font-family:'Jersey 15',monospace;font-size:" + (size || 52) + 'px;line-height:.9;letter-spacing:2px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000';
+    el.appendChild(big);
+    if (sub) { const sm = document.createElement('div'); sm.textContent = sub; sm.style.cssText = "font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ffffff;background:#0a0821;border:2px solid " + col + ';border-radius:3px;padding:3px 6px;white-space:nowrap'; el.appendChild(sm); }
+    fx.appendChild(el);
+    if (!el.animate) return;
+    el.animate([{ transform: 'scale(2.6) rotate(-6deg)', opacity: 0 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .14 }, { transform: 'scale(1.04) rotate(-2deg)', opacity: 1, offset: .22 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .86 }, { transform: 'scale(.9) translateY(-14px) rotate(-2deg)', opacity: 0 }], { duration: 1900, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => el.remove();
+  }
+  endIn() { const el = this.endRef.current; if (el && el.animate) el.animate([{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.3,1.2)' }); }
+  // ─── flow ───
+  engage() { if (this.state.phase !== 'intro') return; const el = this.introRef.current; if (el && el.animate) el.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(20px)' }], { duration: 180, fill: 'forwards' }); this.later(() => this.setState({ phase: 'roll' }, () => this.startRound()), 170); }
+  decoy() { if (this.state.phase !== 'intro') return; this.setState(s => ({ phase: 'fled', gold: s.gold - this.DECOY_COST }), () => this.endIn()); }
+  startRound() {
+    const S = this.state, round = S.round + 1, nLit = S.broke >= 2 ? 2 : 1;
+    const manned = [0, 1, 2, 3].filter(c => this.shipIn(S, c) >= 0), lit = [];
+    if (manned.length) lit.push(manned[Math.floor(Math.random() * manned.length)]); // the first beam always hunts a ship
+    const rest = this.shuffle([0, 1, 2, 3].filter(c => !lit.includes(c)));
+    while (lit.length < nLit && rest.length) lit.push(rest.shift());
+    const core = S.core.open ? { ...S.core, v: 1 + Math.floor(Math.random() * 6) } : S.core;
+    this.setState({ phase: 'roll', round, lit, core, pick: -1, dice: [], hint: '' });
+    const c = this.coreRef.current; if (c && c.animate && !this.reduced) c.animate([{ filter: 'brightness(1)' }, { filter: 'brightness(2.4) drop-shadow(0 0 16px #ff4d4d)' }, { filter: 'brightness(1)' }], { duration: 700, easing: 'ease-out' });
+    if (S.core.open && round > 1) this.later(() => { const el = this.q('[data-core]'); this.punch(el, 1.25); }, 120);
+    this.later(() => this.roll(), 520);
+  }
+  roll() {
+    const n = this.DICE, dice = Array.from({ length: n }, () => ({ v: 1 + Math.floor(Math.random() * 6), faces: this.shuffle([1, 2, 3, 4, 5, 6]), settled: false, used: false, fly: false }));
+    const pre = 600, st = n > 1 ? Math.min(220, 900 / n) : 0;
+    this.setState({ dice, pick: -1 }, () => requestAnimationFrame(() => requestAnimationFrame(() => dice.forEach((d, k) => { const el = this.drt[k].cube.current; if (!el) return; el.style.animation = 'none'; void el.offsetHeight; if (!this.reduced) el.style.animation = 'dice-tumble ' + Math.round(pre + k * st) + 'ms cubic-bezier(0.19,1,0.22,1) forwards'; }))));
+    this.later(() => this.setD(d => ({ ...d, faces: [d.v].concat(this.shuffle([1, 2, 3, 4, 5, 6].filter(x => x !== d.v))) })), 120);
+    dice.forEach((d, k) => this.later(() => this.setD((x, j) => j === k ? { ...x, settled: true } : x), pre + k * st));
+    this.later(() => this.setState({ phase: 'place', pick: -1 }), pre + (n - 1) * st + 140);
+  }
+  tapDie(i) { const S = this.state; if (S.phase !== 'place') return; const d = S.dice[i]; if (!d || d.used || d.fly) return; this.setState({ pick: S.pick === i ? -1 : i, hint: '' }); }
+  tapSlot(r, c) {
+    const S = this.state; if (S.phase !== 'place' || r !== this.active(S)) return;
+    const sl = S.rows[r].slots[c], key = r + '-' + c, el = this.q('[data-slot="' + key + '"]');
+    if (!sl || sl.die || this.pend.has(key)) return;
+    if (this.shipIn(S, c) < 0) return this.nope(el, 'NO SHIP UNDER THAT COLUMN');
+    this.spend(sl.v, key, el, () => this.fill(r, c));
+  }
+  tapCore() { const S = this.state; if (S.phase !== 'place' || !S.core.open || S.core.die || this.pend.has('core')) return; if (!this.onBoard(S)) return; this.spend(S.core.v, 'core', this.q('[data-core]'), () => this.crack()); }
+  spend(v, key, el, then) {
+    const S = this.state; let di = S.pick;
+    if (di >= 0 && S.dice[di].v !== v) return this.nope(el, 'THAT SLOT NEEDS A ' + v);
+    if (di < 0) di = S.dice.findIndex(d => !d.used && !d.fly && d.v === v);
+    if (di < 0) return this.nope(el, 'NO ' + v + ' IN THE TRAY');
+    this.pend.add(key);
+    this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, fly: true } : x), pick: -1, hint: '' }));
+    this.flyDie(di, el, v, () => { this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, fly: false, used: true } : x) })); this.pend.delete(key); then(); });
+  }
+  flyDie(di, el, v, done) {
+    const g = this.gen, fin = () => { if (g === this.gen) done(); };
+    const from = this.rect(this.drt[di].box.current), to = this.rect(el), fx = this.fxRef.current;
+    if (!from || !to || !fx || this.reduced) return fin();
+    const sz = 30, x1 = to.x + to.w / 2 - sz / 2, y1 = to.y + to.h / 2 - sz / 2, dx = from.x + from.w / 2 - sz / 2 - x1, dy = from.y + from.h / 2 - sz / 2 - y1;
+    const im = document.createElement('img'); im.src = 'assets/flat_' + v + '_48.png';
+    im.style.cssText = 'position:absolute;left:' + x1 + 'px;top:' + y1 + 'px;width:' + sz + 'px;height:' + sz + 'px;display:block;image-rendering:pixelated;filter:drop-shadow(3px 3px 0 #240011)';
+    fx.appendChild(im);
+    im.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(1.3)' }, { transform: 'translate(' + dx * .45 + 'px,' + (dy * .45 - 40) + 'px) scale(1.5)', offset: .5 }, { transform: 'translate(0,0) scale(1)' }], { duration: 420, easing: 'cubic-bezier(.3,.7,.4,1)' }).onfinish = () => { im.remove(); fin(); };
+  }
+  fill(r, c) {
+    const S = this.state, rows = S.rows.map((row, j) => j !== r ? row : { ...row, slots: row.slots.map((sl, k) => k === c && sl ? { ...sl, die: sl.v } : sl) });
+    const done = rows[r].slots.every(sl => !sl || sl.die), el = this.q('[data-slot="' + r + '-' + c + '"]'), p = this.center(el);
+    this.setState({ rows, filled: S.filled + 1 });
+    this.punch(el, 1.25); if (p) this.sparks(p.x, p.y, [this.LAYER_COL[r], '#ffffff'], 10);
+    if (done) this.later(() => this.breakLayer(r), 260);
+  }
+  // LAYER BROKEN: the row blows apart outward; each layer climbs the Ladder (bigger stamp, more shake, more shards)
+  breakLayer(r) {
+    const S = this.state, k = S.broke, last = r === S.rows.length - 1, L = this.LADDER[Math.min(k, this.LADDER.length - 1)], col = this.LAYER_COL[r];
+    const rowEl = this.q('[data-row="' + r + '"]'), rc = this.center(rowEl), rr = this.rect(rowEl);
+    [0, 1, 2, 3].forEach(c => {
+      const p = this.center(this.q('[data-slot="' + r + '-' + c + '"]')); if (!p || !rc) return;
+      const ox = p.x - rc.x, n = 8 + k * 3;
+      for (let i = 0; i < n; i++) {
+        const a = Math.atan2((Math.random() - .5) * 1.6, ox === 0 ? (Math.random() - .5) : ox) + (Math.random() - .5) * .9, d = 50 + k * 18 + Math.random() * 70, sz = 4 + Math.round(Math.random() * (4 + k)), deg = Math.round(Math.random() * 360);
+        this.anim(this.fxEl('left:' + (p.x - sz / 2) + 'px;top:' + (p.y - sz / 2) + 'px;width:' + sz + 'px;height:' + sz + 'px;background:' + (i % 3 ? col : '#ffffff') + ';box-shadow:0 0 6px ' + col), [{ transform: 'translate(0,0) rotate(0deg)', opacity: 1 }, { transform: 'translate(' + (Math.cos(a) * d).toFixed(1) + 'px,' + (Math.sin(a) * d).toFixed(1) + 'px) rotate(' + deg + 'deg)', opacity: 0 }], { duration: 620 + Math.random() * 360, easing: 'steps(' + (8 + k) + ')' });
+      }
+      this.burst(p.x, p.y, 1 + (k > 1 ? 1 : 0), 6, 380);
+    });
+    if (rr) this.anim(this.fxEl('left:' + rr.x + 'px;top:' + (rr.y + rr.h / 2 - 4) + 'px;width:' + rr.w + 'px;height:8px;background:#ffffff;box-shadow:0 0 18px ' + col), [{ transform: 'scaleX(.1)', opacity: 1 }, { transform: 'scaleX(1.25) scaleY(3)', opacity: 0 }], { duration: 420, easing: 'ease-out' });
+    this.setState(s => ({ broke: s.broke + 1, rows: s.rows.map((row, j) => j === r ? { ...row, broken: true } : row) }));
+    this.flash(last ? '#ffffff' : col, last ? .6 : .25 + k * .08, 320, last ? 3 : 0); this.shake(6 + k * 3, 300 + k * 60);
+    this.stamp('LAYER BROKEN', last ? 'THE CORE IS OPEN' : 'LAYER ' + (r + 2) + ' / ' + S.rows.length, L, 300, 42 + k * 6);
+    if (last) this.later(() => this.setState(s => ({ core: { ...s.core, open: true } }), () => { const el = this.q('[data-core]'); if (el && el.animate && !this.reduced) el.animate([{ transform: 'scale(0) rotate(-90deg)' }, { transform: 'scale(1.3) rotate(8deg)', offset: .7 }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.34,1.56,.64,1)' }); }), 700);
+  }
+  crack() {
+    const c = this.coreRef.current, h = this.center(c);
+    this.setState(s => ({ phase: 'boom', core: { ...s.core, die: s.core.v }, filled: s.filled + 1 }));
+    if (c && c.animate && !this.reduced) c.animate([{ filter: 'brightness(1)' }, { filter: 'brightness(5)', offset: .5 }, { filter: 'brightness(1)' }], { duration: 160, iterations: 6 });
+    if (h) for (let q = 0; q < 6; q++) this.later(() => { this.burst(h.x + (Math.random() - .5) * 110, h.y + (Math.random() - .5) * 70, q % 2 ? 2 : 1); this.shake(4, 180); }, q * 130);
+    this.later(() => { if (c) c.style.opacity = 0; this.flash('#ffffff', .85, 340, 3); this.shake(14, 460); if (h) { this.burst(h.x, h.y, 5); this.debris(h.x, h.y, ['#ffffff', '#ffd644', '#3f7bff', '#8fc0ff', '#ff4d4d'], 34, 50); } this.stamp('CORE CRACKED', 'THE LOCK IS OPEN', '#48f320', 300); }, 6 * 130 + 60);
+    this.later(() => this.setState(s => ({ phase: 'won', gold: s.gold + this.sec().bounty }), () => this.endIn()), 2400);
+  }
+  tapArrow(c, d) {
+    const S = this.state; if (S.phase !== 'place') return;
+    const a = this.shipIn(S, c), t = c + d; if (a < 0 || t < 0 || t > 3) return;
+    let di = S.pick;
+    if (di < 0) { // no die picked: spend the least useful one (nothing in reach takes it), else the lowest
+      const fr = this.freeDice(S); if (!fr.length) return this.say('NO DICE LEFT TO MOVE WITH');
+      const spare = fr.filter(j => !this.fits(S, S.dice[j].v).length);
+      di = (spare.length ? spare : fr).sort((x, y) => S.dice[x].v - S.dice[y].v)[0];
+    }
+    const b = this.shipIn(S, t), bc = this.center(this.drt[di].box.current);
+    if (bc) this.sparks(bc.x, bc.y, ['#48f320', '#ffffff'], 8);
+    this.setState(s => ({ dice: s.dice.map((x, j) => j === di ? { ...x, used: true } : x), pick: -1, hint: '', ships: s.ships.map((x, j) => j === a ? { ...x, col: t } : j === b ? { ...x, col: c } : x) }));
+  }
+  advance() {
+    const S = this.state; if (S.phase !== 'place' || this.pend.size) return;
+    this.setState({ phase: 'fire', pick: -1, hint: '', dice: S.dice.map(d => ({ ...d, used: true })) });
+    S.lit.forEach((c, q) => this.later(() => this.beam(c), 380 + q * 420));
+    const t = 380 + S.lit.length * 420;
+    this.later(() => this.setState({ lit: [] }), t + 300);
+    this.later(() => { if (!this.state.ships.some(sh => sh.alive)) return this.lose(); this.startRound(); }, t + 1400);
+  }
+  beam(c) {
+    const lr = this.rect(this.laneRefs[c].current), cr = this.rect(this.coreRef.current);
+    if (lr && cr) {
+      const top = cr.y + cr.h * .55, hgt = lr.y + lr.h - top;
+      this.anim(this.fxEl('left:' + (lr.x + 4) + 'px;top:' + top + 'px;width:' + (lr.w - 8) + 'px;height:' + hgt + 'px;transform-origin:50% 0;background:linear-gradient(90deg,#ff4d4d,#ffd0d0 30%,#ffffff 50%,#ffd0d0 70%,#ff4d4d);box-shadow:0 0 30px #ff4d4d,0 0 60px rgba(255,77,77,.5)'), [{ transform: 'scaleY(0) scaleX(.5)', opacity: 1 }, { transform: 'scaleY(1) scaleX(1.1)', opacity: 1, offset: .16 }, { transform: 'scaleY(1) scaleX(1)', opacity: 1, offset: .5 }, { transform: 'scaleY(1) scaleX(.1)', opacity: 0 }], { duration: 700, easing: 'cubic-bezier(.2,.8,.3,1)' });
+      this.later(() => { this.sparks(lr.x + lr.w / 2, lr.y + lr.h - 10, ['#ff4d4d', '#ffffff', '#ffd644'], 16); this.burst(lr.x + lr.w / 2, lr.y + lr.h - 30, 2, 6, 360); }, 110);
+    }
+    this.flash('#ff1a1a', .4, 360); this.shake(14, 460);
+    this.later(() => this.hit(c), 110);
+  }
+  hit(c) {
+    const S = this.state, si = this.shipIn(S, c); if (si < 0) return;
+    const sh = S.ships[si], f = this.FLEET[sh.k], el = this.shipRefs[si].current, p = this.center(el);
+    if (sh.shield) { // bubble pops on the first hit of the fight
+      this.setState(s => ({ ships: s.ships.map((x, j) => j === si ? { ...x, shield: false } : x) }));
+      if (p) { this.anim(this.fxEl('left:' + (p.x - 30) + 'px;top:' + (p.y - 38) + 'px;width:60px;height:60px;border:3px solid #6ad0ff;border-radius:50%;box-sizing:border-box;box-shadow:0 0 16px #6ad0ff'), [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(2)', opacity: 0 }], { duration: 480, easing: 'steps(6)' }); this.sparks(p.x, p.y - 8, ['#6ad0ff', '#ffffff'], 16); this.pop(p.x, p.y - 44, 'SHIELDED', '#6ad0ff', 30); }
+      return;
+    }
+    if (el && el.animate && !this.reduced) el.animate([{ filter: 'brightness(1)', transform: 'none', opacity: 1 }, { filter: 'brightness(6)', transform: 'scaleX(1.2) scaleY(.7)', opacity: 1, offset: .3 }, { filter: 'brightness(6)', transform: 'scaleX(.15) scaleY(1.6)', opacity: 0 }], { duration: 360, easing: 'steps(5)' });
+    if (p) { this.burst(p.x, p.y - 8, 3); this.debris(p.x, p.y - 8, [f.col, '#ffffff', '#ff9a3c', '#5a1a2a'], 20, 40); this.pop(p.x, p.y - 44, 'VAPORIZED', '#ff4d4d', 30); }
+    this.setState(s => ({ ships: s.ships.map((x, j) => j === si ? { ...x, alive: false, col: -1 } : x) }));
+    this.later(() => this.reserveIn(c), 650);
+  }
+  reserveIn(c) {
+    const S = this.state; if (this.shipIn(S, c) >= 0) return;
+    const ri = S.ships.findIndex(sh => sh.alive && sh.col < 0); if (ri < 0) return;
+    const f = this.FLEET[S.ships[ri].k], from = this.center(this.resRef.current), lr = this.rect(this.laneRefs[c].current), to = lr && { x: lr.x + lr.w / 2, y: lr.y + lr.h - 88 }, g = this.gen, fx = this.fxRef.current;
+    this.setState(s => ({ ships: s.ships.map((x, j) => j === ri ? { ...x, col: c, hid: true } : x) }));
+    const land = () => { if (g !== this.gen) return; this.setState(s => ({ ships: s.ships.map((x, j) => j === ri ? { ...x, hid: false } : x) })); if (to) { this.sparks(to.x, to.y, [f.col, '#ffffff'], 12); this.pop(to.x, to.y - 40, f.name + ' IN', f.col, 24); } };
+    if (!from || !to || !fx || this.reduced) return this.later(land, 300);
+    const im = document.createElement('img'); im.src = 'assets/' + f.ship + '.png';
+    im.style.cssText = 'position:absolute;left:' + (to.x - 18) + 'px;top:' + (to.y - 22) + 'px;width:36px;height:44px;display:block;z-index:4;image-rendering:pixelated;filter:drop-shadow(0 0 8px ' + f.col + ')';
+    fx.appendChild(im);
+    const dx = from.x - to.x, dy = from.y - to.y;
+    im.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.7)' }, { transform: 'translate(' + dx * .5 + 'px,' + (dy * .5 - 50) + 'px) scale(1.3)', offset: .5 }, { transform: 'translate(0,0) scale(1)' }], { duration: 560, easing: 'cubic-bezier(.3,.7,.4,1)' }).onfinish = () => { im.remove(); land(); };
+  }
+  lose() {
+    this.setState({ phase: 'boom' });
+    this.later(() => { this.flash('#ff1a1a', .5, 520); this.shake(10, 420); }, 200);
+    this.later(() => this.setState({ phase: 'lost' }, () => this.endIn()), 1200);
+  }
+  tick() {
+    const t = (performance.now() - this.t0) / 1000, A = this.driftA.current, B = this.driftB.current, c = this.coreRef.current;
+    if (A) A.style.backgroundPosition = '0px ' + ((t * 12) % 900).toFixed(1) + 'px';
+    if (B) B.style.backgroundPosition = '120px ' + (300 + (t * 26) % 1350).toFixed(1) + 'px';
+    if (c) c.style.transform = 'translateY(' + (Math.sin(t * 1.4) * 3).toFixed(2) + 'px)';
+    this.drt.forEach((r, i) => {
+      const fl = r.float.current, sh = r.shadow.current, d = this.state.dice[i]; if (!fl || !sh || !d) return;
+      const st = d.settled, a = r.angle, bob = st ? Math.sin(a) * 2 : 0, sway = st ? Math.cos(a * .7) : 0, rot = st ? Math.sin(a * .5) * 2 : 0;
+      fl.style.transform = 'translateX(' + sway + 'px) translateY(' + (-bob) + 'px) rotate(' + rot + 'deg)';
+      const k = 1 - bob / 20; sh.style.transform = 'translateX(' + (sway * .6) + 'px) scale(' + k + ')'; sh.style.opacity = st ? .35 + .35 * k : 0;
+      r.angle += .03;
+    });
+  }
+  renderVals() {
+    const S = this.state, ph = S.phase, sec = this.sec(), placing = ph === 'place', ar = this.active(S);
+    const pd = S.pick >= 0 ? S.dice[S.pick] : null, free = this.freeDice(S);
+    const hot = new Set(); (pd ? [pd.v] : free.map(j => S.dice[j].v)).forEach(v => this.fits(S, v).forEach(k => hot.add(k)));
+    const used = S.dice.filter(d => d.used).length, charge = ph === 'fire' ? 100 : placing ? Math.round(15 + 85 * used / Math.max(1, S.dice.length)) : 8;
+    const rows = S.rows.map((row, r) => {
+      const col = this.LAYER_COL[r], on = r === ar;
+      return { r, op: row.broken ? 0 : on ? 1 : .3, cells: row.slots.map((sl, c) => {
+        if (!sl) return { has: false };
+        const key = r + '-' + c, fill = sl.die > 0, reach = on && this.shipIn(S, c) >= 0, hl = placing && hot.has(key);
+        return { has: true, key, tap: () => this.tapSlot(r, c), label: '' + sl.v, hasDie: fill, noDie: !fill, dieSrc: 'assets/flat_' + (sl.die || 1) + '_32.png', notch: col,
+          bw: fill ? 3 : 2, bs: fill || reach || hl ? 'solid' : 'dashed', bd: hl ? '#48f320' : fill ? col : reach ? col : on ? 'rgba(242,242,242,.35)' : col,
+          bg: hl ? 'rgba(20,60,14,.95)' : fill ? this.hexA(col, .28) : 'rgba(10,8,33,.94)', txt: hl ? '#48f320' : reach ? '#ffffff' : '#6b7187',
+          glow: hl ? '0 0 14px rgba(72,243,32,.65)' : fill ? 'inset 0 0 0 2px #0a0821,0 0 10px ' + this.hexA(col, .6) : reach ? '0 0 8px ' + this.hexA(col, .55) : 'none', pe: on && placing && !row.broken ? 'auto' : 'none' };
+      }) };
+    }).reverse();
+    const lanes = [0, 1, 2, 3].map(c => { const lit = S.lit.includes(c); return { ref: this.laneRefs[c], lit, charge,
+      bg: lit ? 'linear-gradient(180deg,rgba(255,77,77,.38),rgba(255,77,77,.12))' : 'rgba(10,8,33,.55)', bs: lit ? 'solid' : 'dashed', bd: lit ? '#ff4d4d' : 'rgba(143,192,255,.18)', glow: lit ? '0 0 18px rgba(255,77,77,.45)' : 'none' }; });
+    const cols = [0, 1, 2, 3].map(c => {
+      const si = this.shipIn(S, c), has = si >= 0, live = has && placing && free.length > 0;
+      return { empty: !has, visL: live && c > 0 ? 'visible' : 'hidden', visR: live && c < 3 ? 'visible' : 'hidden', tapL: () => this.tapArrow(c, -1), tapR: () => this.tapArrow(c, 1),
+        abd: pd ? '#48f320' : '#3a3a5a', acol: pd ? '#48f320' : '#a9b0c0', aglow: pd ? '0 0 10px rgba(72,243,32,.45)' : 'none' };
+    });
+    const ships = S.ships.map((sh, i) => { const f = this.FLEET[sh.k], on = sh.alive && sh.col >= 0;
+      return { ref: this.shipRefs[i], x: on ? sh.col * (this.CW + this.GAP) : 0, op: on && !sh.hid ? 1 : 0, src: 'assets/' + f.ship + '.png', name: f.name, col: f.col, shieldOn: on && sh.shield, danger: on && !sh.shield && S.lit.includes(sh.col) }; });
+    const reserve = S.ships.filter(sh => sh.alive && sh.col < 0).map(sh => ({ src: 'assets/' + this.FLEET[sh.k].ship + '.png', name: this.FLEET[sh.k].name }));
+    const coreHl = placing && hot.has('core');
+    const core = { open: S.core.open, v: S.core.v, tap: () => this.tapCore(), hasDie: S.core.die > 0, noDie: !(S.core.die > 0), dieSrc: 'assets/flat_' + (S.core.die || 1) + '_48.png',
+      bd: coreHl ? '#48f320' : '#ff4d4d', col: coreHl ? '#48f320' : '#ffffff', bg: coreHl ? 'rgba(20,60,14,.95)' : 'rgba(10,8,33,.94)', glow: coreHl ? '0 0 18px rgba(72,243,32,.75)' : '0 0 18px rgba(255,77,77,.75)' };
+    const lostNames = S.ships.filter(s => !s.alive).map(s => this.FLEET[s.k].name), nRows = S.rows.length;
+    const lostRow = { src: 'assets/spaceship_icon.png', label: lostNames.length ? 'LOST · ' + lostNames.join(', ') : 'SHIPS LOST', value: lostNames.length ? '-' + lostNames.length : 'NONE', col: lostNames.length ? '#b3201c' : '#2e8a12' };
+    const end = ph === 'won' ? { title: 'CORE CRACKED', col: '#48f320', sub: lostNames.length ? 'THE LOCK COST YOU' : 'NOT A SCRATCH', stamp: 'SECTOR ' + (String((this.props || {}).sector) === '3' ? 3 : 2) + ' · ROUND ' + S.round, hasTotal: true,
+      rows: [{ src: 'assets/flat_6_32.png', label: 'LAYERS BROKEN', value: S.broke + '/' + nRows, col: '#0a0821' }, { src: 'assets/flat_6_32.png', label: 'SLOTS FILLED', value: '' + S.filled, col: '#0a0821' }, lostRow, { src: 'assets/coin.png', label: 'BOUNTY', value: '+' + sec.bounty, col: '#0a0821' }, { src: 'assets/prestige.png', label: 'PRESTIGE', value: '+' + sec.prestige, col: '#0a0821' }] }
+      : ph === 'lost' ? { title: 'FLEET LOST', col: '#ff4d4d', sub: 'THE LOCK HOLDS', stamp: 'ROUND ' + S.round, hasTotal: false,
+        rows: [{ src: 'assets/flat_6_32.png', label: 'LAYERS BROKEN', value: S.broke + '/' + nRows, col: '#0a0821' }, lostRow, { src: 'assets/prestige.png', label: 'PRESTIGE', value: 'LOST', col: '#b3201c' }] }
+      : { title: 'SLIPPED AWAY', col: '#ffd644', sub: 'THE DECOY DRAWS ITS FIRE', stamp: 'NO CONTACT', hasTotal: true, rows: [{ src: 'assets/coin.png', label: 'DECOY', value: '-' + this.DECOY_COST, col: '#b3201c' }] };
+    return {
+      wrapRef: this.wrapRef, stageRef: this.stageRef, shakeRef: this.shakeRef, fxRef: this.fxRef, driftA: this.driftA, driftB: this.driftB, boardRef: this.boardRef, coreRef: this.coreRef,
+      trayRef: this.trayRef, resRef: this.resRef, introRef: this.introRef, endRef: this.endRef,
+      sectorN: String((this.props || {}).sector) === '3' ? 3 : 2, roundTxt: S.round || '-', gold: S.gold, layerN: nRows, fleetN: S.ships.length, bounty: '+' + sec.bounty, decoyCost: this.DECOY_COST,
+      progTxt: ar >= 0 ? 'LAYER ' + (ar + 1) + ' / ' + nRows : 'CORE EXPOSED', progCol: ar >= 0 ? this.LAYER_COL[ar] : '#ff4d4d',
+      coreBeams: S.lit.map(c => ({ x: Math.round(16 + c * (this.CW + this.GAP) + this.CW / 2 - 4) })),
+      rows, lanes, cols, ships, reserve, noReserve: !reserve.length, core,
+      hint: S.hint || this.HINT, hintCol: S.hint ? S.hintCol : '#a9b0c0',
+      isIntro: ph === 'intro', isEnd: ph === 'won' || ph === 'lost' || ph === 'fled',
+      rolled: S.dice.map((d, i) => { const r = this.drt[i], on = S.pick === i, o = { boxRef: r.box, floatRef: r.float, shadowRef: r.shadow, ref: r.cube, scale: on ? 'scale(1.15)' : d.settled ? 'scale(1)' : 'scale(.7)', show: d.used || d.fly ? 0 : 1, ring: on ? '#ffd644' : 'transparent', glow: on ? '0 0 14px 2px #ffd644' : 'none', tap: () => this.tapDie(i) }; d.faces.forEach((f, j) => { o['f' + j] = 'assets/flat_' + f + '_48.png'; }); return o; }),
+      btn: placing ? { label: 'END ROUND', op: 1 } : { label: ph === 'roll' ? 'ROLLING' : ph === 'fire' ? 'BEAMS FIRE' : ph === 'intro' ? 'FIGHT' : 'BRACE', op: .4 },
+      primary: () => { if (placing) this.advance(); },
+      engage: () => this.engage(), decoy: () => this.decoy(), restart: () => this.restart(), end
+    };
+  }
+}
+</script>
+</body>
+</html>

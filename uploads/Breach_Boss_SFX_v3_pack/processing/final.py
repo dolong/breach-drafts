@@ -1,0 +1,26 @@
+# id, stem, tier, event, trigger, cap_ms (None = natural tail), lufs target, variants
+FINAL = [
+ ("gate_jump_charge","DSGNMisc_MOVEMENT-Mecha Large Takeoff","big","Ships stream into the gate","Jump Gate v2 · jump() at phase 'jump'",None,-14,range(1,7)),
+ ("gate_jump_exit","MAGSpel_CAST-Teleport Downer","big","White flash as the fleet exits the gate","Jump Gate v2 · jump() with the white flash",1500,-14,range(1,7)),
+ ("boss_engage","DSGNSynth_BUFF-Mecha Lock In","combat","FIGHT / ENGAGE confirm","Jump Gate v2 · fight(); boss files · engage()",900,-14,range(1,7)),
+ ("gate_decoy","DSGNMisc_SKILL RELEASE-Flare Gun","combat","DECOY flare launches","Jump Gate v2 · decoy()",None,-14,range(1,7)),
+ ("fleet_shot","DSGNMisc_PROJECTILE-Laser Shot","combat","A 1-damage ship fires","fireSeq() muzzle(), dmg 1",600,-17,range(1,7)),
+ ("fleet_shot_mid","DSGNMisc_PROJECTILE-Laser Bursts","combat","A 2–3 damage ship fires","fireSeq() muzzle(), dmg 2–3",450,-15.5,range(1,7)),
+ ("fleet_shot_big","DSGNMisc_SKILL IMPACT-Mecha Purple Laser","combat","A 4+ damage ship fires","fireSeq() muzzle(), dmg 4+",None,-14,range(1,7)),
+ ("boss_hit","DSGNMisc_HIT-Laser Hit","combat","Bolt hits the boss","hitEnemy(), dmg < 4",None,-16,range(1,7)),
+ ("boss_hit_heavy","DSGNMisc_HIT-Mecha Armor Piercer","combat","Heavy hit on the boss","hitEnemy(), dmg ≥ 4",900,-14,range(1,7)),
+ ("boss_hit_crit","DSGNMisc_SKILL IMPACT-Critical Strike","combat","×2 hit on an open core / inhaling maw","hitEnemy() when exposed()",1000,-13,range(1,7)),
+ ("shield_up","DSGNSynth_BUFF-Bonus Max Shield","combat","Block added","addBlock() / block ship fires",None,-15,range(1,7)),
+ ("shield_block","DSGNTonl_SKILL IMPACT-Deflected Hit","combat","Incoming damage blocked","resolveEnemy() when blocked > 0",700,-15,range(1,7)),
+ ("hull_hit","DSGNImpt_EXPLOSION-Bass Hit","combat","Your hull takes 1–2","hullHit() n < 3 (not MISS)",900,-15,range(1,6)),
+ ("hull_hit_heavy","DSGNImpt_EXPLOSION-Mecha Core Damage","combat","Your hull takes 3+","hullHit() / biteDmg() n ≥ 3",1200,-14.5,range(1,7)),
+ ("ship_destroyed","DSGNImpt_EXPLOSION-Mecha Multiple Bangs","big","A ship is eaten / vaporised","sinkShip(); vaporize() +170ms",1400,-14,range(1,7)),
+ ("boss_phase2_overdrive","DSGNSynth_CAST-Mecha Speeding","big","Mother Core OVERDRIVE","Mother Core afterPlayer() OVERDRIVE",2000,-14,range(1,7)),
+ ("marauder_shot","DSGNMisc_HIT-Mecha Laser Pistol","combat","Marauder blaster shot","Marauder enemyTurn() each muzzle()",450,-16,range(1,7)),
+ ("marauder_charge","DSGNSynth_CAST-Mecha Laser Prepare","big","Marauder CHARGING round","Marauder enemyTurn() atk 0",None,-14,range(1,7)),
+ ("mothercore_shot","DSGNTonl_SKILL RELEASE-Tiny Energy Sphere","combat","Mother Core plasma shot","Mother Core enemyTurn() each muzzle()",240,-17,range(1,7)),
+ ("mothercore_beam","DSGNMisc_SKILL IMPACT-Mecha Black Laser","big","CORE BEAM fires","Mother Core vaporize() at the start",None,-13,range(1,7)),
+ ("garganta_regrow","DSGNMisc_CAST-Slime Ball","combat","+1 REGROWS","Garganta endRound() regen",None,-15,range(1,7)),
+ ("garganta_bite_layer","DSGNMisc_HIT-Mecha Gore Cruncher","combat","Meat layer on the jaw snap","Garganta bite() +335ms, under garganta_bite",600,-16,range(1,7)),
+]
+TIER={"dice":-12,"ui":-9,"combat":-6,"big":0}

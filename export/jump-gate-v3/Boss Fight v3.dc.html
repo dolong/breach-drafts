@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<script src="boss-sfx.js"></script>
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}a{color:#6af5d6}a:hover{color:#b8fff0}@keyframes dice-tumble{0%{transform:rotateX(0deg) rotateY(0deg)}100%{transform:rotateX(1080deg) rotateY(720deg)}}@keyframes blink{50%{opacity:.3}}</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden">
+<div ref="{{ stageRef }}" data-screen-label="Boss Fight v3" style="position:relative;flex:none;width:390px;height:844px;overflow:hidden;background:#000;image-rendering:pixelated;color:#ffffff;transform-origin:center center;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div ref="{{ driftA }}" style="position:absolute;inset:0;background:#000 url(assets/space.png) 0 0/600px 900px repeat"></div>
+<div ref="{{ driftB }}" style="position:absolute;inset:0;background:url(assets/space.png) 120px 300px/900px 1350px repeat;opacity:.28;mix-blend-mode:screen"></div>
+<sc-if value="{{ isM }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:radial-gradient(70% 28% at 50% 20%,rgba(255,77,77,.2) 0%,rgba(255,77,77,0) 100%)"></div></sc-if>
+<sc-if value="{{ isC }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:radial-gradient(85% 30% at 50% 19%,rgba(63,123,255,.32) 0%,rgba(63,123,255,0) 100%)"></div></sc-if>
+<sc-if value="{{ isG }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:radial-gradient(80% 32% at 50% 18%,rgba(110,200,60,.12) 0%,rgba(110,200,60,0) 100%)"></div></sc-if>
+</div>
+<div ref="{{ shakeRef }}" style="position:absolute;inset:0;display:flex;flex-direction:column">
+
+<sc-if value="{{ isG }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;z-index:0;left:0;top:0;width:390px;height:560px;overflow:hidden;pointer-events:none">
+<div ref="{{ enemyRef }}" style="position:absolute;z-index:1;left:27px;top:-12px;width:336px;height:302px;transform-origin:50% -30%">
+<div ref="{{ hitRef }}" style="position:absolute;inset:0">
+<img ref="{{ imgRef }}" src="assets/garganta_v4.png" alt="Garganta" style="width:336px;height:302px;display:block;image-rendering:pixelated">
+<div ref="{{ eye0box }}" data-fw="19.5" style="position:absolute;left:112.5px;top:130.5px;width:19.5px;height:21px;background:url(assets/garg_eyes3_0.png) 0 0/331.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ eye1box }}" data-fw="16.5" style="position:absolute;left:208.5px;top:130.5px;width:16.5px;height:21px;background:url(assets/garg_eyes3_1.png) 0 0/280.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ eye2box }}" data-fw="15" style="position:absolute;left:121.5px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_2.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ eye3box }}" data-fw="15" style="position:absolute;left:204px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_3.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ biteRef }}" style="position:absolute;left:58px;top:60px;width:220.35px;height:294.45px;background:url(assets/garganta_bite3.png) 0 0/220.35px 294.45px no-repeat;image-rendering:pixelated;opacity:0;pointer-events:none"></div>
+<div ref="{{ shutRef }}" style="position:absolute;left:63.75px;top:10.9px;width:220.35px;height:294.45px;background:url(assets/garganta_shut.png) 0 0/220.35px 294.45px no-repeat;image-rendering:pixelated;opacity:0;pointer-events:none"></div>
+<img ref="{{ hurtRef }}" src="assets/garganta_hurt7.png" alt="" style="position:absolute;left:0;top:-99px;width:336px;height:400.5px;display:block;image-rendering:pixelated;visibility:hidden;transform-origin:168px 0">
+<div ref="{{ coreRef }}" style="position:absolute;left:147px;top:264px;width:42px;height:42px;opacity:.1;mix-blend-mode:screen;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);background:#ff3a6a"><div style="position:absolute;left:12px;top:12px;width:18px;height:18px;background:#ffd0dc;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%)"></div></div>
+</div>
+<sc-if value="{{ exposedOn }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:134px;top:251px;width:68px;height:68px">
+<div style="position:absolute;left:0;top:0;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:3px 0 0 3px"></div>
+<div style="position:absolute;right:0;top:0;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:3px 3px 0 0"></div>
+<div style="position:absolute;left:0;bottom:0;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:0 0 3px 3px"></div>
+<div style="position:absolute;right:0;bottom:0;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:0 3px 3px 0"></div>
+</div>
+</sc-if>
+</div>
+<div style="position:absolute;left:0;right:0;top:280px;height:200px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.7) 100%)"></div>
+<div ref="{{ droneWrap }}" style="position:absolute;inset:0">
+<sc-for list="{{ drones }}" as="dr" hint-placeholder-count="0"><div ref="{{ dr.ref }}" style="position:absolute;left:184px;top:147px;width:22px;height:27px;will-change:transform"><img src="{{ dr.src }}" alt="{{ dr.name }}" style="width:22px;height:27px;display:block;filter:drop-shadow(1px 1px 0 #000)"></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<div style="position:relative;flex:none;margin:12px 16px 0;height:44px;display:flex;align-items:stretch;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 10px;border-right:2px solid #3a3a5a"><div style="flex:none;width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;animation:blink .6s steps(2) infinite"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">ROUND</span><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1">{{ round }}</span></div>
+<div ref="{{ goldRef }}" style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px;border-right:2px solid #3a3a5a"><img src="assets/coin.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#ffd644">{{ gold }}</span></div>
+<div ref="{{ presRef }}" style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px"><img src="assets/prestige.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#c79bff">{{ pres }}</span></div>
+</div>
+
+<div style="position:relative;flex:none;margin:10px 16px 0;height:214px">
+<sc-if value="{{ isM }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;right:0;top:0;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #ff4d4d;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#ff4d4d">MARAUDER</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ eSegs }}" as="s" hint-placeholder-count="10"><div style="flex:1;min-width:0;height:10px;background:{{ s.bg }};border:1px solid #f2f2f2;box-sizing:border-box"></div></sc-for></div>
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ eHp }}</span>
+</div>
+<div style="position:absolute;left:0;right:0;top:44px;height:136px;display:flex;align-items:center;justify-content:center;pointer-events:none">
+<div style="position:absolute;width:230px;height:140px;background:radial-gradient(closest-side,rgba(255,77,77,.24),rgba(255,77,77,0))"></div>
+<div ref="{{ enemyRef }}" style="position:relative;width:110px;height:134px">
+<div style="position:absolute;left:-12px;top:-6px;width:14px;height:14px;border-top:3px solid rgba(255,77,77,.85);border-left:3px solid rgba(255,77,77,.85)"></div>
+<div style="position:absolute;right:-12px;top:-6px;width:14px;height:14px;border-top:3px solid rgba(255,77,77,.85);border-right:3px solid rgba(255,77,77,.85)"></div>
+<div style="position:absolute;left:-12px;bottom:-6px;width:14px;height:14px;border-bottom:3px solid rgba(255,77,77,.85);border-left:3px solid rgba(255,77,77,.85)"></div>
+<div style="position:absolute;right:-12px;bottom:-6px;width:14px;height:14px;border-bottom:3px solid rgba(255,77,77,.85);border-right:3px solid rgba(255,77,77,.85)"></div>
+<div ref="{{ hitRef }}" style="position:absolute;inset:0"><img ref="{{ imgRef }}" src="assets/kestrel_h11.png" alt="Marauder" style="width:110px;height:134px;display:block;transform:rotate(180deg)"></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isC }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;top:0;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #3f7bff;border-radius:6px;box-shadow:3px 3px 0 #0a1440;box-sizing:border-box">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#8fc0ff">MOTHER CORE</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ eSegs }}" as="s" hint-placeholder-count="10"><div style="flex:1;min-width:0;height:10px;background:{{ s.bg }};border:1px solid #f2f2f2;box-sizing:border-box"></div></sc-for></div>
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ eHp }}</span>
+</div>
+<div style="position:absolute;left:0;right:0;top:40px;height:146px;display:flex;align-items:center;justify-content:center;pointer-events:none">
+<div style="position:absolute;width:330px;height:170px;background:radial-gradient(closest-side,rgba(63,123,255,.3),rgba(63,123,255,0))"></div>
+<div ref="{{ enemyRef }}" style="position:relative;width:200px;height:144px">
+<div ref="{{ droneWrap }}" style="position:absolute;inset:0">
+<sc-for list="{{ drones }}" as="dr" hint-placeholder-count="0"><div ref="{{ dr.ref }}" style="position:absolute;left:89px;top:59px;width:22px;height:27px;will-change:transform"><img src="{{ dr.src }}" alt="{{ dr.name }}" style="width:22px;height:27px;display:block;filter:drop-shadow(1px 1px 0 #000)"></div></sc-for>
+</div>
+<div ref="{{ hitRef }}" style="position:absolute;inset:0;z-index:1">
+<img ref="{{ imgRef }}" src="assets/mother_core.png" alt="Mother Core" style="width:200px;height:144px;display:block;image-rendering:auto">
+<div ref="{{ coreRef }}" style="position:absolute;left:105px;top:55px;width:32px;height:32px;opacity:.3;mix-blend-mode:screen;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);background:#ff4d4d"><div style="position:absolute;left:8px;top:8px;width:16px;height:16px;background:#ffffff;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%)"></div></div>
+</div>
+<sc-if value="{{ exposedOn }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:95px;top:45px;width:52px;height:52px;z-index:2">
+<div style="position:absolute;left:0;top:0;width:10px;height:10px;border-style:solid;border-color:#ff4d4d;border-width:3px 0 0 3px"></div>
+<div style="position:absolute;right:0;top:0;width:10px;height:10px;border-style:solid;border-color:#ff4d4d;border-width:3px 3px 0 0"></div>
+<div style="position:absolute;left:0;bottom:0;width:10px;height:10px;border-style:solid;border-color:#ff4d4d;border-width:0 0 3px 3px"></div>
+<div style="position:absolute;right:0;bottom:0;width:10px;height:10px;border-style:solid;border-color:#ff4d4d;border-width:0 3px 3px 0"></div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isMC }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;pointer-events:none">
+<div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 12px;background:#0a0821;border:2px solid {{ intent.col }};border-radius:6px;box-shadow:2px 2px 0 #240011;box-sizing:border-box;white-space:nowrap">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ intent.label }}</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;letter-spacing:1px;color:{{ intent.col }}">{{ intent.text }}</span></div>
+<sc-if value="{{ intent.hasSub }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ intent.sub }}</span></sc-if>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isG }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;pointer-events:none">
+<div style="position:absolute;right:0;top:150px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;padding:6px 10px;background:#0a0821;border:2px solid {{ intent.col }};border-radius:6px;box-shadow:2px 2px 0 #240011;box-sizing:border-box;white-space:nowrap">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ intent.label }}</span>
+<span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:{{ intent.col }}">{{ intent.text }}</span>
+<sc-if value="{{ intent.hasSub }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ intent.sub }}</span></sc-if>
+</div>
+<sc-if value="{{ hasBelly }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ bellyRef }}" style="position:absolute;left:0;top:150px;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:6px 10px;background:#0a0821;border:2px solid #9dff5a;border-radius:6px;box-shadow:2px 2px 0 #12300a;box-sizing:border-box;white-space:nowrap">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#9dff5a">IN THE BELLY</span>
+<div style="display:flex;gap:6px"><sc-for list="{{ belly }}" as="bl" hint-placeholder-count="1"><img src="{{ bl.src }}" alt="{{ bl.name }}" style="width:22px;height:27px;display:block;filter:sepia(1) hue-rotate(50deg) saturate(3) brightness(.8) drop-shadow(1px 1px 0 #000)"></sc-for></div>
+</div>
+</sc-if>
+<div style="position:absolute;left:0;right:0;top:0;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #6fbf3a;border-radius:6px;box-shadow:3px 3px 0 #12300a;box-sizing:border-box">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#b8f070">GARGANTA</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ eSegs }}" as="s" hint-placeholder-count="10"><div style="flex:1;min-width:0;height:10px;background:{{ s.bg }};border:1px solid #f2f2f2;box-sizing:border-box"></div></sc-for></div>
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ eHp }}</span>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="position:relative;flex:none;margin:8px 0 0;height:288px">
+<sc-if value="{{ isPick }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:8px 16px 4px;box-sizing:border-box">
+<div style="flex:none;display:flex;gap:8px">
+<sc-for list="{{ cards }}" as="cd" hint-placeholder-count="3">
+<div ref="{{ cd.slotRef }}" style="flex:1 1 0;min-width:0;display:flex">
+<div onClick="{{ cd.pick }}" style="position:relative;flex:1;min-width:0;height:166px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 5px 8px;background:#0a0821;border:3px solid {{ cd.bd }};border-radius:8px;box-shadow:{{ cd.sh }};box-sizing:border-box;cursor:pointer;transform:{{ cd.lift }};transition:transform .25s cubic-bezier(.34,1.56,.64,1),border-color .15s,box-shadow .15s">
+<img src="{{ cd.src }}" alt="{{ cd.from }}" style="flex:none;width:30px;height:36px;display:block;object-fit:contain;filter:drop-shadow(2px 2px 0 #000)">
+<div style="font-family:'Jersey 15',monospace;font-size:20px;line-height:.9;letter-spacing:1px;text-align:center;text-wrap:balance;color:{{ cd.col }}">{{ cd.name }}</div>
+<div style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap"><span style="color:{{ cd.col }}">{{ cd.pips }}</span><span style="color:#3a3a5a">{{ cd.ghost }}</span></div>
+<div style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.25;text-align:center;white-space:pre-line;color:#ffffff">{{ cd.face }}</div>
+<sc-if value="{{ cd.marked }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;top:-11px;transform:translateX(-50%);padding:3px 6px;background:#ff4d4d;border-radius:3px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#ffffff">DODGE</div></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="flex:1;min-height:0;padding:8px 10px;display:flex;flex-direction:column;gap:5px;background:#0a0821;border:3px solid {{ picked.bd }};border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box;overflow:hidden;transition:border-color .2s">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;white-space:nowrap;color:{{ picked.col }}">{{ picked.name }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#a9b0c0">{{ picked.from }}</span></div>
+<sc-for list="{{ picked.rules }}" as="ru" hint-placeholder-count="2"><div style="display:flex;gap:6px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.3;color:{{ ru.c }}"><span style="flex:none;color:{{ ru.mc }}">{{ ru.m }}</span><span style="text-wrap:pretty">{{ ru.t }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isBattle }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;padding:0 16px">
+<div style="flex:none;height:50px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid {{ tac.col }};border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<img src="{{ tac.src }}" alt="" style="flex:none;width:24px;height:29px;display:block;object-fit:contain">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;letter-spacing:1px;white-space:nowrap;color:{{ tac.col }}">{{ tac.name }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ffffff">{{ tac.face }}</span></div>
+<sc-if value="{{ tac.showCost }}" hint-placeholder-val="{{ false }}"><div style="flex:none;height:26px;display:flex;align-items:center;gap:5px;padding:0 7px;border:2px solid #ffd644;border-radius:4px;box-sizing:border-box;opacity:{{ tac.costOp }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">REROLL</span><img src="assets/coin.png" alt="" style="width:12px;height:12px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;color:#ffd644">{{ tac.cost }}</span></div></sc-if>
+</div>
+<div ref="{{ trayRef }}" style="flex:none;height:152px;display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<div style="flex:none;display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap"><span style="color:#a9b0c0">{{ tray.left }}</span><span style="color:{{ tray.col }}">{{ tray.right }}</span></div>
+<div style="flex:1;min-height:0;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px">
+<sc-for list="{{ rolled }}" as="cube" hint-placeholder-count="0">
+<div onClick="{{ cube.tap }}" style="position:relative;flex:none;width:52px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+<div style="position:relative;width:40px;height:40px">
+<div style="position:absolute;inset:0;border:2px dashed rgba(242,242,242,.25);border-radius:6px"></div>
+<div ref="{{ cube.boxRef }}" style="position:absolute;inset:0;perspective:100px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);transform:{{ cube.scale }}">
+<div ref="{{ cube.shadowRef }}" style="position:absolute;left:5px;top:38px;width:30px;height:8px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(2px)"></div>
+<div ref="{{ cube.floatRef }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div ref="{{ cube.ref }}" style="width:40px;height:40px;position:relative;transform-style:preserve-3d">
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:translateZ(20px)"><img src="{{ cube.f0 }}" alt="" style="width:40px;height:40px;display:block;filter:{{ cube.dim }}"><div style="position:absolute;inset:-3px;border:2px solid {{ cube.ring }};box-shadow:{{ cube.glow }};border-radius:4px;pointer-events:none;transition:border-color .2s,box-shadow .2s"></div></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg) translateZ(20px);filter:brightness(.82)"><img src="{{ cube.f1 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(90deg) translateZ(20px);filter:brightness(.9)"><img src="{{ cube.f2 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateX(-90deg) translateZ(20px);filter:brightness(.74)"><img src="{{ cube.f3 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(90deg) translateZ(20px);filter:brightness(.86)"><img src="{{ cube.f4 }}" alt="" style="width:40px;height:40px;display:block"></div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(-90deg) translateZ(20px);filter:brightness(.78)"><img src="{{ cube.f5 }}" alt="" style="width:40px;height:40px;display:block"></div>
+</div>
+</div>
+</div>
+</div>
+<sc-if value="{{ cube.isBank }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);padding:1px 3px;background:#bfe8ff;border-radius:2px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#0a0821">BANK</div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="flex:none;height:44px;display:flex;gap:8px">
+<sc-if value="{{ act.isCall }}" hint-placeholder-val="{{ false }}"><sc-for list="{{ nums }}" as="nb" hint-placeholder-count="6"><button onClick="{{ nb.tap }}" style="flex:1;min-width:0;height:44px;display:flex;align-items:center;justify-content:center;padding:0;background:#0a0821;border:3px solid #ff5cd6;border-radius:8px;box-shadow:3px 3px 0 #240011;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #240011"><img src="{{ nb.src }}" alt="{{ nb.n }}" style="width:28px;height:28px;display:block"></button></sc-for></sc-if>
+<sc-if value="{{ act.isRed }}" hint-placeholder-val="{{ false }}"><button onClick="{{ more }}" style="flex:1;min-width:0;height:44px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #ff9a3c;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:1px;white-space:nowrap;color:#ff9a3c;cursor:pointer;opacity:{{ act.op }}" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">ROLL ANOTHER</button></sc-if>
+<sc-if value="{{ act.isGam }}" hint-placeholder-val="{{ false }}"><button onClick="{{ callHi }}" style="flex:1;min-width:0;height:44px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #ffd644;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:1px;white-space:nowrap;color:#ffd644;cursor:pointer;opacity:{{ act.op }}" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">▲ HIGHER</button><button onClick="{{ callLo }}" style="flex:1;min-width:0;height:44px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #ffd644;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:1px;white-space:nowrap;color:#ffd644;cursor:pointer;opacity:{{ act.op }}" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">▼ LOWER</button></sc-if>
+<sc-if value="{{ act.isFree }}" hint-placeholder-val="{{ false }}"><button onClick="{{ freeReroll }}" style="flex:1;min-width:0;height:44px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #7ab8ff;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:24px;letter-spacing:1px;white-space:nowrap;color:#7ab8ff;cursor:pointer;opacity:{{ act.op }}" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">{{ act.freeLbl }}</button></sc-if>
+</div>
+<div style="flex:none;min-height:16px;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.3;text-wrap:balance;color:{{ hintCol }}">{{ hint }}</div>
+</div>
+</sc-if>
+</div>
+
+<div ref="{{ fleetRef }}" style="flex:none;margin:8px 16px 0;height:120px;display:grid;grid-template-columns:repeat({{ nCols }},minmax(0,1fr));gap:{{ fGap }}px">
+<sc-for list="{{ fleet }}" as="f" hint-placeholder-count="4">
+<div ref="{{ f.ref }}" style="position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:6px 2px;background:#0a0821;border:3px solid {{ f.bd }};border-radius:6px;box-shadow:{{ f.glow }};box-sizing:border-box;transform:{{ f.lift }};transition:transform .3s cubic-bezier(.34,1.56,.64,1),border-color .15s,box-shadow .15s">
+<img data-ship="1" src="{{ f.src }}" alt="{{ f.name }}" style="width:42px;height:51px;display:block;filter:drop-shadow(2px 2px 0 #000);opacity:{{ f.shipOp }}">
+<sc-if value="{{ f.showName }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:#ffffff">{{ f.name }}</span></sc-if>
+<span style="max-width:100%;font-family:'Jersey 15',monospace;font-size:{{ f.cardSz }}px;line-height:.9;text-align:center;overflow-wrap:anywhere;color:{{ f.cardCol }}">{{ f.card }}</span>
+<sc-if value="{{ f.aimed }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:3px 0 0 3px;animation:blink .5s steps(2) infinite"></div>
+<div style="position:absolute;right:-6px;top:-6px;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:3px 3px 0 0;animation:blink .5s steps(2) infinite"></div>
+<div style="position:absolute;left:-6px;bottom:-6px;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:0 0 3px 3px;animation:blink .5s steps(2) infinite"></div>
+<div style="position:absolute;right:-6px;bottom:-6px;width:12px;height:12px;border-style:solid;border-color:#ff4d4d;border-width:0 3px 3px 0;animation:blink .5s steps(2) infinite"></div>
+</sc-if>
+<sc-if value="{{ f.out }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:rgba(10,8,33,.88);border-radius:3px"><span style="font-family:'Jersey 15',monospace;font-size:28px;line-height:1;color:{{ f.outCol }}">{{ f.outIcon }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:{{ f.outCol }}">{{ f.outLbl }}</span></div></sc-if>
+</div>
+</sc-for>
+</div>
+
+<div ref="{{ hullRef }}" style="flex:none;margin:8px 16px 0;height:40px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px;color:#ffffff">HULL</span>
+<div style="flex:1;min-width:0;display:flex;gap:2px"><sc-for list="{{ hullSegs }}" as="s" hint-placeholder-count="8"><div style="flex:1;min-width:0;height:10px;background:{{ s.bg }};border:1px solid #f2f2f2;box-sizing:border-box"></div></sc-for></div>
+<span style="flex:none;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:{{ hullCol }}">{{ hullTxt }}</span>
+<sc-if value="{{ hasBlock }}" hint-placeholder-val="{{ false }}"><div style="flex:none;height:24px;display:flex;align-items:center;padding:0 6px;border:2px solid #6ad0ff;border-radius:4px;box-sizing:border-box;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#6ad0ff">BLOCK {{ block }}</div></sc-if>
+</div>
+
+<button onClick="{{ primary }}" style="flex:none;margin:10px 16px 0;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;white-space:nowrap;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ btn.op }};transition:opacity .2s" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ btn.label }}</button>
+</div>
+
+<div ref="{{ fxRef }}" style="position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden"></div>
+
+<sc-if value="{{ isPrompt }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:40;display:flex;align-items:center;padding:0 16px;box-sizing:border-box;background:rgba(5,4,15,.8)">
+<div ref="{{ promptRef }}" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px 14px 16px;background:#0a0821;border:3px solid {{ pr.col }};border-radius:8px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;background:{{ pr.col }};box-shadow:0 0 8px {{ pr.col }};animation:blink .6s steps(2) infinite"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:{{ pr.col }}">{{ pr.kicker }}</span></div>
+<div style="font-family:'Jersey 15',monospace;font-size:46px;line-height:.9;letter-spacing:2px;text-align:center;color:#ffffff;text-shadow:4px 4px 0 #240011">{{ pr.title }}</div>
+<img src="{{ pr.src }}" alt="" style="width:42px;height:51px;display:block;object-fit:contain;filter:drop-shadow(2px 2px 0 #000)">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;text-wrap:balance;color:#ffffff">{{ pr.body }}</span>
+<div style="display:flex;align-items:center;gap:8px"><img src="assets/prestige.png" alt="" style="width:18px;height:18px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:28px;line-height:1;color:#c79bff">-{{ pr.cost }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">OF {{ pres }} PRESTIGE</span></div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ pr.yes }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:28px;letter-spacing:2px;white-space:nowrap;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ pr.yesLbl }}</button>
+<button onClick="{{ pr.no }}" style="height:48px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #f2f2f2;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:22px;letter-spacing:1px;white-space:nowrap;color:#ffffff;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">{{ pr.noLbl }}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;padding:0 16px;box-sizing:border-box;background:rgba(5,4,15,.9)">
+<div ref="{{ endRef }}" style="display:flex;flex-direction:column;align-items:center;gap:18px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#a9b0c0">BOSS ENCOUNTER</span>
+<div style="font-family:'Jersey 15',monospace;font-size:56px;line-height:.9;letter-spacing:2px;text-align:center;color:{{ end.col }};text-shadow:4px 4px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000">{{ end.title }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ end.sub }}</span>
+<div style="width:100%;display:flex;flex-direction:column;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<sc-for list="{{ end.rows }}" as="r" hint-placeholder-count="3"><div style="height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:2px solid #1c1a3a"><img src="{{ r.src }}" alt="" style="width:20px;height:20px;display:block"><span style="flex:1;min-width:0;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ r.label }}</span><span style="font-family:'Jersey 15',monospace;font-size:26px;line-height:1;white-space:nowrap;color:{{ r.col }}">{{ r.value }}</span></div></sc-for>
+</div>
+<button onClick="{{ restart }}" style="width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ againLbl }}</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;boss&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;marauder&quot;,&quot;mothercore&quot;,&quot;garganta&quot;],&quot;default&quot;:&quot;marauder&quot;,&quot;tsType&quot;:&quot;'marauder' | 'mothercore' | 'garganta'&quot;,&quot;section&quot;:&quot;Test fight&quot;},&quot;sector&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;],&quot;default&quot;:&quot;2&quot;,&quot;tsType&quot;:&quot;'1' | '2' | '3'&quot;,&quot;section&quot;:&quot;Test fight&quot;},&quot;fleetSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:1,&quot;max&quot;:8,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Test fight&quot;},&quot;forceCard&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;volley&quot;,&quot;focus&quot;,&quot;broadside&quot;,&quot;redline&quot;,&quot;gambit&quot;,&quot;target&quot;,&quot;reverse&quot;,&quot;firing&quot;,&quot;deflector&quot;,&quot;decoy&quot;,&quot;charge&quot;,&quot;echo&quot;,&quot;ram&quot;,&quot;bounty&quot;,&quot;patch&quot;],&quot;default&quot;:&quot;none&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Test fight&quot;},&quot;openingBarrage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Test fight&quot;},&quot;fleet&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{id:string,name:string,ship:string,col:string,pts:number}&gt;&quot;},&quot;band&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;'short' | 'even' | 'big'&quot;},&quot;hull&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;hp&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;atkBonus&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;ii0&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;frenzy0&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;boolean&quot;},&quot;gold&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;prestigeBal&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;bossPrestige&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;ejAvail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;boolean&quot;},&quot;barrageDmg&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;barrageScore&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;onDone&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(r: {outcome: string, lost: number[], gold: number, prestige: number, spentP: number, rounds: number}) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  // ─── data ───
+  CARDS = {
+    volley: { name: 'VOLLEY', risk: 1, col: '#7affd0', n: 2, face: 'ROLL 2 · DEAL TOTAL', rule: ['ROLL 2, DEAL THE TOTAL.', 'MISFIRES DON\'T HURT.'] },
+    focus: { name: 'FOCUS FIRE', risk: 2, col: '#c79bff', n: 3, face: 'ROLL 3 · BEST ×2', rule: ['ROLL 3, DEAL YOUR HIGHEST DIE ×2.'] },
+    broadside: { name: 'BROADSIDE', risk: 3, col: '#ff6b6b', n: 5, face: 'ROLL 5 · TOTAL · 2 MISFIRES JAM', rule: ['ROLL 5, DEAL THE TOTAL.', '2+ MISFIRES JAM IT: DEAL NOTHING.', 'MISFIRES STILL HURT.'] },
+    redline: { name: 'REDLINE', risk: 3, col: '#ff9a3c', n: 1, face: 'ROLL TILL YOU STOP', rule: ['ROLL ONE AT A TIME, ADDING EACH.', 'STOP ANYTIME TO FIRE.', 'A 1 ENDS IT: DEAL 0, TAKE 2.'] },
+    gambit: { name: 'GAMBIT', risk: 2, col: '#ffd644', n: 1, face: 'HIGHER OR LOWER · ×2', rule: ['ROLL 1, THEN CALL HIGHER OR LOWER.', 'RIGHT ×2 · TIE HOLDS · WRONG FIZZLES.', 'FIRE ANYTIME. NO MISFIRES.'] },
+    target: { name: 'TARGET LOCK', risk: 2, col: '#ff5cd6', n: 4, face: 'CALL IT · 8 A MATCH', rule: ['CALL A NUMBER, ROLL 4.', 'EACH MATCH DEALS 8, OTHERS 0.', 'CALL 1 AND 1S MATCH, NO MISFIRE.'] },
+    reverse: { name: 'REVERSE POLARITY', risk: 1, col: '#a8ff3a', n: 4, face: '1S DEAL 6', rule: ['ROLL 4. 1S DEAL 6 EACH AND DON\'T HURT.', 'EVERY OTHER NUMBER DEALS 1.'] },
+    firing: { name: 'FIRING SOLUTION', risk: 2, col: '#7ab8ff', n: 5, face: 'ROLL 5 · MAKE A HAND', rule: ['ROLL 5 + 1 FREE REROLL. 1S MISFIRE.', 'PAIR 6 · TWO PAIR 10 · THREE 15', 'FULL 20 · STRAIGHT 25 · FIVE 50'] },
+    deflector: { name: 'DEFLECTOR', risk: 1, col: '#6ad0ff', n: 2, face: 'ROLL 2 · BLOCK', rule: ['ROLL 2, BLOCK THE TOTAL.', 'BLOCK BEYOND THE ATTACK REFLECTS.'] },
+    decoy: { name: 'DECOY FLARE', risk: 2, col: '#ffb36a', n: 4, face: 'ROLL 4 · 1S FEED IT', rule: ['ROLL 4, DEAL THE TOTAL.', 'MISFIRES SPARE YOU BUT GIVE', 'THE BOSS +1 ATTACK EACH.'] },
+    charge: { name: 'CHARGE UP', risk: 1, col: '#bfe8ff', n: 2, face: 'BANK 2 DICE', rule: ['DON\'T FIRE. ROLL 2 AND BANK THEM.', 'YOUR NEXT CARD ADDS THEM.', 'BANKED 1S MISFIRE.'] },
+    echo: { name: 'ECHO', risk: 1, col: '#a99cff', n: 0, face: 'REPLAY LAST CARD', rule: ['REPLAY YOUR LAST CARD WITH', 'THE SAME DICE, MISFIRES TOO.'] },
+    ram: { name: 'RAM', risk: 3, col: '#e8522c', n: 2, face: 'ROLL 2 · ×3 · HURTS', rule: ['ROLL 2, DEAL THE TOTAL ×3.', 'TAKE THE LOWER DIE AS DAMAGE.'] },
+    bounty: { name: 'BOUNTY', risk: 2, col: '#ffe066', n: 3, face: 'ROLL 3 · EARN GOLD', rule: ['ROLL 3, DEAL THE TOTAL.', 'EARN THAT MUCH GOLD.', 'MISFIRES HIT FOR 3.'] },
+    patch: { name: 'PATCH UP', risk: 1, col: '#48f320', n: 2, face: 'ROLL 2 · HEAL', rule: ['ROLL 2, HEAL THE LOWER DIE. NO MISFIRES.'] }
+  };
+  // each blueprint brings one card
+  SHIP_CARD = { herald: 'deflector', warden: 'decoy', kestrel: 'redline', sovereign: 'bounty', barnacle: 'broadside', siren: 'deflector', wraith: 'gambit', obsidian: 'focus' };
+  ROLES = {
+    herald: { name: 'HERALD', ship: 'ship_blue', col: '#7ab8ff', pts: 10 }, warden: { name: 'WARDEN', ship: 'ship_teal', col: '#6af5d6', pts: 14 },
+    kestrel: { name: 'KESTREL', ship: 'ship_violet', col: '#c79bff', pts: 15 }, sovereign: { name: 'SOVEREIGN', ship: 'ship_gold', col: '#ffd644', pts: 20 },
+    barnacle: { name: 'BARNACLE', ship: 'ship_amber', col: '#ffb36a', pts: 12 }, siren: { name: 'SIREN', ship: 'ship_magenta', col: '#ff5cd6', pts: 12 },
+    wraith: { name: 'WRAITH', ship: 'ship_ice', col: '#bfe8ff', pts: 12 }, obsidian: { name: 'OBSIDIAN', ship: 'ship_obsidian', col: '#a99cff', pts: 16 }
+  };
+  LOG = ['herald', 'warden', 'kestrel', 'sovereign', 'barnacle', 'siren', 'wraith', 'obsidian'];
+  EXPECT = { 1: [2, 3], 2: [3, 4], 3: [4, 5] };
+  BOSS = {
+    marauder: { name: 'MARAUDER', end: 'MARAUDER DOWN', LV: { easy: [8, [1, 2, 0, 3]], normal: [10, [2, 3, 0, 4]], hard: [14, [3, 3, 0, 6]] }, prestige: 20, seg: ['#ff4d4d', '#2a0a12'], W: 110, H: 134, src: 'assets/kestrel_h11.png', rot: 180, booms: 6, glow: 'drop-shadow(0 0 10px rgba(255,77,77,.45))' },
+    mothercore: { name: 'MOTHER CORE', end: 'CORE DESTROYED', LV: { easy: [16, [1, 2, 0, 4]], normal: [20, [2, 3, 0, 5]], hard: [26, [3, 4, 0, 6]] }, prestige: 80, seg: ['#ff4d4d', '#2a0a12'], W: 200, H: 144, src: 'assets/mother_core.png', rot: 0, booms: 10, smooth: true, glow: 'drop-shadow(0 0 10px rgba(63,123,255,.5))' },
+    garganta: { name: 'GARGANTA', end: 'GARGANTA SLAIN', LV: { easy: [18, [1, 2, 0, 4]], normal: [22, [2, 3, 0, 5]], hard: [28, [3, 4, 0, 6]] }, prestige: 100, seg: ['#9dff5a', '#14280a'], W: 336, H: 302, src: 'assets/garganta_v4.png', rot: 0, booms: 10, glow: 'drop-shadow(0 0 14px rgba(120,220,70,.3))' }
+  };
+  REPEL = { 1: 4, 2: 5, 3: 6 }; EVADE = { 1: 20, 2: 40, 3: 60 }; OFFER = { short: 2, even: 3, big: 4 }; BARRAGE_SCORE = 10;
+  OUT = { captured: ['CAPTURED', '#ffb36a', '!'], vaporized: ['VAPORIZED', '#ff4d4d', '✕'], swallowed: ['SWALLOWED', '#9dff5a', '!'], digested: ['DIGESTED', '#ff4d4d', '✕'] };
+  // ─── refs ───
+  wrapRef = React.createRef(); stageRef = React.createRef(); shakeRef = React.createRef(); fxRef = React.createRef(); driftA = React.createRef(); driftB = React.createRef();
+  enemyRef = React.createRef(); hitRef = React.createRef(); imgRef = React.createRef(); hullRef = React.createRef(); trayRef = React.createRef(); fleetRef = React.createRef();
+  endRef = React.createRef(); promptRef = React.createRef(); coreRef = React.createRef(); droneWrap = React.createRef(); biteRef = React.createRef(); shutRef = React.createRef();
+  hurtRef = React.createRef(); bellyRef = React.createRef(); goldRef = React.createRef(); presRef = React.createRef();
+  shipRefs = [0, 1, 2, 3, 4, 5, 6, 7].map(() => React.createRef()); droneRefs = [0, 1, 2, 3, 4, 5, 6, 7].map(() => React.createRef()); slotRefs = [0, 1, 2, 3].map(() => React.createRef());
+  drt = Array.from({ length: 10 }, (_, i) => ({ box: React.createRef(), float: React.createRef(), shadow: React.createRef(), cube: React.createRef(), angle: i * 2.1 }));
+  eyeRefs = [0, 1, 2, 3].map(() => ({ box: React.createRef() }));
+  eyeOff = [0, 1, 2, 3].map(() => ({ x: 0, y: 0 })); nextLook = 2500; nextBlink = 1800; blinkAt = -1e9; lookEl = null; lookUntil = 0;
+  ts = []; gen = 0; t0 = performance.now(); busy = false;
+  // ─── props ───
+  P() { return this.props || {}; }
+  key() { const b = this.P().boss; return this.BOSS[b] ? b : 'marauder'; }
+  sec() { const s = +this.P().sector; return [1, 2, 3].includes(s) ? s : 2; }
+  mkFleet() {
+    const p = this.P();
+    if (Array.isArray(p.fleet) && p.fleet.length) return p.fleet.slice(-6).map(f => ({ ...f, card: this.SHIP_CARD[f.id] || 'volley' }));
+    const n = Math.max(1, Math.min(8, parseInt(p.fleetSize, 10) || 4));
+    return this.LOG.slice(0, n).slice(-6).map(id => ({ id, ...this.ROLES[id], card: this.SHIP_CARD[id] }));
+  }
+  band() { const p = this.P(); if (this.OFFER[p.band]) return p.band; const n = this.FLEET.length, ex = this.EXPECT[this.sec()]; return n < ex[0] ? 'short' : n > ex[1] ? 'big' : 'even'; }
+  lvl() { const p = this.P(), L = this.BOSS[this.key()].LV[['easy', 'normal', 'hard'][this.sec() - 1]], ab = p.atkBonus || 0; return { hp: p.hp || L[0], intents: L[1].map(x => x ? Math.max(1, x + ab) : 0) }; }
+  bossP() { return this.P().bossPrestige || this.BOSS[this.key()].prestige; }
+  barrageDmg() {
+    const p = this.P(); if (p.barrageDmg != null) return +p.barrageDmg || 0; if (p.openingBarrage === false) return 0;
+    return Math.min(Math.floor(this.lvl().hp * .25), Math.floor(this.score() / this.BARRAGE_SCORE));
+  }
+  score() { const p = this.P(); return p.barrageScore != null ? p.barrageScore : this.FLEET.reduce((a, f) => a + (f.pts || 0), 0); }
+  fresh() {
+    this.FLEET = this.mkFleet();
+    const L = this.lvl(), p = this.P(), n = this.FLEET.length; this.HULL_MAX = p.hull || Math.max(4, 2 * n);
+    return { phase: 'intro', round: 1, ii: p.ii0 || 0, eHp: L.hp, eMax: L.hp, hull: this.HULL_MAX, gold: p.gold != null ? p.gold : 120, pres: p.prestigeBal != null ? p.prestigeBal : 150, spentP: 0, rr: 0,
+      offer: [], sel: -1, cur: null, dice: [], calls: [], call: 0, freeUsed: false, freeSel: [], bank: [], last: null, lastK: -1, block: 0, atkAdd: 0, dmgRound: 0,
+      st: this.FLEET.map(() => 'ok'), target: -1, over: !!p.frenzy0, evaded: false, ej: p.ejAvail !== false, prompt: null, dmgDealt: 0, bestHit: 0, hint: '', hintCol: '' };
+  }
+  state = this.fresh();
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.onResize = () => this.fit(); window.addEventListener('resize', this.onResize);
+    if (window.ResizeObserver && this.wrapRef.current) { this.ro = new ResizeObserver(this.onResize); this.ro.observe(this.wrapRef.current); }
+    this.fit(); this.applyTint(); this.begin();
+  }
+  componentDidUpdate(pp) { if (pp && ['boss', 'sector', 'fleetSize', 'forceCard', 'openingBarrage'].some(k => pp[k] !== this.props[k])) this.restart(); }
+  componentWillUnmount() { this.clearAll(); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); if (this.ro) this.ro.disconnect(); }
+  fit() { const w = this.wrapRef.current, st = this.stageRef.current; if (!w || !st) return; st.style.transform = 'scale(' + Math.min(w.clientWidth / 390, w.clientHeight / 844) + ')'; }
+  applyTint() { this.baseF = this.BOSS[this.key()].glow; const el = this.imgRef.current; if (el) el.style.filter = this.baseF; }
+  restart() { this.clearAll(); this.busy = false; (this.jA || []).forEach(a => a.cancel()); this.jA = []; if (this.deathAnim) { this.deathAnim.cancel(); this.deathAnim = null; } this.setState(this.fresh(), () => { this.applyTint(); this.begin(); }); }
+  later(f, ms) { const g = this.gen; this.ts.push(setTimeout(() => { if (g === this.gen) f(); }, ms)); }
+  clearAll() { this.gen++; this.ts.forEach(clearTimeout); this.ts = []; clearTimeout(this.sayT); const fx = this.fxRef.current; if (fx) fx.innerHTML = ''; }
+  shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  d6() { return 1 + Math.floor(Math.random() * 6); }
+  hexA(h, a) { return 'rgba(' + parseInt(h.slice(1, 3), 16) + ',' + parseInt(h.slice(3, 5), 16) + ',' + parseInt(h.slice(5, 7), 16) + ',' + a + ')'; }
+  alive(S) { S = S || this.state; return S.st.map((x, k) => x === 'ok' ? k : -1).filter(k => k >= 0); }
+  swallowed(S) { S = S || this.state; return S.st.map((x, k) => x === 'swallowed' ? k : -1).filter(k => k >= 0); }
+  sfx(n, o) { if (window.BossSFX) window.BossSFX.play(n, o); }
+  // ─── fx (one layer above the board, stage coordinates) ───
+  rect(el) { const st = this.stageRef.current; if (!st || !el) return null; const S = st.getBoundingClientRect(), k = S.width / st.offsetWidth || 1, r = el.getBoundingClientRect(); return { x: (r.left - S.left) / k, y: (r.top - S.top) / k, w: r.width / k, h: r.height / k }; }
+  center(el) { const r = this.rect(el); return r ? { x: r.x + r.w / 2, y: r.y + r.h / 2 } : null; }
+  fxEl(css, txt) { const fx = this.fxRef.current; if (!fx) return null; const d = document.createElement('div'); d.style.cssText = 'position:absolute;' + css; if (txt != null) d.textContent = txt; fx.appendChild(d); return d; }
+  anim(d, kf, o) { if (!d) return; if (!d.animate) { d.remove(); return; } d.animate(kf, o).onfinish = () => d.remove(); }
+  pop(x, y, txt, col, sz) { this.anim(this.fxEl('left:' + x + 'px;top:' + y + 'px;z-index:2;font-family:"Jersey 15",monospace;font-size:' + (sz || 34) + 'px;line-height:1;letter-spacing:1px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000', txt), [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { transform: 'translate(-50%,-70%) scale(1.15)', opacity: 1, offset: .18 }, { transform: 'translate(-50%,-90%) scale(1)', opacity: 1, offset: .7 }, { transform: 'translate(-50%,-130%) scale(.95)', opacity: 0 }], { duration: 950, easing: 'cubic-bezier(.2,.8,.3,1)' }); }
+  popAt(el, dy, txt, col, sz) { const c = this.center(el); if (c) this.pop(c.x, c.y + (dy || 0), txt, col, sz); }
+  sparks(x, y, cols, n) { for (let i = 0; i < (n || 10); i++) { const s = 3 + Math.round(Math.random() * 3), a = Math.random() * Math.PI * 2, r = 16 + Math.random() * 34; this.anim(this.fxEl('left:' + (x - s / 2) + 'px;top:' + (y - s / 2) + 'px;width:' + s + 'px;height:' + s + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + (Math.cos(a) * r).toFixed(1) + 'px,' + (Math.sin(a) * r).toFixed(1) + 'px)', opacity: 0 }], { duration: 360 + Math.random() * 280, easing: 'cubic-bezier(.2,.8,.4,1)' }); } }
+  boomSheet() {
+    if (this._boom) return this._boom;
+    const G = 32, N = 9, cv = document.createElement('canvas'); cv.width = G * N; cv.height = G;
+    const g = cv.getContext('2d'); let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const lobes = Array.from({ length: 12 }, () => .72 + rnd() * .5), noise = Array.from({ length: G * G }, () => rnd());
+    const pal = ['#ffffff', '#fff3b0', '#ffd644', '#ff9a3c', '#e8522c', '#b3201c', '#5a1a2a', '#2a1426'];
+    for (let f = 0; f < N; f++) {
+      const p = f / (N - 1), R = 3 + p * 12.5, hole = p < .4 ? 0 : (p - .4) / .6 * R * .85;
+      for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
+        const dx = x + .5 - G / 2, dy = y + .5 - G / 2, d = Math.hypot(dx, dy), a = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI) * 12, i0 = Math.floor(a) % 12, t = a - Math.floor(a), lb = lobes[i0] * (1 - t) + lobes[(i0 + 1) % 12] * t;
+        const r = R * lb, h = hole * lb, n = noise[(y >> 1) * G + (x >> 1)];
+        if (d > r || d < h || (p > .55 && n < (p - .55) / .45 * .85)) continue;
+        const q = (d - h) / Math.max(1, r - h), heat = Math.max(0, Math.min(1, (1 - p) * 1.15 - q * .4 + (n - .5) * .3));
+        g.fillStyle = pal[Math.round((1 - heat) * (pal.length - 1))]; g.fillRect(f * G + x, y, 1, 1);
+      }
+    }
+    return (this._boom = { url: cv.toDataURL(), N, G });
+  }
+  burst(x, y, k, frames, ms) {
+    const B = this.boomSheet(), S = B.G * k, n = frames || B.N, rot = 90 * Math.floor(Math.random() * 4), fl = Math.random() < .5 ? -1 : 1;
+    const d = this.fxEl('left:' + Math.round(x - S / 2) + 'px;top:' + Math.round(y - S / 2) + 'px;width:' + S + 'px;height:' + S + 'px;image-rendering:pixelated;background:url(' + B.url + ') 0 0/' + (B.N * S) + 'px ' + S + 'px no-repeat;transform:rotate(' + rot + 'deg) scaleX(' + fl + ')');
+    this.anim(d, [{ backgroundPosition: '0px 0px' }, { backgroundPosition: (-n * S) + 'px 0px' }], { duration: ms || n * 65, easing: 'steps(' + n + ')' });
+  }
+  debris(x, y, cols, n) { for (let i = 0; i < n; i++) { const sz = 3 * (1 + Math.floor(Math.random() * 2)), a = Math.random() * Math.PI * 2, r = 34 + Math.random() * 64; this.anim(this.fxEl('left:' + Math.round(x) + 'px;top:' + Math.round(y) + 'px;width:' + sz + 'px;height:' + sz + 'px;background:' + cols[i % cols.length]), [{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + Math.round(Math.cos(a) * r) + 'px,' + Math.round(Math.sin(a) * r) + 'px)', opacity: 0 }], { duration: 520 + Math.random() * 320, easing: 'steps(7)' }); } }
+  shatter(cx, cy) {
+    const B = this.BOSS[this.key()], W = B.W, H = B.H, box = this.fxEl('left:' + Math.round(cx - W / 2) + 'px;top:' + Math.round(cy - H / 2) + 'px;width:' + W + 'px;height:' + H + 'px;transform:rotate(' + B.rot + 'deg);filter:' + (this.baseF || 'none')); if (!box) return;
+    [[0, 0, -1, -1], [1, 0, 1, -1], [0, 1, -1, 1], [1, 1, 1, 1]].forEach(([qx, qy, sx, sy]) => {
+      const p = document.createElement('div');
+      p.style.cssText = 'position:absolute;left:' + qx * W / 2 + 'px;top:' + qy * H / 2 + 'px;width:' + W / 2 + 'px;height:' + H / 2 + 'px;image-rendering:' + (B.smooth ? 'auto' : 'pixelated') + ';background:url(' + B.src + ') ' + (-qx * W / 2) + 'px ' + (-qy * H / 2) + 'px/' + W + 'px ' + H + 'px no-repeat';
+      box.appendChild(p);
+      if (p.animate) p.animate([{ transform: 'translate(0,0) rotate(0deg)', opacity: 1 }, { transform: 'translate(' + sx * Math.round(44 + Math.random() * 30) + 'px,' + sy * Math.round(34 + Math.random() * 30) + 'px) rotate(' + sx * 90 + 'deg)', opacity: 0 }], { duration: 900, easing: 'steps(9)', fill: 'forwards' });
+    });
+    this.later(() => box.remove(), 950);
+  }
+  muzzle(p) { if (p) this.burst(p.x, p.y, 1, 3, 150); }
+  bolt(a, b, col, ms, done) {
+    const g = this.gen, fin = () => { if (g === this.gen && done) done(); };
+    if (!a || !b) return fin();
+    const dx = b.x - a.x, dy = b.y - a.y, ang = Math.atan2(-dx, dy) * 180 / Math.PI, d = this.fxEl('left:' + (a.x - 2) + 'px;top:' + (a.y - 10) + 'px;width:4px;height:20px;background:linear-gradient(' + col + ',#ffffff);box-shadow:0 0 8px ' + col);
+    if (!d || !d.animate) { if (d) d.remove(); return fin(); }
+    d.animate([{ transform: 'translate(0,0) rotate(' + ang + 'deg)' }, { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(' + ang + 'deg)' }], { duration: ms, easing: 'cubic-bezier(.5,0,.9,.5)', fill: 'forwards' });
+    setTimeout(() => { d.remove(); fin(); }, ms); // timer-driven so the flow never waits on a paused animation
+  }
+  // a ship sprite flying between two points: into a boss (shrinks away) or back out to its tile (grows in)
+  ghost(src, a, b, ms, into) { if (!a || !b || this.reduced) return; const im = document.createElement('img'), fx = this.fxRef.current; if (!fx) return; im.src = src; im.style.cssText = 'position:absolute;left:' + (a.x - 21) + 'px;top:' + (a.y - 25) + 'px;width:42px;height:51px;display:block;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)'; fx.appendChild(im); if (!im.animate) return im.remove(); const end = 'translate(' + (b.x - a.x) + 'px,' + (b.y - a.y) + 'px)'; im.animate(into ? [{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: end + ' scale(.3)', opacity: 0 }] : [{ transform: 'translate(0,0) scale(.3)', opacity: 0 }, { transform: end + ' scale(1)', opacity: 1 }], { duration: ms, easing: 'cubic-bezier(.5,0,.6,1)' }).onfinish = () => im.remove(); }
+  shake(p, ms) { const el = this.shakeRef.current; if (!el || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + (-p) + 'px,' + (p * .5) + 'px)' }, { transform: 'translate(' + p + 'px,' + (-p * .4) + 'px)' }, { transform: 'translate(' + (-p * .6) + 'px,' + (p * .3) + 'px)' }, { transform: 'translate(' + (p * .3) + 'px,0)' }, { transform: 'translate(0,0)' }], { duration: ms || 260 }); }
+  flash(col, a, ms, st) { if (this.reduced) return; this.anim(this.fxEl('inset:0;background:' + col + ';opacity:0'), [{ opacity: a }, { opacity: 0 }], { duration: ms || 320, easing: st ? 'steps(' + st + ')' : 'ease-out' }); }
+  punch(el, k) { if (el && el.animate && !this.reduced) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(' + (k || 1.08) + ')' }, { transform: 'scale(1)' }], { duration: 220, easing: 'ease-out' }); }
+  say(msg, col) { this.setState({ hint: msg, hintCol: col || '#ffd644' }); clearTimeout(this.sayT); this.sayT = setTimeout(() => this.setState({ hint: '' }), 1500); }
+  shieldFx() { const a = this.rect(this.fleetRef.current), b = this.rect(this.hullRef.current); if (!a || !b) return; this.anim(this.fxEl('left:' + (a.x - 6) + 'px;top:' + (a.y - 6) + 'px;width:' + (a.w + 12) + 'px;height:' + (b.y + b.h - a.y + 12) + 'px;border:3px solid #6ad0ff;border-radius:10px;box-sizing:border-box;box-shadow:0 0 18px #6ad0ff,inset 0 0 18px rgba(106,208,255,.5);background:rgba(106,208,255,.08)'), [{ opacity: 0, transform: 'scale(.97)' }, { opacity: 1, transform: 'scale(1.01)', offset: .3 }, { opacity: 0, transform: 'scale(1.02)' }], { duration: 700, easing: 'ease-out' }); }
+  streaks(c) { for (let i = 0; i < 9; i++) { const x = c.x + (Math.random() - .5) * 170, h = 40 + Math.random() * 80; this.anim(this.fxEl('left:' + x + 'px;top:' + (c.y - h) + 'px;width:2px;height:' + h + 'px;background:linear-gradient(rgba(255,255,255,0),#ffffff)'), [{ transform: 'translateY(-40px) scaleY(.4)', opacity: 0 }, { transform: 'translateY(0) scaleY(1)', opacity: .9, offset: .4 }, { transform: 'translateY(30px) scaleY(.2)', opacity: 0 }], { duration: 420 + Math.random() * 200, easing: 'ease-out' }); } }
+  shipImg(k) { const t = this.shipRefs[k] && this.shipRefs[k].current; return t && t.querySelector('[data-ship]'); }
+  nose(k) { const r = this.rect(this.shipImg(k)); return r && { x: r.x + r.w / 2, y: r.y + 4 }; }
+  maw() { const er = this.rect(this.imgRef.current); return er && { x: er.x + er.w * .5, y: er.y + er.h * .944 }; }
+  coreAt() { const er = this.rect(this.imgRef.current); return er && { x: er.x + er.w * .607, y: er.y + er.h * .49 }; }
+  // fleet ships orbit the Mother Core and Garganta; they fire from the orbit, nose pointed at the boss
+  orbitNose(k) {
+    const el = this.droneRefs[k] && this.droneRefs[k].current, c = this.center(el), er = this.rect(this.imgRef.current); if (!c || !er || !el || el.style.visibility === 'hidden') return null;
+    const g = this.key() === 'garganta', dx = er.x + er.w * .5 - c.x, dy = er.y + er.h * (g ? .944 : .5) - c.y, L = Math.hypot(dx, dy) || 1, im = el.firstChild;
+    if (im && im.animate) im.animate([{ filter: 'drop-shadow(1px 1px 0 #000) brightness(3)' }, { filter: 'drop-shadow(1px 1px 0 #000)' }], { duration: 160, easing: 'steps(2)' });
+    return { x: c.x + dx / L * 12, y: c.y + dy / L * 12 };
+  }
+  // ─── intent: what the boss does this round ───
+  intent(S) {
+    S = S || this.state; const I = this.lvl().intents, a = I[S.ii % I.length], mx = Math.max(...I), b = this.key(), up = S.over ? 1 : 0;
+    if (b === 'marauder') { if (S.round % 3 === 0) return { kind: 'board' }; return a ? { kind: 'fire', atk: a } : { kind: 'charge', next: I[(S.ii + 1) % I.length] }; }
+    if (!a) return { kind: b === 'garganta' ? 'inhale' : 'exposed' };
+    if (a === mx) return { kind: b === 'garganta' ? 'devour' : 'beam', atk: a + up };
+    return { kind: b === 'garganta' ? 'bite' : 'fire', atk: a + up };
+  }
+  exposed(S) { const k = this.intent(S).kind; return k === 'exposed' || k === 'inhale'; }
+  // ─── flow: warp in → opening barrage → [pick → roll → rerolls → fire → boss] ───
+  begin() {
+    this.later(() => this.warpIn(), 120);
+    const bd = this.barrageDmg();
+    this.later(() => bd > 0 ? this.barrage(bd) : this.startRound(), 1000);
+  }
+  warpIn() {
+    this.sfx('boss_warp_in');
+    const h = this.hitRef.current, dw = this.droneWrap.current, g = this.key() === 'garganta';
+    if (!this.reduced) {
+      if (dw && dw.animate && this.key() !== 'marauder') dw.animate([{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(.2)', opacity: 0, offset: .55 }, { transform: 'scale(1.1)', opacity: 1, offset: .85 }, { transform: 'none', opacity: 1 }], { duration: 900, easing: 'cubic-bezier(.2,.9,.3,1)' });
+      if (h && h.animate) h.animate(g ? [{ transform: 'translate(-90px,-60px)', opacity: 0, filter: 'brightness(0)' }, { transform: 'translate(6px,4px)', opacity: 1, filter: 'brightness(.6)', offset: .75 }, { transform: 'none', opacity: 1, filter: 'none' }] : [{ transform: 'translateY(-160px) scale(.2)', opacity: 0, filter: 'brightness(5)' }, { transform: 'translateY(8px) scale(1.06)', opacity: 1, filter: 'brightness(2)', offset: .7 }, { transform: 'none', opacity: 1, filter: 'none' }], { duration: g ? 1100 : 650, easing: 'cubic-bezier(.2,.9,.3,1)' });
+    }
+    this.later(() => { this.flash('#ffffff', .35, 260); this.shake(5, 260); const c = this.center(this.imgRef.current); if (c) this.streaks(c); }, 420);
+  }
+  // the gate's fleet score flies at the boss before round 1
+  barrage(dmg) {
+    this.setState({ phase: 'barrage' });
+    const from = this.center(this.fleetRef.current), er = this.rect(this.imgRef.current), to = er && { x: er.x + er.w / 2, y: er.y + er.h * (this.key() === 'garganta' ? .55 : .5) };
+    const done = () => { this.sfx('fleet_shot_big'); this.hitEnemy(dmg, '#6af5d6', to, 'BARRAGE'); this.flash('#6af5d6', .2, 260); this.later(() => this.startRound(), 900); };
+    const el = from && to && !this.reduced && this.fxEl('left:' + from.x + 'px;top:' + from.y + 'px;width:0;height:0;z-index:3');
+    if (!el || !el.animate) { if (el) el.remove(); return this.later(done, 300); }
+    el.innerHTML = '<div style="position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;white-space:nowrap"><span style="font-family:Silkscreen,monospace;font-size:12px;line-height:1;color:#a9b0c0">FLEET SCORE</span><span style="font-family:\'Jersey 15\',monospace;font-size:48px;line-height:.9;color:#6af5d6;text-shadow:3px 3px 0 #0f4a4a">' + this.score() + '</span></div>';
+    this.sfx('tonal_click');
+    el.animate([{ transform: 'translate(0,0) scale(.4)', opacity: 0 }, { transform: 'translate(0,0) scale(1.15)', opacity: 1, offset: .2 }, { transform: 'translate(0,0) scale(1)', opacity: 1, offset: .5 }, { transform: 'translate(' + (to.x - from.x) + 'px,' + (to.y - from.y) + 'px) scale(.35)', opacity: 1 }], { duration: 1200, easing: 'cubic-bezier(.6,0,.8,.4)', fill: 'forwards' });
+    this.later(() => { el.remove(); this.burst(to.x, to.y, 2); done(); }, 1200);
+  }
+  startRound() {
+    const S = this.state, it = this.intent(S), al = this.alive(S);
+    let target = -1;
+    if ((it.kind === 'board' || it.kind === 'beam') && al.length) target = al[Math.floor(Math.random() * al.length)];
+    if (it.kind === 'devour' && al.length) target = al.includes(S.lastK) ? S.lastK : al[al.length - 1];
+    const offer = this.mkOffer(S, target, it);
+    this.setState({ phase: 'pick', offer, sel: -1, cur: null, dice: [], calls: [], call: 0, freeUsed: false, freeSel: [], target, block: 0, atkAdd: 0, dmgRound: 0, hint: '' }, () => { this.dealAnim(offer.length); this.intentSfx(it); });
+  }
+  // offer: one card per ship drawn at random (each ship once), the beam's target always in, Volley fills the gaps
+  mkOffer(S, target, it) {
+    const size = this.OFFER[this.band()] || 3, al = this.alive(S), pick = it.kind === 'beam' && target >= 0 ? [target] : [];
+    this.shuffle(al.filter(k => !pick.includes(k))).forEach(k => { if (pick.length < size) pick.push(k); });
+    pick.sort((a, b) => a - b);
+    const out = pick.map(k => ({ k, card: this.FLEET[k].card === 'echo' && !S.last ? 'volley' : this.FLEET[k].card }));
+    while (out.length < size) out.push({ k: -1, card: 'volley' });
+    const fc = this.P().forceCard;
+    if (fc && fc !== 'none' && this.CARDS[fc] && !(fc === 'echo' && !S.last)) { let j = out.findIndex(o => o.k < 0); if (j < 0) j = out.map(o => o.k !== target).lastIndexOf(true); if (j >= 0) out[j] = { k: out[j].k, card: fc }; }
+    return out;
+  }
+  intentSfx(it) { const m = { board: 'boarding', beam: 'target_lock', exposed: 'mothercore_core_open', inhale: 'garganta_inhale', devour: 'boss_intent_danger' }; this.sfx(m[it.kind] || ((it.atk || 0) >= 5 ? 'boss_intent_danger' : 'boss_intent')); }
+  dealAnim(n) { for (let i = 0; i < n; i++) this.sfx('whoosh', { delay: 60 + i * 90 }); if (this.reduced) return; this.slotRefs.slice(0, n).forEach((r, i) => { const el = r.current; if (el && el.animate) el.animate([{ transform: 'translateY(46px) scale(.5)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 460, delay: 60 + i * 90, easing: 'cubic-bezier(.2,.9,.3,1.25)', fill: 'backwards' }); }); }
+  pickCard(i) { if (this.state.phase !== 'pick') return; this.sfx('metallic_click'); this.setState(s => ({ sel: s.sel === i ? -1 : i })); }
+  play() {
+    const S = this.state; if (S.phase !== 'pick' || S.sel < 0) return;
+    const o = S.offer[S.sel], c = this.CARDS[o.card], base = { cur: o, sel: -1, dice: [], calls: [], call: 0, freeUsed: false, freeSel: [] };
+    this.sfx('bit_sword');
+    if (o.card === 'echo') { const L = S.last; return this.setState({ ...base, phase: 'act', dice: L.dice.map(d => this.mkDie(d.v, d.banked, true)), calls: L.calls.slice(), call: L.call }, () => this.trayIn()); }
+    if (o.card === 'target') return this.setState({ ...base, phase: 'call' }, () => this.trayIn());
+    this.setState({ ...base, phase: 'roll' }, () => { this.trayIn(); this.later(() => this.rollNew(c.n, true), 200); });
+  }
+  trayIn() { const tr = this.trayRef.current; if (tr && tr.animate && !this.reduced) tr.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: 'ease-out' }); }
+  callNum(n) { if (this.state.phase !== 'call') return; this.sfx('metallic_click'); this.setState({ call: n, phase: 'roll' }, () => this.later(() => this.rollNew(4, true), 120)); }
+  mkDie(v, banked, settled) { return { v, banked: !!banked, faces: [v].concat(this.shuffle([1, 2, 3, 4, 5, 6].filter(x => x !== v))), settled: !!settled }; }
+  // banked dice join this roll first (already settled), then the new dice tumble in
+  rollNew(n, withBank) {
+    const S = this.state, add = (withBank ? S.bank : []).map(v => this.mkDie(v, true, true)), neu = Array.from({ length: n }, () => this.mkDie(this.d6(), false, false));
+    const start = S.dice.length + add.length, dice = S.dice.concat(add, neu).slice(0, 10), idx = neu.map((_, q) => start + q).filter(j => j < 10);
+    this.busy = true;
+    this.setState({ dice, bank: withBank ? [] : S.bank }, () => this.tumble(idx, () => { this.busy = false; this.setState({ phase: 'act' }); }));
+  }
+  tumble(idx, done) {
+    const pre = 520, st = idx.length > 1 ? Math.min(220, 900 / idx.length) : 0;
+    if (idx.length) { this.sfx('dice_roll'); idx.forEach((j, q) => this.sfx('die_land', { delay: pre + q * st, vol: .65, pitch: .96 })); }
+    requestAnimationFrame(() => requestAnimationFrame(() => idx.forEach((j, q) => { const el = this.drt[j] && this.drt[j].cube.current; if (!el) return; el.style.animation = 'none'; void el.offsetHeight; if (!this.reduced) el.style.animation = 'dice-tumble ' + Math.round(pre + q * st) + 'ms cubic-bezier(0.19,1,0.22,1) forwards'; })));
+    idx.forEach((j, q) => this.later(() => this.setState(s => ({ dice: s.dice.map((d, i) => i === j ? { ...d, settled: true } : d) })), pre + q * st));
+    this.later(done, pre + Math.max(0, idx.length - 1) * st + 140);
+  }
+  addDie(extra) { const S = this.state, j = S.dice.length; this.busy = true; this.setState({ ...(extra || {}), dice: S.dice.concat(this.mkDie(this.d6(), false, false)) }, () => this.tumble([j], () => { this.busy = false; this.forceUpdate(); })); }
+  more() { const S = this.state; if (S.phase !== 'act' || this.busy || !S.cur || S.cur.card !== 'redline') return; const o = this.evS(S); if (o.bust) { this.sfx('denied'); return this.say('BUSTED · REROLL THE 1 OR TAKE IT', '#ff4d4d'); } if (S.dice.length >= 10) return this.say('THE TRAY IS FULL · FIRE', '#ffd644'); this.sfx('metallic_click'); this.addDie(); }
+  callHL(dir) { const S = this.state; if (S.phase !== 'act' || this.busy || !S.cur || S.cur.card !== 'gambit') return; const o = this.evS(S); if (o.fizz) { this.sfx('denied'); return this.say('FIZZLED · REROLL THE LAST DIE OR ACCEPT', '#ff4d4d'); } if (S.dice.length >= 10) return this.say('THE TRAY IS FULL · FIRE', '#ffd644'); this.sfx('metallic_click'); this.addDie({ calls: S.calls.concat(dir) }); }
+  cost() { return 5 * (this.state.rr + 1); }
+  canReroll(S, i) { const c = S.cur && S.cur.card, d = S.dice[i]; if (!d || c === 'echo') return false; if (c === 'redline' || c === 'gambit') return i === S.dice.length - 1 && !d.banked; return true; }
+  tapDie(i) {
+    const S = this.state; if (S.phase !== 'act' || this.busy || !S.cur) return;
+    if (S.cur.card === 'firing' && !S.freeUsed) { this.sfx('metallic_click'); return this.setState({ freeSel: S.freeSel.includes(i) ? S.freeSel.filter(x => x !== i) : S.freeSel.concat(i) }); }
+    if (!this.canReroll(S, i)) { this.sfx('denied'); return this.say(S.cur.card === 'echo' ? 'ECHO REPLAYS THE SAME DICE' : 'ONLY THE LAST DIE CAN BE REROLLED', '#ff4d4d'); }
+    const cost = this.cost(); if (S.gold < cost) { this.sfx('denied'); return this.say('A REROLL COSTS ' + cost + ' GOLD', '#ff4d4d'); }
+    this.sfx('coin_spend'); this.popAt(this.goldRef.current, 26, '-' + cost, '#ffd644', 24);
+    this.rerollIdx([i], { gold: S.gold - cost, rr: S.rr + 1 });
+  }
+  rerollIdx(idx, extra) { this.busy = true; this.setState(s => ({ ...extra, dice: s.dice.map((d, j) => idx.includes(j) ? this.mkDie(this.d6(), d.banked, false) : d) }), () => this.tumble(idx, () => { this.busy = false; this.forceUpdate(); })); }
+  freeReroll() { const S = this.state; if (S.phase !== 'act' || this.busy || !S.cur || S.cur.card !== 'firing' || S.freeUsed) return; this.sfx('metallic_click'); if (!S.freeSel.length) return this.setState({ freeUsed: true }); this.rerollIdx(S.freeSel.slice(), { freeUsed: true, freeSel: [] }); }
+  // ─── scoring: what a card does with these dice ───
+  realCard(S) { const c = S.cur && S.cur.card; return c === 'echo' ? (S.last && S.last.card) : c; }
+  evS(S) { return this.ev(this.realCard(S), S.dice, S.calls, S.call); }
+  hand(vals) {
+    const c = {}; vals.forEach(x => { c[x] = (c[x] || 0) + 1; });
+    const ks = Object.keys(c).map(Number).sort((a, b) => c[b] - c[a] || b - a), n0 = ks.length ? c[ks[0]] : 0, n1 = ks.length > 1 ? c[ks[1]] : 0, has = x => !!c[x];
+    if (n0 >= 5) return ['FIVE OF A KIND', 50, [ks[0]]];
+    if ([2, 3, 4, 5, 6].every(has)) return ['STRAIGHT', 25, [2, 3, 4, 5, 6]];
+    if (n0 >= 3 && n1 >= 2) return ['FULL HOUSE', 20, [ks[0], ks[1]]];
+    if (n0 >= 3) return ['THREE OF A KIND', 15, [ks[0]]];
+    if (n0 >= 2 && n1 >= 2) return ['TWO PAIR', 10, [ks[0], ks[1]]];
+    if (n0 >= 2) return ['PAIR', 6, [ks[0]]];
+    return ['NO HAND', 0, []];
+  }
+  // a die showing 1 misfires (no damage, 1 hull) unless the card says otherwise; banked 1s always misfire
+  ev(cid, dice, calls, call) {
+    const o = { dmg: 0, block: 0, heal: 0, atkAdd: 0, bank: null, mis: [], misAmt: 1, extra: null, marks: dice.map(() => ''), bust: false, fizz: false, jam: false, hand: '' };
+    const A = dice.map((_, i) => i), R = A.filter(i => !dice[i].banked), Bk = A.filter(i => dice[i].banked), v = i => dice[i].v, sum = a => a.reduce((t, i) => t + v(i), 0);
+    const ones = A.filter(i => v(i) === 1), good = A.filter(i => v(i) > 1), bOnes = Bk.filter(i => v(i) === 1), bGood = Bk.filter(i => v(i) > 1), rOnes = R.filter(i => v(i) === 1);
+    const hit = a => a.forEach(i => { o.marks[i] = 'hit'; }), mis = a => a.forEach(i => { o.marks[i] = 'mis'; o.mis.push(i); });
+    switch (cid) {
+      case 'volley': o.dmg = sum(good); hit(good); mis(bOnes); break;
+      case 'focus': { const best = good.reduce((m, i) => m < 0 || v(i) > v(m) ? i : m, -1); o.dmg = best < 0 ? 0 : v(best) * 2; if (best >= 0) hit([best]); mis(ones); break; }
+      case 'broadside': mis(ones); o.jam = ones.length >= 2; if (!o.jam) { o.dmg = sum(good); hit(good); } break;
+      case 'redline': mis(bOnes); if (rOnes.length) { o.bust = true; o.extra = { n: 2, lbl: 'BUST' }; rOnes.forEach(i => { o.marks[i] = 'mis'; }); } else { o.dmg = sum(R) + sum(bGood); hit(R.concat(bGood)); } break;
+      case 'gambit': {
+        mis(bOnes); if (!R.length) break; let shot = v(R[0]); hit([R[0]]);
+        for (let q = 1; q < R.length; q++) { const a = v(R[q - 1]), b = v(R[q]), c = calls[q - 1]; if (b === a) { o.marks[R[q]] = 'hit'; continue; } if ((c === 'hi' && b > a) || (c === 'lo' && b < a)) { shot *= 2; o.marks[R[q]] = 'hit'; } else { o.fizz = true; o.marks[R[q]] = 'mis'; break; } }
+        o.dmg = o.fizz ? 0 : shot + sum(bGood); if (!o.fizz) hit(bGood); break;
+      }
+      case 'target': { const m = A.filter(i => v(i) === call); o.dmg = 8 * m.length; hit(m); if (call !== 1) mis(ones); break; }
+      case 'reverse': o.dmg = 6 * rOnes.length + good.length; hit(rOnes.concat(good)); mis(bOnes); break;
+      case 'firing': { const h = this.hand(good.map(v)); o.hand = h[0]; o.dmg = h[1]; if (h[1]) hit(good.filter(i => h[2].includes(v(i)))); mis(ones); break; }
+      case 'deflector': o.block = sum(good); hit(good); mis(ones); break;
+      case 'decoy': o.dmg = sum(good); hit(good); o.atkAdd = rOnes.length; rOnes.forEach(i => { o.marks[i] = 'flare'; }); mis(bOnes); break;
+      case 'charge': o.bank = A.map(v); hit(A); break;
+      case 'ram': { const use = R.concat(bGood); o.dmg = 3 * sum(use); hit(use); mis(bOnes); if (R.length) o.extra = { n: Math.min(...R.map(v)), lbl: 'RAM' }; break; }
+      case 'bounty': o.dmg = sum(good); hit(good); mis(ones); o.misAmt = 3; break;
+      case 'patch': { const use = R.concat(bGood); o.heal = use.length ? Math.min(...use.map(v)) : 0; hit(use); mis(bOnes); break; }
+    }
+    return o;
+  }
+  // ─── resolve the card ───
+  primaryAct() { const ph = this.state.phase; if (ph === 'pick') this.play(); else if (ph === 'act') this.fire(); }
+  fire() {
+    const S = this.state; if (S.phase !== 'act' || this.busy || !S.cur) return;
+    const cid = S.cur.card, real = this.realCard(S), o = this.ev(real, S.dice, S.calls, S.call), mult = this.exposed() && !o.bank ? 2 : 1;
+    const last = cid === 'echo' ? S.last : { card: real, dice: S.dice.map(d => ({ v: d.v, banked: d.banked })), calls: S.calls.slice(), call: S.call };
+    this.setState({ phase: 'fire', last, lastK: S.cur.k, freeSel: [] }, () => this.fireSeq(o, o.dmg * mult, real));
+  }
+  shotFrom(k) {
+    if (k < 0) { const al = this.alive(); k = al.length ? al[Math.floor(Math.random() * al.length)] : -1; }
+    if (k < 0) { const f = this.rect(this.fleetRef.current); return f && { x: f.x + f.w / 2, y: f.y }; }
+    return (this.key() !== 'marauder' && this.orbitNose(k)) || this.nose(k);
+  }
+  shotTo() {
+    const er = this.rect(this.imgRef.current), b = this.key(), ex = this.exposed(); if (!er) return null;
+    if (b === 'mothercore') return ex ? { x: er.x + er.w * .607 + (Math.random() * 10 - 5), y: er.y + er.h * .49 + (Math.random() * 10 - 5) } : { x: er.x + er.w / 2 + (Math.random() * 70 - 35), y: er.y + er.h / 2 + (Math.random() * 44 - 22) };
+    if (b === 'garganta') return ex ? { x: er.x + er.w * .5 + (Math.random() * 10 - 5), y: er.y + er.h * .944 + (Math.random() * 10 - 5) } : { x: er.x + er.w * (.32 + Math.random() * .36), y: er.y + er.h * (.3 + Math.random() * .5) };
+    return { x: er.x + er.w / 2 + (Math.random() * 30 - 15), y: er.y + er.h / 2 + (Math.random() * 30 - 15) };
+  }
+  fireSeq(o, dmg, cid) {
+    const S = this.state, k = S.cur.k, col = this.CARDS[cid].col; let t = 0;
+    if (dmg > 0) {
+      const nb = Math.max(1, Math.min(5, o.marks.filter(m => m === 'hit').length));
+      for (let q = 0; q < nb; q++) this.later(() => {
+        const from = this.shotFrom(k), to = this.shotTo(), fin = q === nb - 1;
+        this.sfx(dmg >= 12 ? 'fleet_shot_big' : dmg >= 6 ? 'fleet_shot_mid' : 'fleet_shot'); this.muzzle(from);
+        this.bolt(from, to, col, 240, () => { if (fin) this.hitEnemy(dmg, col, to); else if (to) this.sparks(to.x, to.y, [col, '#ffffff'], 6); });
+      }, q * 140);
+      t = nb * 140 + 420;
+    } else if (o.jam || o.bust || o.fizz) { const p = this.shotFrom(k); if (p) this.pop(p.x, p.y - 20, o.jam ? 'JAMMED' : o.bust ? 'BUST' : 'FIZZLED', '#ff4d4d', 30); this.sfx('denied'); t = 520; }
+    if (o.block) { this.later(() => this.addBlock(o.block, k >= 0 ? this.shipRefs[k].current : this.hullRef.current), t); t += 460; }
+    if (o.heal) { this.later(() => this.heal(o.heal), t); t += 460; }
+    if (cid === 'bounty' && dmg > 0) { this.later(() => this.gainGold(dmg), t); t += 420; }
+    if (o.bank) { this.later(() => { this.sfx('shield_up'); this.popAt(this.trayRef.current, -10, 'BANKED ' + o.bank.length, '#bfe8ff', 30); this.setState(s => ({ bank: s.bank.concat(o.bank) })); }, t); t += 520; }
+    if (o.atkAdd) { this.later(() => { const er = this.rect(this.imgRef.current); if (er) this.pop(er.x + er.w / 2, er.y + er.h * .7, '+' + o.atkAdd + ' ATTACK', '#ffb36a', 28); this.setState(s => ({ atkAdd: s.atkAdd + o.atkAdd })); }, t); t += 520; }
+    o.mis.forEach((j, q) => this.later(() => this.missDie(j, o.misAmt), t + q * 240)); if (o.mis.length) t += o.mis.length * 240 + 300;
+    if (o.extra) { this.later(() => this.hullHit(o.extra.n, null, o.extra.lbl), t); t += 520; }
+    this.later(() => this.afterPlayer(), t + 380);
+  }
+  hitEnemy(dmg, col, at, lbl) {
+    this.sfx(this.exposed() ? 'boss_hit_crit' : dmg >= 6 ? 'boss_hit_heavy' : 'boss_hit');
+    const er = this.rect(this.imgRef.current), p = at || (er && { x: er.x + er.w / 2, y: er.y + er.h / 2 });
+    if (p) { this.sparks(p.x, p.y, [col, '#ffffff', '#ffd644'], 12); this.pop(p.x, p.y - 18, (lbl ? lbl + ' ' : '') + '-' + dmg, '#ffffff', dmg >= 8 ? 46 : 36); }
+    this.shake(dmg >= 6 ? 6 : 3, 220);
+    if (this.key() === 'garganta') this.hurt();
+    else { const h = this.hitRef.current; if (h && h.animate && !this.reduced) h.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px)' }, { transform: 'translateY(0)' }], { duration: 220, easing: 'ease-out' }); const im = this.imgRef.current, bf = this.baseF || 'drop-shadow(0 0 0 transparent)'; if (im && im.animate) im.animate([{ filter: bf + ' brightness(3)' }, { filter: bf }], { duration: 200 }); }
+    this.setState(s => ({ eHp: Math.max(0, s.eHp - dmg), dmgDealt: s.dmgDealt + dmg, dmgRound: s.dmgRound + dmg, bestHit: Math.max(s.bestHit, dmg) }));
+  }
+  addBlock(n, el) { this.sfx('shield_up'); const c = this.center(el); if (c) this.pop(c.x, c.y - 30, '+' + n + ' BLOCK', '#6ad0ff', 26); this.shieldFx(); this.setState(s => ({ block: s.block + n })); }
+  heal(n) { this.sfx('mecha_repair'); const c = this.center(this.hullRef.current); if (c) { this.pop(c.x, c.y - 26, '+' + n + ' HULL', '#48f320', 30); this.sparks(c.x, c.y, ['#48f320', '#ffffff'], 10); } this.punch(this.hullRef.current, 1.05); this.setState(s => ({ hull: Math.min(this.HULL_MAX, s.hull + n) })); }
+  gainGold(n) { this.sfx('coin_toss'); this.sfx('whimsy_coin', { delay: 120 }); this.popAt(this.goldRef.current, 26, '+' + n, '#ffd644', 26); this.punch(this.goldRef.current, 1.1); this.setState(s => ({ gold: s.gold + n })); }
+  missDie(j, amt) {
+    const d = this.state.dice[j]; if (!d) return;
+    const from = this.center(this.drt[j].box.current), hr = this.rect(this.hullRef.current), to = hr && { x: hr.x + hr.w * (.3 + Math.random() * .4), y: hr.y + hr.h / 2 }, fx = this.fxRef.current, g = this.gen;
+    if (!from || !to || !fx || this.reduced) return this.hullHit(amt, to, 'MISFIRE');
+    const im = document.createElement('img'); im.src = 'assets/flat_' + d.v + '_48.png';
+    im.style.cssText = 'position:absolute;left:' + (from.x - 16) + 'px;top:' + (from.y - 16) + 'px;width:32px;height:32px;display:block;image-rendering:pixelated;filter:drop-shadow(0 0 6px #ff4d4d)';
+    fx.appendChild(im);
+    const dx = to.x - from.x, dy = to.y - from.y;
+    im.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: 'translate(' + dx * .5 + 'px,' + (dy * .5 - 30) + 'px) rotate(200deg)', offset: .5 }, { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(400deg) scale(.7)' }], { duration: 420, easing: 'cubic-bezier(.4,0,.8,.6)', fill: 'forwards' });
+    setTimeout(() => { im.remove(); if (g === this.gen) this.hullHit(amt, to, 'MISFIRE'); }, 420);
+  }
+  hullHit(n, at, label) {
+    if (label === 'MISFIRE') this.sfx('die_hull'); else this.sfx(n >= 3 ? 'hull_hit_heavy' : 'hull_hit');
+    const hr = this.rect(this.hullRef.current), p = at || (hr && { x: hr.x + hr.w / 2, y: hr.y + hr.h / 2 });
+    if (p) { this.sparks(p.x, p.y, ['#ff4d4d', '#ffffff', '#7a1a0e'], 10); this.pop(p.x, p.y - 26, (label ? label + ' ' : '') + '-' + n, '#ff4d4d', 30); }
+    this.shake(n >= 3 ? 8 : 4, 260); this.flash('#ff1a1a', n >= 3 ? .3 : .14, 300); this.punch(this.hullRef.current, 1.04);
+    this.setState(s => ({ hull: Math.max(0, s.hull - n) }));
+  }
+  afterPlayer() {
+    const S = this.state;
+    if (S.eHp <= 0) return this.explode();
+    if (S.hull <= 0) return this.hullZero();
+    if (this.intent(S).kind === 'inhale' && S.dmgRound > 0 && this.swallowed(S).length) return this.spit(() => this.toEnemy());
+    this.toEnemy();
+  }
+  toEnemy() {
+    const S = this.state, b = this.key();
+    this.setState({ phase: 'enemy' });
+    if (b !== 'marauder' && !S.over && S.eHp <= S.eMax / 2) {
+      const g = b === 'garganta'; this.setState({ over: true }); this.sfx(g ? 'boss_phase2_frenzy' : 'boss_phase2_overdrive');
+      const er = this.rect(this.imgRef.current), im = this.imgRef.current, bf = this.baseF || '';
+      if (er) this.pop(er.x + er.w / 2, er.y + er.h / 2, g ? 'FRENZY' : 'OVERDRIVE', '#ff4d4d', 46);
+      this.flash('#ff1a1a', .3, 300, 3); this.shake(6, 300);
+      if (im && im.animate) im.animate([{ filter: bf }, { filter: bf + ' hue-rotate(150deg) brightness(1.4)' }, { filter: bf }], { duration: 300, iterations: 3, easing: 'steps(2)' });
+      return this.later(() => this.enemyTurn(), 1300);
+    }
+    this.later(() => this.enemyTurn(), 420);
+  }
+  // ─── the boss resolves its intent ───
+  enemyTurn() {
+    const S = this.state, it = this.intent(S), b = this.key(), er = this.rect(this.imgRef.current), lbl = (t, c) => { if (er) this.pop(er.x + er.w / 2, er.y + er.h + 4, t, c, 30); };
+    if (it.kind === 'charge') {
+      this.sfx('marauder_charge'); lbl('CHARGING', '#ffb36a');
+      const im = this.imgRef.current, bf = this.baseF || ''; if (im && im.animate) im.animate([{ filter: bf + ' drop-shadow(0 0 0 #ffb36a)' }, { filter: bf + ' drop-shadow(0 0 16px #ffb36a) brightness(1.5)' }, { filter: bf + ' drop-shadow(0 0 0 #ffb36a)' }], { duration: 900, easing: 'ease-in-out' });
+      return this.later(() => this.reflect(this.state.block, () => this.endRound()), 1000);
+    }
+    if (it.kind === 'board') return this.boarders();
+    if (it.kind === 'exposed') { this.sfx('mothercore_core_seal'); lbl('CORE SEALS', '#ffd644'); return this.later(() => this.reflect(this.state.block, () => this.endRound()), 800); }
+    if (it.kind === 'inhale') { this.sfx('garganta_maw_shut'); lbl('MAW SHUTS', '#ffd644'); return this.later(() => this.reflect(this.state.block, () => this.inhaleEnd()), 800); }
+    const atk = it.atk + S.atkAdd;
+    if (b === 'garganta') return this.bite(() => this.resolveAttack(it, atk));
+    const from = b === 'mothercore' ? this.coreAt() : er && { x: er.x + er.w / 2, y: er.y + er.h - 12 }, shots = Math.min(atk, 6); let landed = 0;
+    for (let q = 0; q < shots; q++) this.later(() => {
+      const al = this.alive(), kk = it.kind === 'beam' && S.target >= 0 ? S.target : al.length ? al[Math.floor(Math.random() * al.length)] : 0, tile = this.shipRefs[kk] && this.shipRefs[kk].current, to = this.center(tile);
+      this.sfx(b === 'mothercore' ? 'mothercore_shot' : 'marauder_shot'); this.muzzle(from);
+      this.bolt(from, to, '#ff4d4d', 300, () => { if (to) this.sparks(to.x, to.y, ['#ff4d4d', '#ffffff'], 6); this.punch(tile, 1.05); if (++landed === shots) this.resolveAttack(it, atk); });
+    }, q * 120);
+  }
+  // block beyond this round's attack bounces back at the boss
+  reflect(n, next) {
+    if (!(n > 0)) { if (this.state.block) this.setState({ block: 0 }); return next(); }
+    this.setState({ block: 0 }); this.sfx('shield_block'); this.shieldFx();
+    const a = this.center(this.hullRef.current), to = this.shotTo();
+    this.popAt(this.hullRef.current, -30, 'REFLECT ' + n, '#6ad0ff', 26);
+    this.bolt(a, to, '#6ad0ff', 320, () => { this.hitEnemy(n, '#6ad0ff', to, 'REFLECT'); this.later(() => this.state.eHp <= 0 ? this.explode() : next(), 500); });
+  }
+  resolveAttack(it, atk) {
+    const S = this.state, blocked = Math.min(S.block, atk), dmg = atk - blocked, excess = S.block - atk, c = this.center(this.hullRef.current), g = this.key() === 'garganta';
+    if (blocked) { this.sfx('shield_block'); this.shieldFx(); if (c) this.pop(c.x - 70, c.y - 34, 'BLOCKED ' + blocked, '#6ad0ff', 26); }
+    if (dmg > 0) { const hit = () => g ? this.biteDmg(dmg, c) : this.hullHit(dmg, c); if (blocked) this.later(hit, 60); else hit(); } else this.shake(2, 160);
+    this.setState({ block: 0 });
+    this.later(() => {
+      if (this.state.hull <= 0) return this.hullZero();
+      this.reflect(excess, () => {
+        if (it.kind === 'beam') return this.beamEnd(blocked >= atk);
+        if (it.kind === 'devour') return this.take(this.state.target, 'swallow', () => this.endRound());
+        this.endRound();
+      });
+    }, dmg > 0 ? 760 : 600);
+  }
+  // Mother Core: the targeted ship survives if its card was played (it dodges) or the beam was fully blocked
+  beamEnd(full) {
+    const S = this.state, k = S.target; if (k < 0 || S.st[k] !== 'ok') return this.endRound();
+    if (S.cur && S.cur.k === k) { this.sfx('dodge'); this.popAt(this.shipRefs[k].current, -40, 'DODGED', '#48f320', 28); return this.later(() => this.endRound(), 800); }
+    if (full) { this.sfx('dodge'); this.popAt(this.shipRefs[k].current, -40, 'BEAM BLOCKED', '#6ad0ff', 26); return this.later(() => this.endRound(), 800); }
+    this.take(k, 'vaporize', () => this.endRound());
+  }
+  // Marauder: boarding replaces the attack; repel it with enough damage this round
+  boarders() {
+    const S = this.state, k = S.target, need = this.REPEL[this.sec()];
+    this.reflect(S.block, () => {
+      const T = this.state; if (k < 0 || T.st[k] !== 'ok') return this.endRound();
+      if (T.dmgRound >= need) { this.sfx('shield_block'); this.popAt(this.shipRefs[k].current, -40, 'REPELLED', '#48f320', 30); return this.later(() => this.endRound(), 900); }
+      this.take(k, 'capture', () => this.endRound());
+    });
+  }
+  // Garganta: any damage on the inhale round frees swallowed ships, otherwise they're digested
+  inhaleEnd() { const sw = this.swallowed(); if (!sw.length) return this.endRound(); if (this.state.dmgRound > 0) return this.spit(() => this.endRound()); this.digest(sw, () => this.endRound()); }
+  // ─── taking ships (Evasive Maneuvers can cancel one per fight) ───
+  take(k, kind, after) {
+    const S = this.state, cost = this.EVADE[this.sec()];
+    if (k < 0 || S.st[k] !== 'ok') return after();
+    const apply = () => this[kind](k, after);
+    if (!S.evaded && S.pres >= cost) { this.pendP = { apply, after }; return this.setState({ phase: 'prompt', prompt: { kind: 'evade', k, what: kind, cost } }, () => this.promptIn()); }
+    apply();
+  }
+  setSt(k, v) { this.setState(s => ({ st: s.st.map((x, j) => (Array.isArray(k) ? k.includes(j) : j === k) ? v : x) })); }
+  capture(k, after) {
+    this.sfx('captured');
+    const er = this.rect(this.imgRef.current), from = er && { x: er.x + er.w / 2, y: er.y + er.h - 10 }, to = this.center(this.shipImg(k));
+    if (from && to) { const dx = to.x - from.x, dy = to.y - from.y, L = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI; this.anim(this.fxEl('left:' + from.x + 'px;top:' + (from.y - 9) + 'px;width:' + L + 'px;height:18px;transform-origin:0 50%;transform:rotate(' + ang + 'deg);background:repeating-linear-gradient(90deg,rgba(255,179,106,.8) 0 6px,rgba(255,179,106,.15) 6px 12px);box-shadow:0 0 14px rgba(255,179,106,.6)'), [{ opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .7 }, { opacity: 0 }], { duration: 900, easing: 'steps(6)' }); }
+    this.later(() => { this.ghost('assets/' + this.FLEET[k].ship + '.png', to, from, 520, true); this.setSt(k, 'captured'); this.popAt(this.shipRefs[k].current, -40, 'CAPTURED', '#ffb36a', 28); this.shake(4, 200); }, 300);
+    this.later(after, 1100);
+  }
+  vaporize(k, after) {
+    this.sfx('mothercore_beam'); this.sfx('ship_destroyed', { delay: 170 });
+    const from = this.coreAt(), to = this.center(this.shipImg(k));
+    if (from && to) { const dx = to.x - from.x, dy = to.y - from.y, L = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI; this.anim(this.fxEl('left:' + from.x + 'px;top:' + (from.y - 6) + 'px;width:' + L + 'px;height:12px;transform-origin:0 50%;transform:rotate(' + ang + 'deg);background:linear-gradient(180deg,#ff4d4d,#ffffff 50%,#ff4d4d);box-shadow:0 0 22px #ff4d4d'), [{ opacity: 1, clipPath: 'inset(0 100% 0 0)' }, { opacity: 1, clipPath: 'inset(0 0 0 0)', offset: .3 }, { opacity: 0, clipPath: 'inset(0 0 0 0)' }], { duration: 560, easing: 'ease-out' }); }
+    this.flash('#ff1a1a', .3, 320); this.shake(9, 320);
+    this.later(() => { if (to) { this.burst(to.x, to.y, 2); this.later(() => this.burst(to.x + 8, to.y - 6, 1), 120); this.debris(to.x, to.y, ['#ffffff', '#ff4d4d', '#8fc0ff', this.FLEET[k].col], 16); this.pop(to.x, to.y - 40, 'VAPORIZED', '#ff4d4d', 26); } this.setSt(k, 'vaporized'); }, 170);
+    this.later(after, 1200);
+  }
+  swallow(k, after) {
+    this.sfx('swallow');
+    const dr = this.droneRefs[k].current, a = this.center(dr && dr.style.visibility !== 'hidden' ? dr : this.shipImg(k)), m = this.maw();
+    this.ghost('assets/' + this.FLEET[k].ship + '.png', a, m, 480, true);
+    this.later(() => { this.setSt(k, 'swallowed'); if (m) this.pop(m.x, m.y - 30, 'SWALLOWED', '#9dff5a', 28); this.shake(6, 240); this.punch(this.hitRef.current, 1.04); }, 480);
+    this.later(after, 1200);
+  }
+  spit(after) {
+    const sw = this.swallowed(), m = this.maw(); if (!sw.length) return after();
+    this.sfx('spit_out'); this.shake(5, 220);
+    sw.forEach((k, q) => this.later(() => { const to = this.center(this.shipImg(k)); this.ghost('assets/' + this.FLEET[k].ship + '.png', m, to, 520, false); this.later(() => { this.setSt(k, 'ok'); this.popAt(this.shipRefs[k].current, -40, 'SPAT OUT', '#48f320', 28); }, 520); }, q * 200));
+    this.later(after, 1200 + sw.length * 200);
+  }
+  digest(list, after) {
+    this.sfx('digest'); const m = this.maw(); this.setSt(list, 'digested');
+    if (m) { this.pop(m.x, m.y - 30, 'DIGESTED', '#ff4d4d', 30); this.sparks(m.x, m.y, ['#9dff5a', '#ff4d4d', '#ffffff'], 12); }
+    this.punch(this.hitRef.current, 1.05); this.shake(5, 260);
+    this.later(after, 1100);
+  }
+  // ─── prestige orders ───
+  promptIn() { const el = this.promptRef.current; if (el && el.animate && !this.reduced) el.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: 'cubic-bezier(.2,.8,.3,1.2)' }); }
+  hullZero() { const S = this.state, cost = 2 * this.bossP(); if (S.ej && S.pres >= cost) return this.setState({ phase: 'prompt', prompt: { kind: 'jump', cost } }, () => this.promptIn()); this.lose(); }
+  answer(yes) {
+    const S = this.state, P = S.prompt; if (S.phase !== 'prompt' || !P) return;
+    if (P.kind === 'evade') {
+      const pc = this.pendP; this.pendP = null; if (!pc) return;
+      if (!yes) return this.setState({ phase: 'enemy', prompt: null }, () => pc.apply());
+      this.sfx('evasive');
+      return this.setState(s => ({ phase: 'enemy', prompt: null, pres: s.pres - P.cost, spentP: s.spentP + P.cost, evaded: true }), () => {
+        const el = this.shipRefs[P.k].current; this.popAt(el, -40, 'EVADED', '#c79bff', 30); this.popAt(this.presRef.current, 26, '-' + P.cost, '#c79bff', 24);
+        if (el && el.animate && !this.reduced) el.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-14px) rotate(-6deg)' }, { transform: 'translateX(12px) rotate(5deg)' }, { transform: 'translateX(0)' }], { duration: 420, easing: 'ease-out' });
+        this.later(pc.after, 800);
+      });
+    }
+    if (!yes) return this.setState({ prompt: null }, () => this.lose());
+    this.sfx('emergency_jump');
+    this.setState(s => ({ prompt: null, phase: 'boom', pres: s.pres - P.cost, spentP: s.spentP + P.cost, ej: false }), () => this.jumpOut());
+  }
+  jumpOut() {
+    const f = this.rect(this.fleetRef.current); this.flash('#ffffff', .8, 420, 3); this.shake(6, 300);
+    if (f && !this.reduced) for (let i = 0; i < 14; i++) { const x = f.x + Math.random() * f.w, h = 60 + Math.random() * 140; this.anim(this.fxEl('left:' + x + 'px;top:' + (f.y - h) + 'px;width:2px;height:' + h + 'px;background:linear-gradient(rgba(255,255,255,0),#6af5d6)'), [{ transform: 'translateY(60px) scaleY(.3)', opacity: 0 }, { transform: 'translateY(0) scaleY(1)', opacity: 1, offset: .4 }, { transform: 'translateY(-120px) scaleY(.2)', opacity: 0 }], { duration: 520 + Math.random() * 200, easing: 'ease-in' }); }
+    this.jA = this.FLEET.map((_, k) => { const el = this.shipImg(k); return el && el.animate && !this.reduced && this.state.st[k] === 'ok' ? el.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(-220px) scaleY(2)', opacity: 0 }], { duration: 520, delay: k * 50, easing: 'cubic-bezier(.6,0,.9,.4)', fill: 'forwards' }) : null; }).filter(Boolean);
+    this.later(() => this.setState({ phase: 'jumped' }, () => this.endIn()), 1100);
+  }
+  endRound() {
+    const S = this.state, b = this.key(), it = this.intent(S), I = this.lvl().intents;
+    const adv = !(it.kind === 'board' && !I[S.ii % I.length]); // boarding on a charging round pushes the charge back a round
+    const regen = b === 'garganta' && S.eHp > 0 && S.eHp < S.eMax;
+    if (regen) { this.sfx('garganta_regrow'); const er = this.rect(this.imgRef.current); if (er) this.pop(er.x + er.w * .45, er.y + er.h * .5, '+1 REGROWS', '#9dff5a', 30); this.setState(s => ({ eHp: Math.min(s.eMax, s.eHp + 1) })); }
+    this.later(() => this.setState(s => ({ round: s.round + 1, ii: s.ii + (adv ? 1 : 0), cur: null, block: 0, atkAdd: 0 }), () => this.later(() => this.startRound(), 100)), regen ? 700 : 0);
+  }
+  // ─── endings ───
+  explode() {
+    const B = this.BOSS[this.key()], n = B.booms, big = this.key() === 'garganta';
+    this.setState({ phase: 'boom' }); this.sfx('boss_death');
+    const er = this.rect(this.imgRef.current); if (!er) return this.win();
+    const cx = er.x + er.w / 2, cy = er.y + er.h / 2, im = this.imgRef.current, bf = this.baseF || '';
+    if (im && im.animate && !this.reduced) im.animate([{ filter: bf }, { filter: bf, offset: .5 }, { filter: bf + ' brightness(5)', offset: .5 }, { filter: bf + ' brightness(5)' }], { duration: 150, iterations: n });
+    for (let q = 0; q < n; q++) this.later(() => { this.burst(cx + Math.round((Math.random() - .5) * er.w * .7), cy + Math.round((Math.random() - .5) * er.h * .6), q % 2 ? (big ? 3 : 2) : (big ? 2 : 1)); this.shake(4, 180); }, q * 140);
+    this.later(() => {
+      const h = this.hitRef.current; if (h && h.animate) this.deathAnim = h.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 1, fill: 'forwards' });
+      this.flash('#ffffff', .8, 300, 3); this.shake(9, 320);
+      this.burst(cx, big ? cy + 30 : cy, big ? 7 : n > 6 ? 5 : 4); this.shatter(cx, cy); this.debris(cx, cy, ['#ffffff', '#ffd644', '#ff9a3c', '#e8522c', '#5a1a2a'], 26);
+    }, n * 140 + 60);
+    this.later(() => this.burst(cx - 30, cy + 18, 2), n * 140 + 220);
+    this.later(() => this.burst(cx + 28, cy - 20, 2), n * 140 + 360);
+    this.later(() => this.win(), n > 6 ? 2600 : 2000);
+  }
+  win() {
+    const S = this.state, back = S.st.map((x, k) => x === 'captured' || x === 'swallowed' ? k : -1).filter(k => k >= 0);
+    this.sfx('boss_victory');
+    back.forEach(k => this.popAt(this.shipRefs[k].current, -40, 'RETURNED', '#48f320', 26));
+    this.setState(s => ({ phase: 'won', st: s.st.map(x => x === 'captured' || x === 'swallowed' ? 'ok' : x) }), () => this.endIn());
+  }
+  lose() {
+    this.setState({ phase: 'boom' }); this.sfx('fleet_defeat');
+    const hr = this.rect(this.hullRef.current); if (hr) for (let q = 0; q < 5; q++) this.later(() => this.burst(hr.x + Math.random() * hr.w, hr.y + hr.h / 2, 2), q * 120);
+    this.later(() => { this.flash('#ff1a1a', .6, 520); this.shake(10, 420); }, 620);
+    this.later(() => this.setState({ phase: 'lost' }, () => this.endIn()), 1400);
+  }
+  endIn() { const el = this.endRef.current; if (el && el.animate) el.animate([{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.3,1.2)' }); }
+  // won: captured/swallowed ships came home; lost or jumped: everything taken stays gone
+  result() {
+    const S = this.state, gone = S.phase === 'won' ? ['vaporized', 'digested'] : ['vaporized', 'digested', 'captured', 'swallowed'];
+    return { outcome: S.phase, lost: S.st.map((x, k) => gone.includes(x) ? k : -1).filter(k => k >= 0), gold: S.gold, prestige: S.pres, spentP: S.spentP, rounds: S.round };
+  }
+  done() { if (this.props && this.props.onDone) this.props.onDone(this.result()); else this.restart(); }
+  // ─── garganta: wince, eyes, bite ───
+  hurt() {
+    this.sfx('garganta_hurt');
+    const n = this.imgRef.current, hu = this.hurtRef.current; if (!n || !hu) return;
+    const eyes = this.eyeRefs.map(r => r.box.current).filter(Boolean);
+    n.style.visibility = 'hidden'; hu.style.transformOrigin = '168px 0px'; eyes.forEach(e => e.style.visibility = 'hidden'); hu.style.visibility = 'visible';
+    if (!this.reduced && hu.animate) { hu.animate([{ transform: 'translate(30px,-4px)' }, { transform: 'translate(36px,-5px)', offset: .3 }, { transform: 'translate(16px,-2px)', offset: .7 }, { transform: 'translate(0,0)' }], { duration: 520, easing: 'steps(8)', fill: 'forwards' }); hu.animate([{ filter: 'brightness(.6) sepia(1) saturate(9) hue-rotate(-40deg) brightness(1.5)' }, { filter: 'none' }, { filter: 'brightness(.6) sepia(1) saturate(9) hue-rotate(-40deg) brightness(1.5)' }, { filter: 'none' }], { duration: 400, easing: 'steps(4)' }); }
+    clearTimeout(this.hurtT); this.hurtT = setTimeout(() => { hu.style.visibility = 'hidden'; n.style.visibility = ''; eyes.forEach(e => e.style.visibility = ''); }, 540);
+  }
+  eyesTick() {
+    const now = performance.now() - this.t0;
+    if (now > this.nextLook) { const els = this.droneRefs.map(r => r.current).filter(e => e && e.style.visibility !== 'hidden'); this.lookEl = els[Math.floor(Math.random() * els.length)] || null; this.lookUntil = now + 1600 + Math.random() * 1400; this.nextLook = this.lookUntil + 1400 + Math.random() * 2600; }
+    if (now > this.nextBlink) { this.blinkAt = now; this.nextBlink = now + 3200 + Math.random() * 4200; }
+    const focus = this.lookEl && now < this.lookUntil ? this.center(this.lookEl) : null, bp = (now - this.blinkAt) / 200, lid = bp >= 0 && bp < 1 ? (bp < .5 ? bp * 2 : (1 - bp) * 2) : 0;
+    this.eyeRefs.forEach((r, k) => {
+      const box = r.box.current; if (!box) return;
+      let tx = Math.sin(now / 1300 + k) * .35, ty = Math.cos(now / 1700 + k) * .35;
+      if (focus) { const c = this.center(box); if (c) { const dx = focus.x - c.x, dy = focus.y - c.y, L = Math.hypot(dx, dy) || 1; tx = dx / L; ty = dy / L * 1.4; } }
+      const o = this.eyeOff[k]; o.x += (tx - o.x) * (focus ? .25 : .06); o.y += (ty - o.y) * (focus ? .25 : .06);
+      const px = Math.max(-2, Math.min(2, Math.round(o.x * 2))), py = Math.max(-1, Math.min(1, Math.round(o.y)));
+      const f = lid > .66 ? 16 : lid > .2 ? 15 : (py + 1) * 5 + (px + 2);
+      box.style.backgroundPosition = (-f * parseFloat(box.dataset.fw)) + 'px 0';
+    });
+  }
+  bite(onImpact) {
+    this.sfx('garganta_bite'); this.sfx('garganta_bite_layer', { delay: 335 });
+    const hit = this.hitRef.current, b = this.biteRef.current, im = this.imgRef.current, eyes = this.eyeRefs.map(r => r.box.current).filter(Boolean), sh = this.shutRef.current, g = this.gen;
+    const open = on => { if (b) b.style.opacity = on ? 1 : 0; if (im) im.style.clipPath = on ? 'inset(0 0 67% 0)' : ''; const core = this.coreRef.current; if (core) core.style.visibility = on ? 'hidden' : 'visible'; eyes.forEach(e => { e.style.visibility = on ? 'hidden' : 'visible'; }); };
+    const impact = () => { if (b) b.style.opacity = 0; if (sh) sh.style.opacity = 1; this.shake(7, 260); this.later(() => { if (g !== this.gen) return; if (sh) sh.style.opacity = 0; open(false); }, 620); onImpact(); };
+    if (this.reduced || !hit || !hit.animate) return impact();
+    open(true); hit.style.transformOrigin = '50% 30%';
+    hit.animate([{ transform: 'translateY(0) scale(1)', easing: 'cubic-bezier(.3,.6,.4,1)' }, { transform: 'translateY(-10px) scale(.95)', offset: .235, easing: 'cubic-bezier(.55,0,.9,.45)' }, { transform: 'translateY(72px) scale(1.22)', offset: .43, easing: 'ease-out' }, { transform: 'translateY(68px) scale(1.2)', offset: .66, easing: 'cubic-bezier(.4,0,.3,1)' }, { transform: 'translateY(0) scale(1)' }], { duration: 1150 });
+    this.later(impact, 385);
+  }
+  biteDmg(n, c, sd) {
+    if (n) this.sfx(n >= 3 ? 'hull_hit_heavy' : 'hull_hit', { db: -6, delay: sd || 0 });
+    if (!this.reduced) {
+      this.anim(this.fxEl('inset:0;z-index:3;background:#ff1a1a'), [{ opacity: .55 }, { opacity: .3, offset: .3 }, { opacity: .38, offset: .45 }, { opacity: 0 }], { duration: 520, easing: 'steps(6)' });
+      this.anim(this.fxEl('inset:0;z-index:3;box-shadow:inset 0 0 0 10px #ff4d4d,inset 0 0 60px 20px rgba(255,26,26,.85)'), [{ opacity: 1 }, { opacity: 0 }], { duration: 700, easing: 'steps(5)' });
+    }
+    const hl = this.hullRef.current;
+    if (hl && hl.animate && !this.reduced) hl.animate([{ borderColor: '#ff4d4d', transform: 'translateX(0)' }, { borderColor: '#ff4d4d', transform: 'translateX(-6px)', offset: .2 }, { borderColor: '#ff4d4d', transform: 'translateX(5px)', offset: .4 }, { borderColor: '#ff4d4d', transform: 'translateX(-3px)', offset: .6 }, { borderColor: '#f2f2f2', transform: 'translateX(0)' }], { duration: 420, easing: 'steps(6)' });
+    if (c && n) this.pop(c.x - 20, c.y - 30, 'HULL -' + n, '#ff4d4d', 30);
+    this.shake(n >= 4 ? 12 : 8, 340);
+    this.setState(s => ({ hull: Math.max(0, s.hull - n) }));
+  }
+  // ─── loop ───
+  tick() {
+    const t = (performance.now() - this.t0) / 1000, A = this.driftA.current, Bg = this.driftB.current, b = this.key(), S = this.state;
+    if (A) A.style.backgroundPosition = '0px ' + ((t * 16) % 900).toFixed(1) + 'px';
+    if (Bg) Bg.style.backgroundPosition = '120px ' + (300 + (t * 34) % 1350).toFixed(1) + 'px';
+    const e = this.enemyRef.current;
+    if (e) {
+      if (b === 'marauder') e.style.transform = 'translate(' + (Math.sin(t * .8) * 7).toFixed(2) + 'px,' + (Math.sin(t * 1.6) * 4).toFixed(2) + 'px) rotate(' + (Math.sin(t * 1.1) * 1.4).toFixed(2) + 'deg)';
+      else if (b === 'mothercore') e.style.transform = 'translate(' + (Math.sin(t * .5) * 4).toFixed(2) + 'px,' + (Math.sin(t * 1.0) * 3).toFixed(2) + 'px) rotate(' + (Math.sin(t * .7) * .5).toFixed(2) + 'deg)';
+      else { const w = S.over ? .8 : .45; e.style.transform = 'translate(' + Math.round(Math.sin(t * w) * 6) + 'px,' + Math.round(Math.sin(t * w * 2) * 2) + 'px) rotate(' + (Math.sin(t * w) * 3.2).toFixed(2) + 'deg)'; }
+    }
+    if (b !== 'marauder') {
+      const spd = S.over ? 1.25 : .7, n = this.FLEET.length, g = b === 'garganta';
+      this.droneRefs.forEach((r, i) => { const el = r.current; if (!el || i >= n) return; const a = t * spd + i * 2 * Math.PI / n, sn = Math.sin(a), front = sn > 0, k = .78 + .3 * (sn + 1) / 2;
+        const ox = Math.round(Math.cos(a) * (g ? 165 : 160)), oy = Math.round(sn * (g ? 44 : 56)), rot = Math.round((g ? Math.atan2(0 - ox, -(113 - oy)) : Math.atan2(-ox, oy)) * 180 / Math.PI / 15) * 15;
+        el.style.transform = 'translate(' + ox + 'px,' + oy + 'px) scale(' + k.toFixed(2) + ') rotate(' + rot + 'deg)';
+        el.style.zIndex = front ? 2 : 0; el.style.opacity = front ? 1 : (g ? .8 : .55); el.style.visibility = S.st[i] === 'ok' ? '' : 'hidden'; });
+    }
+    if (b === 'mothercore') { const co = this.coreRef.current; if (co) { const ex = this.exposed() && S.phase !== 'enemy', p = (Math.sin(t * (ex ? 8 : 3)) + 1) / 2; co.style.opacity = ((Math.round(p * 3) / 3) * (ex ? .85 : .35) + (ex ? .15 : .05)).toFixed(2); co.style.transform = 'scale(' + (ex ? 1.3 : 1) + ')'; } }
+    if (b === 'garganta') this.eyesTick();
+    this.drt.forEach((r, i) => {
+      const fl = r.float.current, sh = r.shadow.current, d = S.dice[i]; if (!fl || !sh || !d) return;
+      const st = d.settled, a = r.angle, bob = st ? Math.sin(a) * 2 : 0, sway = st ? Math.cos(a * .7) : 0, rot = st ? Math.sin(a * .5) * 2 : 0;
+      fl.style.transform = 'translateX(' + sway + 'px) translateY(' + (-bob) + 'px) rotate(' + rot + 'deg)';
+      const k = 1 - bob / 20; sh.style.transform = 'translateX(' + (sway * .6) + 'px) scale(' + k + ')'; sh.style.opacity = st ? .35 + .35 * k : 0;
+      r.angle += .03;
+    });
+  }
+  renderVals() {
+    const S = this.state, ph = S.phase, b = this.key(), B = this.BOSS[b], it = this.intent(S), n = this.FLEET.length;
+    const cur = S.cur, cid = cur && cur.card, real = this.realCard(S), C = cid ? this.CARDS[cid] : null, RC = real ? this.CARDS[real] : null;
+    const ex = this.exposed(S), mult = ex ? 2 : 1, rolling = ph === 'roll' || this.busy;
+    const battle = !!cur && ['call', 'roll', 'act', 'fire', 'enemy', 'prompt', 'boom'].includes(ph);
+    const out = battle && S.dice.length && real ? this.ev(real, S.dice, S.calls, S.call) : null;
+    const name = k => k >= 0 && this.FLEET[k] ? this.FLEET[k].name : '';
+    const tgt = S.target >= 0 && S.st[S.target] === 'ok' ? S.target : -1, need = this.REPEL[this.sec()], sw = this.swallowed(S);
+    // intent tag
+    const nx = 'NEXT' + (S.over ? (b === 'garganta' ? ' · FRENZY' : ' · OVERDRIVE') : ''), add = S.atkAdd ? ' +' + S.atkAdd : '';
+    let intent;
+    if (it.kind === 'board') intent = { label: nx, text: tgt >= 0 ? 'BOARDING · ' + name(tgt) : 'BOARDING', col: '#ffb36a', sub: tgt >= 0 ? 'DEAL ' + need + '+ THIS ROUND TO REPEL' : '' };
+    else if (it.kind === 'charge') intent = { label: nx, text: 'CHARGING · THEN FIRES ' + it.next, col: '#ffb36a', sub: '' };
+    else if (it.kind === 'exposed') intent = { label: nx, text: 'CORE EXPOSED · HITS ×2', col: '#ffd644', sub: '' };
+    else if (it.kind === 'inhale') intent = { label: 'MAW HITS ×2', text: 'INHALES', col: '#ffd644', sub: sw.length ? 'HIT IT TO FREE ' + sw.map(name).join(', ') : '' };
+    else if (it.kind === 'beam') intent = { label: nx, text: 'CORE BEAM ' + it.atk + add + (tgt >= 0 ? ' · ' + name(tgt) : ''), col: '#ff2a2a', sub: tgt >= 0 ? 'PLAY ITS CARD OR BLOCK IT ALL' : '' };
+    else if (it.kind === 'devour') intent = { label: nx, text: 'DEVOUR ' + it.atk + add, col: '#ff2a2a', sub: tgt >= 0 ? 'SWALLOWS ' + name(tgt) : '' };
+    else intent = { label: nx, text: (it.kind === 'bite' ? 'BITES ' : 'FIRES ') + it.atk + add, col: it.atk >= 5 ? '#ff2a2a' : '#ff4d4d', sub: '' };
+    intent.hasSub = !!intent.sub;
+    // hint under the tray
+    const cost = this.cost();
+    let hint = S.hint, hintCol = S.hintCol || '#ffd644';
+    if (!hint) {
+      hintCol = '#a9b0c0';
+      if (ph === 'call') hint = 'CALL A NUMBER · EACH MATCH DEALS 8';
+      else if (ph === 'roll') hint = 'ROLLING';
+      else if (ph === 'act' && out) {
+        const misN = out.mis.length;
+        if (real === 'firing' && cid !== 'echo' && !S.freeUsed) { hint = 'TAP DICE FOR YOUR FREE REROLL'; hintCol = '#7ab8ff'; }
+        else if (out.bust) { hint = 'A 1 BUSTS IT · REROLL IT FOR ' + cost + ' GOLD OR TAKE IT'; hintCol = '#ff4d4d'; }
+        else if (out.fizz) { hint = 'WRONG CALL · REROLL IT FOR ' + cost + ' GOLD OR ACCEPT'; hintCol = '#ff4d4d'; }
+        else if (cid === 'echo') hint = 'REPLAYING ' + (RC ? RC.name : '') + ' WITH THE SAME DICE';
+        else if (misN) { hint = misN + (misN > 1 ? ' MISFIRES' : ' MISFIRE') + ' · -' + misN * out.misAmt + ' HULL · REROLL FOR ' + cost + ' GOLD'; hintCol = '#ff4d4d'; }
+        else if (real === 'redline') hint = 'ROLL ANOTHER TO ADD IT, OR FIRE';
+        else if (real === 'gambit') { const lv = S.dice.filter(d => !d.banked).slice(-1)[0]; hint = 'HIGHER OR LOWER THAN ' + (lv ? lv.v : '') + '?'; hintCol = '#ffffff'; }
+        else hint = 'TAP A DIE TO REROLL IT FOR ' + cost + ' GOLD';
+      }
+      else if (ph === 'fire') hint = 'FIRING';
+      else if (ph === 'enemy' || ph === 'prompt') hint = { board: 'BOARDERS INCOMING', charge: 'THE MARAUDER CHARGES ITS CANNON', exposed: 'THE CORE SEALS SHUT', inhale: 'THE MAW SNAPS SHUT', beam: 'CORE BEAM INCOMING', devour: 'IT LUNGES' }[it.kind] || 'INCOMING FIRE';
+    }
+    // tray header: live result
+    let right = '', rcol = '#a9b0c0';
+    if (out && ph !== 'roll') {
+      if (out.bust) { right = 'BUST · TAKE 2'; rcol = '#ff4d4d'; }
+      else if (out.fizz) { right = 'FIZZLED'; rcol = '#ff4d4d'; }
+      else if (out.jam) { right = 'JAMMED'; rcol = '#ff4d4d'; }
+      else if (out.bank) { right = 'BANK ' + out.bank.length + ' DICE'; rcol = '#bfe8ff'; }
+      else if (real === 'deflector') { right = 'BLOCK ' + out.block; rcol = '#6ad0ff'; }
+      else if (real === 'patch') { right = 'HEAL ' + out.heal; rcol = '#48f320'; }
+      else { right = (out.hand ? out.hand + ' · ' : 'SHOT ') + out.dmg * mult + (ex && out.dmg ? ' (×2)' : ''); rcol = out.dmg ? '#48f320' : '#a9b0c0'; }
+    }
+    const tray = { left: ph === 'call' ? 'CALL A NUMBER' : real === 'target' && S.call ? 'CALLED ' + S.call : 'ROLLED', right, col: rcol };
+    const lastI = S.dice.length - 1, onlyLast = real === 'redline' || real === 'gambit';
+    const rolled = S.dice.map((d, i) => {
+      const r = this.drt[i], mk = out && d.settled ? out.marks[i] : '', sel = S.freeSel.includes(i), canR = cid !== 'echo' && (!onlyLast || (i === lastI && !d.banked));
+      const ring = sel ? '#ffd644' : mk === 'mis' ? '#ff4d4d' : mk === 'hit' ? '#48f320' : mk === 'flare' ? '#ffb36a' : 'transparent';
+      const o = { boxRef: r.box, floatRef: r.float, shadowRef: r.shadow, ref: r.cube, scale: sel ? 'scale(1.12)' : d.settled ? 'scale(1)' : 'scale(.7)', ring, glow: sel ? '0 0 14px 2px #ffd644' : mk === 'mis' ? '0 0 10px rgba(255,77,77,.6)' : 'none', dim: ph === 'act' && onlyLast && !canR ? 'brightness(.65)' : 'none', isBank: d.banked, tap: () => this.tapDie(i) };
+      d.faces.forEach((f, j) => { o['f' + j] = 'assets/flat_' + f + '_48.png'; }); return o;
+    });
+    const stuck = out && (out.bust || out.fizz);
+    const act = { isCall: ph === 'call', isRed: ph === 'act' && cid === 'redline', isGam: ph === 'act' && cid === 'gambit', isFree: ph === 'act' && cid === 'firing' && !S.freeUsed,
+      op: rolling || stuck || (cid !== 'firing' && S.dice.length >= 10) ? .4 : 1, freeLbl: S.freeSel.length ? 'FREE REROLL · ' + S.freeSel.length + (S.freeSel.length > 1 ? ' DICE' : ' DIE') : 'SKIP FREE REROLL' };
+    const tac = C ? { name: C.name + (cid === 'echo' && RC ? ' · ' + RC.name : ''), col: C.col, face: (cid === 'echo' && RC ? RC : C).face, src: cur.k >= 0 ? 'assets/' + this.FLEET[cur.k].ship + '.png' : 'assets/spaceship_icon.png', showCost: cid !== 'echo' && ph === 'act' && !(cid === 'firing' && !S.freeUsed), cost, costOp: S.gold >= cost ? 1 : .4 }
+      : { name: '', col: '#f2f2f2', face: '', src: 'assets/spaceship_icon.png', showCost: false, cost: 0, costOp: 1 };
+    // offer + detail panel
+    const cards = S.offer.map((o, i) => { const c = this.CARDS[o.card], f = o.k >= 0 ? this.FLEET[o.k] : null, on = S.sel === i;
+      return { slotRef: this.slotRefs[i], name: c.name, col: c.col, pips: '●'.repeat(c.risk), ghost: '●'.repeat(3 - c.risk), face: c.face.split(' · ').join('\n'), src: f ? 'assets/' + f.ship + '.png' : 'assets/spaceship_icon.png', from: f ? f.name : 'FLEET',
+        bd: on ? '#f2f2f2' : c.col, sh: on ? '0 0 16px ' + this.hexA(c.col, .6) + ',4px 4px 0 #240011' : '3px 3px 0 #240011', lift: on ? 'translateY(-8px)' : 'none', marked: it.kind === 'beam' && o.k >= 0 && o.k === tgt, pick: () => this.pickCard(i) }; });
+    const selO = S.sel >= 0 ? S.offer[S.sel] : null, sc = selO && this.CARDS[selO.card];
+    const tip = it.kind === 'board' && tgt >= 0 ? { t: 'BOARDERS WANT THE ' + name(tgt) + '. DEAL ' + need + '+ THIS ROUND TO REPEL THEM.', c: '#ffb36a' }
+      : it.kind === 'beam' && tgt >= 0 ? { t: 'THE BEAM IS LOCKED ON THE ' + name(tgt) + '. PLAY ITS CARD TO DODGE, OR BLOCK ALL ' + (it.atk + S.atkAdd) + '.', c: '#ff4d4d' }
+      : it.kind === 'devour' && tgt >= 0 ? { t: 'DEVOUR SWALLOWS THE ' + name(tgt) + (S.lastK === tgt ? ', THE SHIP YOU PLAYED LAST.' : ', YOUR NEWEST SHIP.'), c: '#ff4d4d' }
+      : it.kind === 'inhale' && sw.length ? { t: 'DEAL ANY DAMAGE THIS ROUND TO FREE ' + sw.map(name).join(', ') + '.', c: '#9dff5a' }
+      : ex ? { t: 'EVERY HIT DEALS ×2 THIS ROUND.', c: '#ffd644' } : null;
+    const tipRow = tip ? [{ t: tip.t, m: '!', mc: tip.c, c: tip.c }] : [];
+    const picked = sc ? { name: sc.name, col: sc.col, bd: sc.col, from: selO.k >= 0 ? 'FROM ' + name(selO.k) : 'FLEET CARD', rules: sc.rule.map(t => ({ t, m: '◆', mc: sc.col, c: '#ffffff' })).concat(sc.rule.length < 3 ? tipRow : []) }
+      : { name: 'PICK A CARD', col: '#a9b0c0', bd: '#f2f2f2', from: S.bank.length ? S.bank.length + ' DICE BANKED' : '', rules: tipRow.concat([{ t: 'A 1 IS A MISFIRE: NO DAMAGE, 1 HULL TO YOU.', m: '·', mc: '#6b7187', c: '#a9b0c0' }, { t: 'REROLL ANY DIE FOR GOLD BEFORE YOU FIRE.', m: '·', mc: '#6b7187', c: '#a9b0c0' }]) };
+    // fleet tiles
+    const live = ['call', 'roll', 'act', 'fire', 'enemy', 'prompt'].includes(ph), aimK = (live || ph === 'pick') && ['board', 'beam', 'devour'].includes(it.kind) ? tgt : -1;
+    const fleet = this.FLEET.map((f, k) => { const st = S.st[k], O = this.OUT[st], on = !!C && cur.k === k && live, cc = this.CARDS[f.card];
+      return { ref: this.shipRefs[k], name: f.name, showName: n <= 4, src: 'assets/' + f.ship + '.png', card: cc.name, cardCol: cc.col, cardSz: n > 4 ? 14 : 16,
+        bd: k === aimK ? '#ff4d4d' : on ? C.col : '#3a3a5a', glow: on ? '0 0 14px ' + this.hexA(C.col, .55) + ',3px 3px 0 #240011' : k === aimK ? '0 0 12px rgba(255,77,77,.45),3px 3px 0 #240011' : '3px 3px 0 #240011',
+        lift: on ? 'translateY(-12px)' : 'none', shipOp: st === 'ok' ? 1 : 0, aimed: k === aimK, out: !!O, outLbl: O ? O[0] : '', outCol: O ? O[1] : '', outIcon: O ? O[2] : '' }; });
+    // primary button
+    let btn = { label: 'BRACE', op: .4 };
+    if (ph === 'pick') btn = sc ? { label: 'PLAY ' + sc.name, op: 1 } : { label: 'PICK A CARD', op: .4 };
+    else if (ph === 'call') btn = { label: 'CALL A NUMBER', op: .4 };
+    else if (ph === 'roll') btn = { label: 'ROLLING', op: .4 };
+    else if (ph === 'act' && out) btn = { label: out.bust ? 'TAKE THE BUST' : out.fizz ? 'ACCEPT THE FIZZLE' : out.jam ? 'FIRE · JAMMED' : out.bank ? 'BANK ' + out.bank.length + ' DICE' : real === 'deflector' ? 'BLOCK ' + out.block : real === 'patch' ? 'HEAL ' + out.heal : 'FIRE · ' + out.dmg * mult, op: rolling ? .4 : 1 };
+    else if (ph === 'fire') btn = { label: 'FIRING', op: .4 };
+    else if (ph === 'enemy' || ph === 'prompt') btn = { label: 'ENEMY TURN', op: .4 };
+    else if (ph === 'barrage') btn = { label: 'OPENING BARRAGE', op: .4 };
+    else if (ph === 'intro') btn = { label: 'ENGAGING', op: .4 };
+    // prompt
+    const P = S.prompt, pk = P && P.k >= 0 ? this.FLEET[P.k] : null, what = { capture: 'BOARDERS ARE DRAGGING THE ', vaporize: 'THE CORE BEAM IS ABOUT TO VAPORIZE THE ', swallow: 'GARGANTA IS SWALLOWING THE ' };
+    const pr = !P ? { col: '#c79bff', kicker: '', title: '', src: 'assets/spaceship_icon.png', body: '', cost: 0, yesLbl: '', noLbl: '', yes: () => {}, no: () => {} }
+      : P.kind === 'evade' ? { col: '#c79bff', kicker: 'CAPTAIN\'S ORDERS', title: 'EVASIVE MANEUVERS', src: 'assets/' + pk.ship + '.png', body: what[P.what] + pk.name + (P.what === 'capture' ? ' AWAY' : '') + '. CANCEL IT? ONCE PER FIGHT.', cost: P.cost, yesLbl: 'EVADE · -' + P.cost, noLbl: 'LET IT HAPPEN', yes: () => this.answer(true), no: () => this.answer(false) }
+      : { col: '#ff4d4d', kicker: 'HULL CRITICAL', title: 'EMERGENCY JUMP', src: 'assets/spaceship_icon.png', body: 'ESCAPE TO THE NEXT SECTOR. NO BOUNTY, NO PRESTIGE, AND LOST SHIPS STAY LOST. ONCE PER RUN.', cost: P.cost, yesLbl: 'JUMP · -' + P.cost, noLbl: 'GO DOWN FIGHTING', yes: () => this.answer(true), no: () => this.answer(false) };
+    // end card
+    const R = this.result(), lostN = R.lost.length;
+    const end = ph === 'won' ? { title: B.end, col: '#48f320', sub: 'BOUNTY PAID AT THE GATE', rows: [{ src: 'assets/flat_6_32.png', label: 'BIGGEST HIT', value: '' + S.bestHit, col: '#ffffff' }, { src: 'assets/spaceship_icon.png', label: 'ROUNDS', value: '' + S.round, col: '#ffffff' }, { src: 'assets/spaceship_icon.png', label: 'SHIPS LOST', value: '' + lostN, col: lostN ? '#ff4d4d' : '#48f320' }].concat(S.spentP ? [{ src: 'assets/prestige.png', label: 'PRESTIGE SPENT', value: '-' + S.spentP, col: '#c79bff' }] : []) }
+      : ph === 'jumped' ? { title: 'JUMPED OUT', col: '#ffd644', sub: 'NO BOUNTY · NO PRESTIGE', rows: [{ src: 'assets/prestige.png', label: 'PRESTIGE SPENT', value: '-' + S.spentP, col: '#c79bff' }, { src: 'assets/spaceship_icon.png', label: 'SHIPS LOST', value: '' + lostN, col: lostN ? '#ff4d4d' : '#48f320' }] }
+      : { title: 'HULL BREACHED', col: '#ff4d4d', sub: 'THE FLEET IS LOST', rows: [{ src: 'assets/flat_6_32.png', label: 'DAMAGE DEALT', value: S.dmgDealt + '/' + S.eMax, col: '#ffffff' }, { src: 'assets/spaceship_icon.png', label: 'ROUNDS SURVIVED', value: '' + S.round, col: '#ffffff' }] };
+    const hull = S.hull, hc = hull <= 3 ? '#ff4d4d' : hull <= 5 ? '#ffd644' : '#48f320';
+    return {
+      wrapRef: this.wrapRef, stageRef: this.stageRef, shakeRef: this.shakeRef, fxRef: this.fxRef, driftA: this.driftA, driftB: this.driftB,
+      enemyRef: this.enemyRef, hitRef: this.hitRef, imgRef: this.imgRef, hullRef: this.hullRef, trayRef: this.trayRef, fleetRef: this.fleetRef, endRef: this.endRef, promptRef: this.promptRef,
+      coreRef: this.coreRef, droneWrap: this.droneWrap, biteRef: this.biteRef, shutRef: this.shutRef, hurtRef: this.hurtRef, bellyRef: this.bellyRef, goldRef: this.goldRef, presRef: this.presRef,
+      eye0box: this.eyeRefs[0].box, eye1box: this.eyeRefs[1].box, eye2box: this.eyeRefs[2].box, eye3box: this.eyeRefs[3].box,
+      isM: b === 'marauder', isC: b === 'mothercore', isG: b === 'garganta', isMC: b !== 'garganta',
+      drones: b === 'marauder' ? [] : this.FLEET.map((f, k) => ({ ref: this.droneRefs[k], src: 'assets/' + f.ship + '.png', name: f.name })),
+      exposedOn: ex && ['pick', 'call', 'roll', 'act', 'fire'].includes(ph),
+      round: S.round, gold: S.gold, pres: S.pres, eHp: S.eHp,
+      eSegs: Array.from({ length: S.eMax }, (_, i) => ({ bg: i < S.eHp ? B.seg[0] : B.seg[1] })),
+      intent, hasBelly: b === 'garganta' && sw.length > 0, belly: sw.map(k => ({ src: 'assets/' + this.FLEET[k].ship + '.png', name: this.FLEET[k].name })),
+      isPick: ph === 'pick', isBattle: battle, cards, picked, tac, tray, rolled, act, hint, hintCol,
+      nums: [1, 2, 3, 4, 5, 6].map(v => ({ n: '' + v, src: 'assets/flat_' + v + '_48.png', tap: () => this.callNum(v) })),
+      more: () => this.more(), callHi: () => this.callHL('hi'), callLo: () => this.callHL('lo'), freeReroll: () => this.freeReroll(),
+      fleet, nCols: n, fGap: n > 4 ? 5 : 8,
+      hullSegs: Array.from({ length: this.HULL_MAX }, (_, i) => ({ bg: i < hull ? hc : '#0a0821' })), hullTxt: hull + '/' + this.HULL_MAX, hullCol: hc, hasBlock: S.block > 0, block: S.block,
+      btn, primary: () => this.primaryAct(),
+      isPrompt: ph === 'prompt' && !!P, pr,
+      isEnd: ['won', 'lost', 'jumped'].includes(ph), end, restart: () => this.done(), againLbl: this.P().onDone ? 'CONTINUE' : 'PLAY AGAIN'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Breach · Garganta reveal v4.1</title><style>
+:root{--bg:#f4f3ef;--card:#fff;--ink:#1d1d1f;--mute:#6b6b70;--line:#dddcd6;--acc:#d2452f}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#111214;--card:#1b1c1f;--ink:#ececee;--mute:#9a9aa2;--line:#2c2d31;--acc:#ff6b4a}}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:20px;max-width:760px;margin:auto}
+h1{font-size:18px;margin:0 0 4px}p{color:var(--mute);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+button{all:unset;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:block}
+button:hover{border-color:var(--acc)}b{display:block}small{color:var(--mute)}.new b{color:var(--acc)}
+</style></head><body>
+<h1>GARGANTA REVEAL · v4.1 vs v4</h1>
+<p>Open from the unzipped folder. Each button plays the alarm, then the reveal at +1100ms, the same as in the game. Use speakers you'll actually play on: phone or laptop.</p>
+<div class="grid" id="g"></div>
+<script>
+const T=[["v4.1 · A (in the game)","ogg/reveal_garganta_01.ogg",1],["v4 · A (old)","compare/reveal_garganta_v4_old_A.ogg",0],
+ ["v4.1 · B","alt_B/ogg/reveal_garganta_B_01.ogg",1],["v4 · B (old)","compare/reveal_garganta_v4_old_B.ogg",0]];
+const g=document.getElementById("g");
+for(const [n,f,isNew] of T){const b=document.createElement("button");if(isNew)b.className="new";b.innerHTML=`<b>${n}</b><small>alarm → reveal</small>`;
+ b.onclick=()=>{new Audio("compare/encounter_alarm_01.ogg").play().catch(()=>{});setTimeout(()=>new Audio(f).play().catch(()=>{}),1100)};g.appendChild(b)}
+</script></body></html>

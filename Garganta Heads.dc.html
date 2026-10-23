@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#05040c;color:#ffffff}a{color:#6af5d6}a:hover{color:#b8fff0}</style>
+</helmet>
+<section data-screen-label="Turn 6 · Swim" style="background:#05040c;padding:48px 48px 8px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;letter-spacing:1px;color:#a9b0c0">TURN 6 · SWIM CYCLE</span>
+<span style="font-family:'Jersey 15',monospace;font-size:44px;line-height:1;letter-spacing:2px">The serpent, swimming through space</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div id="6a" style="display:flex;flex-direction:column;gap:14px;width:836px;max-width:100%">
+<div ref="{{ swimFrame }}" style="position:relative;width:836px;max-width:100%;height:372px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<canvas ref="{{ swim }}" width="830" height="366" style="position:absolute;left:0;top:0;width:830px;height:366px;display:block;image-rendering:pixelated"></canvas>
+<div style="position:absolute;left:12px;top:12px;z-index:5;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">6a</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">SWIM</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">16 pixel frames at 10fps: the head and body glide as one rigid piece with a gentle bob, and only the trailing fins flex in a long, slow wave. Stars step past in three layers as it swims left.</span></div>
+</div>
+</div>
+</section>
+<section data-screen-label="Turn 5 · Serpent" style="background:#05040c;padding:48px 48px 8px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;letter-spacing:1px;color:#a9b0c0">TURN 5 · WARNING FLYBY</span>
+<span style="font-family:'Jersey 15',monospace;font-size:44px;line-height:1;letter-spacing:2px">The serpent, in Garganta's colours</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div id="5a" style="display:flex;flex-direction:column;gap:14px;width:836px;max-width:100%">
+<div style="position:relative;width:836px;max-width:100%;height:372px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011;display:flex;align-items:center;justify-content:center">
+<img src="assets/garganta_serpent.png" alt="Garganta serpent" style="flex:none;width:808px;height:316px;display:block;image-rendering:pixelated">
+<div style="position:absolute;left:12px;top:12px;z-index:5;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">5a</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">SERPENT</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">Recoloured to Garganta's own palette: its green ramp, crimson fins from its eye reds, bone spikes, red-ringed eyes with a yellow iris and slit. Drifts right to left behind the encounter warning.</span></div>
+</div>
+</div>
+</section>
+<section data-screen-label="Turn 4 · States" style="background:#05040c;padding:48px 48px 8px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;letter-spacing:1px;color:#a9b0c0">TURN 4 · EVERY GARGANTA STATE, LIVE</span>
+<span style="font-family:'Jersey 15',monospace;font-size:44px;line-height:1;letter-spacing:2px">Idle, hurt, bite and eyes</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div id="4a" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:400px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<div ref="{{ idleWrap }}" style="position:absolute;left:27px;top:-12px;width:336px;height:302px;transform-origin:50% -30%"><img src="assets/garganta_v4.png" alt="" style="position:absolute;left:0;top:0;width:336px;height:302px;display:block;image-rendering:pixelated">
+<div ref="{{ i0 }}" data-fw="19.5" style="position:absolute;left:112.5px;top:130.5px;width:19.5px;height:21px;background:url(assets/garg_eyes3_0.png) 0 0/331.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ i1 }}" data-fw="16.5" style="position:absolute;left:208.5px;top:130.5px;width:16.5px;height:21px;background:url(assets/garg_eyes3_1.png) 0 0/280.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ i2 }}" data-fw="15" style="position:absolute;left:121.5px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_2.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ i3 }}" data-fw="15" style="position:absolute;left:204px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_3.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div></div>
+<div style="position:absolute;left:12px;top:12px;z-index:5;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">4a</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">IDLE</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">Pendulum sway from above the screen. Eyes glance left, right and down, and blink every few seconds.</span></div>
+</div>
+<div id="4b" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:400px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<div style="position:absolute;left:27px;top:-12px;width:336px;height:302px"><img ref="{{ hurtN }}" src="assets/garganta_v4.png" alt="" style="position:absolute;left:0;top:0;width:336px;height:302px;display:block;image-rendering:pixelated">
+<div ref="{{ h0 }}" data-fw="19.5" style="position:absolute;left:112.5px;top:130.5px;width:19.5px;height:21px;background:url(assets/garg_eyes3_0.png) 0 0/331.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ h1 }}" data-fw="16.5" style="position:absolute;left:208.5px;top:130.5px;width:16.5px;height:21px;background:url(assets/garg_eyes3_1.png) 0 0/280.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ h2 }}" data-fw="15" style="position:absolute;left:121.5px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_2.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ h3 }}" data-fw="15" style="position:absolute;left:204px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_3.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<img ref="{{ hurtImg }}" src="assets/garganta_hurt7.png" alt="" style="position:absolute;left:0;top:-99px;width:336px;height:400.5px;display:block;image-rendering:pixelated;visibility:hidden;transform-origin:168px 0"></div>
+<div style="position:absolute;left:12px;top:12px;z-index:5;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">4b</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">HURT</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">On each hit: wince frame swaps in and the head and body flinch right together, two red flashes, back to idle in about half a second.</span></div>
+</div>
+<div id="4c" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:400px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<div ref="{{ biteWrap }}" style="position:absolute;left:27px;top:-12px;width:336px;height:302px"><img ref="{{ biteImg }}" src="assets/garganta_v4.png" alt="" style="position:absolute;left:0;top:0;width:336px;height:302px;display:block;image-rendering:pixelated">
+<div ref="{{ b0 }}" data-fw="19.5" style="position:absolute;left:112.5px;top:130.5px;width:19.5px;height:21px;background:url(assets/garg_eyes3_0.png) 0 0/331.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ b1 }}" data-fw="16.5" style="position:absolute;left:208.5px;top:130.5px;width:16.5px;height:21px;background:url(assets/garg_eyes3_1.png) 0 0/280.5px 21px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ b2 }}" data-fw="15" style="position:absolute;left:121.5px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_2.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ b3 }}" data-fw="15" style="position:absolute;left:204px;top:160.5px;width:15px;height:16.5px;background:url(assets/garg_eyes3_3.png) 0 0/255px 16.5px no-repeat;image-rendering:pixelated"></div>
+<div ref="{{ biteOpen }}" style="position:absolute;left:58px;top:60px;width:220.35px;height:294.45px;background:url(assets/garganta_bite3.png) 0 0/220.35px 294.45px no-repeat;image-rendering:pixelated;opacity:0;pointer-events:none"></div>
+<div ref="{{ biteShut }}" style="position:absolute;left:63.75px;top:10.9px;width:220.35px;height:294.45px;background:url(assets/garganta_shut.png) 0 0/220.35px 294.45px no-repeat;image-rendering:pixelated;opacity:0;pointer-events:none"></div></div><div ref="{{ biteFlash }}" style="position:absolute;inset:0;z-index:3;background:#ff1a1a;opacity:0"></div><div ref="{{ biteVig }}" style="position:absolute;inset:0;z-index:3;box-shadow:inset 0 0 0 10px #ff4d4d,inset 0 0 60px 20px rgba(255,26,26,.85);opacity:0"></div>
+<div style="position:absolute;left:12px;top:12px;z-index:5;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">4c</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">BITE</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">When it deals damage: jaws open, rears back and lunges, snaps shut on contact with a red stepped flash and edge vignette, then settles back to idle.</span></div>
+</div>
+<div id="4d" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:400px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:44px 16px 16px;box-sizing:border-box"><img src="assets/garg_eyes3_0.png" alt="Eye 1 frames" style="width:100%;height:auto;display:block;image-rendering:pixelated"><img src="assets/garg_eyes3_1.png" alt="Eye 2 frames" style="width:100%;height:auto;display:block;image-rendering:pixelated"><img src="assets/garg_eyes3_2.png" alt="Eye 3 frames" style="width:100%;height:auto;display:block;image-rendering:pixelated"><img src="assets/garg_eyes3_3.png" alt="Eye 4 frames" style="width:100%;height:auto;display:block;image-rendering:pixelated"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;color:#a9b0c0">15 LOOK FRAMES · 2 BLINK FRAMES PER EYE</span></div>
+<div style="position:absolute;left:12px;top:12px;z-index:5;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">4d</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">EYE FRAMES</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">Pixel eye sprites cut from the head. The slit steps a whole pixel at a time as it tracks a ship.</span></div>
+</div>
+</div>
+</section>
+<section data-screen-label="Turn 3 · Concept" style="background:#05040c;padding:48px 48px 8px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;letter-spacing:1px;color:#a9b0c0">TURN 3 · YOUR CONCEPT · GAME PALETTE · BACKGROUND REMOVED</span>
+<span style="font-family:'Jersey 15',monospace;font-size:44px;line-height:1;letter-spacing:2px">Four-eyed croc, cut out and recolored</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div id="3a" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:400px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<img src="assets/garganta_v4.png" alt="Garganta concept" style="position:absolute;left:24px;top:-12px;width:336px;height:302px;display:block;image-rendering:pixelated">
+<div style="position:absolute;left:12px;top:12px;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">3a</div>
+<div style="position:absolute;left:16px;right:16px;bottom:16px;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #6fbf3a;border-radius:6px;box-shadow:3px 3px 0 #12300a;box-sizing:border-box"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#b8f070">GARGANTA</span><div style="flex:1;height:10px;background:#9dff5a;border:1px solid #f2f2f2;box-sizing:border-box"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">CONCEPT</span>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">Your four-eyed croc, cut from its background and mapped to the game greens, hull red and gold. Live in Garganta v4.</span>
+</div>
+</div>
+</div>
+</section>
+<section data-screen-label="Turn 2 · Croc heads" style="background:#05040c;padding:48px 48px 8px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;letter-spacing:1px;color:#a9b0c0">TURN 2 · MORE DETAIL · MORE CROCODILE</span>
+<span style="font-family:'Jersey 15',monospace;font-size:44px;line-height:1;letter-spacing:2px">Maw, Crown and Pouch, redrawn as crocs</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<sc-for list="{{ opts2 }}" as="o" hint-placeholder-count="0">
+<div id="{{ o.id }}" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:400px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<div style="position:absolute;inset:0;background:radial-gradient(90% 50% at 50% 20%,rgba(110,200,60,.2) 0%,rgba(110,200,60,0) 100%)"></div>
+<img src="{{ o.src }}" alt="{{ o.name }}" style="position:absolute;left:6px;top:-12px;width:372px;height:324px;display:block;image-rendering:pixelated">
+<div style="position:absolute;left:12px;top:12px;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">{{ o.id }}</div>
+<div style="position:absolute;left:16px;right:16px;bottom:16px;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #6fbf3a;border-radius:6px;box-shadow:3px 3px 0 #12300a;box-sizing:border-box"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#b8f070">GARGANTA</span><div style="flex:1;height:10px;background:#9dff5a;border:1px solid #f2f2f2;box-sizing:border-box"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">{{ o.name }}</span>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">{{ o.note }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+<section data-screen-label="Turn 1 · Top-down heads" style="background:#05040c;padding:48px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;letter-spacing:1px;color:#a9b0c0">GARGANTA · TOP-DOWN · FACING THE FLEET</span>
+<span style="font-family:'Jersey 15',monospace;font-size:44px;line-height:1;letter-spacing:2px">Four heads, neck off the top edge</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<sc-for list="{{ opts }}" as="o" hint-placeholder-count="0">
+<div id="{{ o.id }}" style="display:flex;flex-direction:column;gap:14px;width:390px">
+<div style="position:relative;width:390px;height:380px;overflow:hidden;border:3px solid #f2f2f2;border-radius:8px;box-sizing:border-box;background:#000 url(assets/space.png) 0 0/600px 900px repeat;image-rendering:pixelated;box-shadow:4px 4px 0 #240011">
+<div style="position:absolute;inset:0;background:radial-gradient(90% 50% at 50% 20%,rgba(110,200,60,.2) 0%,rgba(110,200,60,0) 100%)"></div>
+<img src="{{ o.src }}" alt="{{ o.name }}" style="position:absolute;left:24px;top:-12px;width:336px;height:288px;display:block;image-rendering:pixelated">
+<div style="position:absolute;left:12px;top:12px;height:26px;display:flex;align-items:center;padding:0 8px;background:#ffd644;border:2px solid #240011;border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#240011">{{ o.id }}</div>
+<div style="position:absolute;left:16px;right:16px;bottom:16px;height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0a0821;border:3px solid #6fbf3a;border-radius:6px;box-shadow:3px 3px 0 #12300a;box-sizing:border-box"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;color:#b8f070">GARGANTA</span><div style="flex:1;height:10px;background:#9dff5a;border:1px solid #f2f2f2;box-sizing:border-box"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-family:'Jersey 15',monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#b8f070">{{ o.name }}</span>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#c3c7d6;text-wrap:pretty">{{ o.note }}</span>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.5;color:#ffd644">WEAK POINT · {{ o.weak }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  R = {};
+  ref(k) { return this.R[k] || (this.R[k] = React.createRef()); }
+  el(k) { const r = this.R[k]; return r && r.current; }
+  componentDidMount() {
+    this.t0 = performance.now(); this.dir = 1;
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.iv = setInterval(() => this.hurtDemo(), 1800); this.iv2 = setInterval(() => this.biteDemo(), 2400);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); clearInterval(this.iv); clearInterval(this.iv2); clearTimeout(this.ht); clearTimeout(this.bt1); clearTimeout(this.bt2); }
+  // swim cycle: a 16-frame pixel spritesheet (assets/anim/garganta_swim.png, 404×170 frames) played frame by frame at 10fps; stars step with it
+  SWIM = { src: 'assets/anim/garganta_swim.png', frames: 16, fw: 404, fh: 170, fps: 10, scale: 2 };
+  swimTick(t) {
+    const cv = this.el('swim'), Q = this.SWIM; if (!cv) return;
+    if (!this.swImg) {
+      this.swImg = new Image(); this.swImg.src = Q.src; this.swRM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const L = [[12, 1, ['#3a3a6a', '#5a5a9a'], 40], [32, 2, ['#a9b0c0', '#6ad0ff'], 22], [80, 2, ['#ffffff'], 10]];
+      this.swStars = []; L.forEach(([v, z, cs, n]) => { for (let i = 0; i < n; i++) this.swStars.push({ x: Math.random() * 840, y: Math.floor(Math.random() * 364), v, z, c: cs[i % cs.length] }); });
+    }
+    const im = this.swImg; if (!im.complete || !im.naturalWidth) return;
+    const k = this.swRM ? 0 : Math.floor(t * Q.fps); if (k === this.swK) return; this.swK = k;
+    const ctx = cv.getContext('2d'), W = cv.width, H = cv.height, S = Q.scale, tq = k / Q.fps;
+    ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, W, H);
+    this.swStars.forEach(st => { ctx.fillStyle = st.c; ctx.fillRect(Math.round((st.x + tq * st.v) % (W + 4)) - 2, st.y, st.z, st.z); });
+    const fr = this.el('swimFrame'); if (fr && !this.swRM) fr.style.backgroundPosition = Math.round(tq * 6) + 'px 0';
+    ctx.drawImage(im, (k % Q.frames) * Q.fw, 0, Q.fw, Q.fh, Math.round((W - Q.fw * S) / 2), Math.round((H - Q.fh * S) / 2), Q.fw * S, Q.fh * S);
+  }
+  tick() {
+    const t = (performance.now() - this.t0) / 1000, w = this.el('idleWrap');
+    this.swimTick(t);
+    if (w) w.style.transform = 'translate(' + Math.round(Math.sin(t * .45) * 6) + 'px,' + Math.round(Math.sin(t * .9) * 2) + 'px) rotate(' + (Math.sin(t * .45) * 3.2).toFixed(2) + 'deg)';
+    const ph = (t % 6) / 6, look = ph < .25 ? [-2, 0] : ph < .4 ? [0, 0] : ph < .65 ? [2, 0] : ph < .85 ? [1, 1] : [0, 0], b = t % 4.3, lid = b < .07 ? 15 : b < .14 ? 16 : b < .21 ? 15 : -1;
+    ['i', 'h', 'b'].forEach(p => [0, 1, 2, 3].forEach(k => { const e = this.el(p + k); if (!e) return; const f = lid >= 0 ? lid : (look[1] + 1) * 5 + (look[0] + 2); e.style.backgroundPosition = (-f * parseFloat(e.dataset.fw)) + 'px 0'; }));
+  }
+  hurtDemo() {
+    const n = this.el('hurtN'), hu = this.el('hurtImg'); if (!n || !hu) return;
+    const eyes = [0, 1, 2, 3].map(k => this.el('h' + k)).filter(Boolean);
+    n.style.visibility = 'hidden'; hu.style.transformOrigin = '168px 0px';
+    eyes.forEach(e => e.style.visibility = 'hidden'); hu.style.visibility = 'visible';
+    if (true) { [hu].forEach(el => { if (!el.animate) return; el.animate([{ transform: 'translate(30px,-4px)' }, { transform: 'translate(36px,-5px)', offset: .3 }, { transform: 'translate(16px,-2px)', offset: .7 }, { transform: 'translate(0,0)' }], { duration: 520, easing: 'steps(8)', fill: 'forwards' }); el.animate([{ filter: 'brightness(.6) sepia(1) saturate(9) hue-rotate(-40deg) brightness(1.5)' }, { filter: 'none' }, { filter: 'brightness(.6) sepia(1) saturate(9) hue-rotate(-40deg) brightness(1.5)' }, { filter: 'none' }], { duration: 400, easing: 'steps(4)' }); }); }
+    clearTimeout(this.ht); this.ht = setTimeout(() => { hu.style.visibility = 'hidden'; n.style.visibility = ''; eyes.forEach(e => e.style.visibility = ''); }, 540);
+  }
+  biteDemo() {
+    const w = this.el('biteWrap'), f = this.el('biteFlash'), vg = this.el('biteVig'), im = this.el('biteImg'), op = this.el('biteOpen'), sh = this.el('biteShut'); if (!w || !w.animate || !im || !op || !sh) return;
+    const eyes = [0, 1, 2, 3].map(k => this.el('b' + k)).filter(Boolean);
+    const set = m => { op.style.opacity = m === 'open' ? 1 : 0; sh.style.opacity = m === 'shut' ? 1 : 0; im.style.clipPath = m ? 'inset(0 0 67% 0)' : ''; eyes.forEach(e => e.style.visibility = m ? 'hidden' : ''); };
+    clearTimeout(this.bt1); clearTimeout(this.bt2);
+    set('open'); w.style.transformOrigin = '50% 30%';
+    w.animate([{ transform: 'translateY(0) scale(1)', easing: 'cubic-bezier(.3,.6,.4,1)' }, { transform: 'translateY(-10px) scale(.95)', offset: .235, easing: 'cubic-bezier(.55,0,.9,.45)' }, { transform: 'translateY(72px) scale(1.22)', offset: .43, easing: 'ease-out' }, { transform: 'translateY(68px) scale(1.2)', offset: .66, easing: 'cubic-bezier(.4,0,.3,1)' }, { transform: 'translateY(0) scale(1)' }], { duration: 1150 });
+    this.bt1 = setTimeout(() => { set('shut'); if (f) f.animate([{ opacity: .55 }, { opacity: .3, offset: .3 }, { opacity: .38, offset: .45 }, { opacity: 0 }], { duration: 520, easing: 'steps(6)' }); if (vg) vg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 700, easing: 'steps(5)' }); }, 385);
+    this.bt2 = setTimeout(() => set(null), 1005);
+  }
+  renderVals() {
+    return { swim: this.ref('swim'), swimFrame: this.ref('swimFrame'), idleWrap: this.ref('idleWrap'), hurtN: this.ref('hurtN'), hurtImg: this.ref('hurtImg'), biteWrap: this.ref('biteWrap'), biteFlash: this.ref('biteFlash'), biteVig: this.ref('biteVig'), biteImg: this.ref('biteImg'), biteOpen: this.ref('biteOpen'), biteShut: this.ref('biteShut'), i0: this.ref('i0'), i1: this.ref('i1'), i2: this.ref('i2'), i3: this.ref('i3'), h0: this.ref('h0'), h1: this.ref('h1'), h2: this.ref('h2'), h3: this.ref('h3'), b0: this.ref('b0'), b1: this.ref('b1'), b2: this.ref('b2'), b3: this.ref('b3'), opts2: [
+      { id: '2a', name: 'MAW', src: 'assets/garg_croc_a.png', note: 'Long croc snout with the jaws parted. Pink gape and interlocking teeth run down both sides.' },
+      { id: '2b', name: 'CROWN', src: 'assets/garg_croc_b.png', note: 'Jaws shut in a toothy croc grin, bulb nose, bone horn frill and four raised eyes.' },
+      { id: '2c', name: 'POUCH', src: 'assets/garg_croc_c.png', note: 'Croc head with bloated throat sacs sagging out from the jaw, jaws ajar, tongue lolling.' }
+    ], opts: [
+      { id: '1a', name: 'MAW', src: 'assets/garg_top_a.png', note: 'Wide toad skull, jaws gaping straight at the fleet. Closest to your reference.', weak: 'THE OPEN MOUTH' },
+      { id: '1b', name: 'CROWN', src: 'assets/garg_top_b2.png', note: 'Long croc snout, jaws shut, fangs hanging over. Horn frill and four eyes.', weak: 'THE EYES' },
+      { id: '1c', name: 'POUCH', src: 'assets/garg_top_c.png', note: 'Bloated cream cheek sacs and frog eyes, tongue lolling down at you.', weak: 'THE CHEEK SACS' },
+      { id: '1d', name: 'THROAT', src: 'assets/garg_top_d.png', note: 'Garganta means throat. The face is one ringed, toothed gullet with eyes on the rim.', weak: 'THE GULLET' }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

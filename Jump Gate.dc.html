@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Silkscreen&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}a{color:#6af5d6}a:hover{color:#b8fff0}@keyframes blink{50%{opacity:.3}}</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden">
+<div ref="{{ stageRef }}" data-screen-label="Jump Gate" style="position:relative;flex:none;width:390px;height:844px;overflow:hidden;background:#000;image-rendering:pixelated;color:#ffffff;transform-origin:center center;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div ref="{{ driftA }}" style="position:absolute;inset:0;background:#000 url(assets/space.png) 0 0/600px 900px repeat"></div>
+<div ref="{{ driftB }}" style="position:absolute;inset:0;background:url(assets/space.png) 120px 300px/900px 1350px repeat;opacity:.28;mix-blend-mode:screen"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(70% 30% at 50% 22%,{{ glow }} 0%,rgba(0,0,0,0) 100%);transition:background .4s"></div>
+</div>
+<div ref="{{ shakeRef }}" style="position:absolute;inset:0">
+
+<div style="position:absolute;left:16px;right:16px;top:12px;height:44px;display:flex;align-items:stretch;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box;z-index:5">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 10px;border-right:2px solid #3a3a5a"><div style="flex:none;width:8px;height:8px;background:#6af5d6;box-shadow:0 0 8px #6af5d6"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#6af5d6">JUMP GATE · SECTOR {{ sector }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px;border-right:2px solid #3a3a5a"><img src="assets/prestige.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#c79bff">{{ prestige }}</span></div>
+<div style="flex:none;display:flex;align-items:center;gap:5px;padding:0 10px"><img src="assets/coin.png" alt="" style="width:16px;height:16px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;color:#ffd644">{{ gold }}</span></div>
+</div>
+
+<sc-if value="{{ isGateView }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;inset:0">
+<div ref="{{ gateRef }}" style="position:absolute;left:100px;top:92px;width:190px;height:190px;border-radius:50%;border:8px solid {{ gate.col }};box-sizing:border-box;box-shadow:0 0 30px 6px {{ gate.glow }},inset 0 0 26px {{ gate.glow }};background:radial-gradient(circle,{{ gate.core }} 0%,rgba(10,8,33,0) 72%);transition:border-color .3s,box-shadow .3s">
+<div ref="{{ swirlRef }}" style="position:absolute;inset:12px;border-radius:50%;background:conic-gradient(from 0deg,rgba(255,255,255,0),{{ gate.swirl }},rgba(255,255,255,0) 35%,{{ gate.swirl }} 65%,rgba(255,255,255,0));opacity:.45"></div>
+</div>
+<div style="position:absolute;left:0;right:0;top:298px;display:flex;flex-direction:column;align-items:center;gap:8px">
+<div style="font-family:'Jersey 15',monospace;font-size:52px;line-height:.9;letter-spacing:2px;color:#ffffff;text-shadow:4px 4px 0 #240011">JUMP GATE</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#6af5d6">SECTOR {{ sector }} · {{ secName }}</span>
+</div>
+<sc-if value="{{ isArrive }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:16px;right:16px;top:410px;display:flex;flex-direction:column;align-items:center;gap:14px">
+<div style="width:100%;display:flex;justify-content:space-between;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0"><span>LAUNCHED THIS RUN</span><span style="color:#ffffff">{{ paradeN }}</span></div>
+<div style="max-width:330px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 12px">
+<sc-for list="{{ parade }}" as="pd" hint-placeholder-count="4"><div ref="{{ pd.ref }}" style="display:flex;flex-direction:column;align-items:center;gap:6px"><img ref="{{ pd.hov }}" src="{{ pd.src }}" alt="{{ pd.name }}" style="width:34px;height:42px;display:block;filter:drop-shadow(2px 2px 0 #000)"></div></sc-for>
+</div>
+<sc-if value="{{ noParade }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;color:#6b7187">NO SHIPS LAUNCHED. YOU JUMP ALONE.</span></sc-if>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;color:#a9b0c0">EVERY SHIP YOU LAUNCHED JUMPS WITH YOU, AND FIGHTS WHATEVER IS WAITING.</span>
+</div>
+<button onClick="{{ jump }}" style="position:absolute;left:16px;right:16px;top:760px;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ jumpOp }}" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">JUMP</button>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isScan }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ panelRef }}" style="position:absolute;left:16px;right:16px;top:392px;bottom:20px;display:flex;flex-direction:column;gap:14px;padding:14px 12px;background:#0a0821;border:3px solid #ff4d4d;border-radius:6px;box-shadow:4px 4px 0 #240011;box-sizing:border-box">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;animation:blink .6s steps(2) infinite"></div><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ff4d4d">CONTACT ON THE EXIT SIDE</span></div>
+<div style="font-family:'Jersey 15',monospace;font-size:44px;line-height:.9;letter-spacing:2px;color:#ffffff;text-shadow:3px 3px 0 #240011,-2px 0 0 rgba(255,77,77,.85),2px 0 0 rgba(106,245,214,.85)">CHANCE ENCOUNTER</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+<sc-for list="{{ reel }}" as="rl" hint-placeholder-count="3">
+<div style="min-width:0;height:196px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 4px 10px;background:{{ rl.bg }};border:3px solid {{ rl.bd }};border-radius:6px;box-shadow:{{ rl.glow }};box-sizing:border-box;opacity:{{ rl.op }};transition:border-color .08s,box-shadow .08s,opacity .3s">
+<div style="height:90px;display:flex;align-items:center;justify-content:center"><img src="{{ rl.src }}" alt="{{ rl.name }}" style="width:{{ rl.w }}px;height:{{ rl.h }}px;display:block;transform:rotate({{ rl.rot }}deg)"></div>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px;text-align:center;color:{{ rl.col }}">{{ rl.name }}</span>
+<div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Jersey 15',monospace;font-size:26px;line-height:1;color:#ffffff">{{ rl.odds }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#6b7187">ODDS</span></div>
+</div>
+</sc-for>
+</div>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-wrap:balance;color:{{ scanCol }}">{{ scanTxt }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBrief }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ briefRef }}" style="position:absolute;left:16px;right:16px;top:64px;bottom:18px;display:flex;flex-direction:column;gap:8px">
+<div style="flex:none;height:178px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px">
+<div style="height:124px;display:flex;align-items:center;justify-content:center"><img src="{{ brief.src }}" alt="{{ brief.name }}" style="width:{{ brief.w }}px;height:{{ brief.h }}px;display:block;transform:rotate({{ brief.rot }}deg);filter:drop-shadow(0 0 14px {{ brief.col }})"></div>
+<div style="font-family:'Jersey 15',monospace;font-size:40px;line-height:.9;letter-spacing:2px;color:{{ brief.col }};text-shadow:3px 3px 0 #240011">{{ brief.name }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">{{ brief.blurb }}</span>
+</div>
+<div style="flex:none;display:flex;justify-content:center;gap:8px">
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid {{ brief.col }};border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">BOSS HP</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffffff">{{ brief.hp }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #48f320;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">HULL</span><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#48f320">{{ brief.hull }}</span></div>
+<div style="height:30px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#0a0821;border:2px solid #ffd644;border-radius:6px;box-sizing:border-box"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#a9b0c0">BOUNTY</span><img src="assets/coin.png" alt="" style="width:14px;height:14px;display:block"><span style="font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:#ffd644">{{ brief.bounty }}</span></div>
+</div>
+
+<div style="flex:none;display:flex;flex-direction:column;gap:6px;padding:10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="display:flex;justify-content:space-between;gap:8px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap"><span style="color:#ffffff">FLEET MATCH</span><span style="color:#a9b0c0">{{ brief.vs }}</span></div>
+<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px">
+<sc-for list="{{ cells }}" as="ce" hint-placeholder-count="6"><div style="min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid #ffffff;visibility:{{ ce.mark }}"></div><div style="width:100%;height:30px;display:flex;align-items:center;justify-content:center;background:{{ ce.bg }};border:2px solid {{ ce.bd }};border-radius:4px;box-sizing:border-box;font-family:'Jersey 15',monospace;font-size:22px;line-height:1;color:{{ ce.col }}">{{ ce.n }}</div></div></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px">
+<sc-for list="{{ caps }}" as="cp" hint-placeholder-count="3"><div style="grid-column:span {{ cp.span }};min-width:0;text-align:center;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:{{ cp.col }}">{{ cp.t }}</div></sc-for>
+</div>
+<div style="display:flex;align-items:baseline;gap:8px;padding-top:4px;flex-wrap:wrap"><span style="font-family:'Jersey 15',monospace;font-size:24px;line-height:1;letter-spacing:1px;white-space:nowrap;color:{{ eff.col }}">{{ eff.tag }}</span><span style="flex:1;min-width:140px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.3;color:#ffffff">{{ eff.txt }}</span></div>
+</div>
+
+<div style="flex:none;display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:#0a0821;border:3px solid #3a3a5a;border-radius:6px;box-sizing:border-box">
+<sc-for list="{{ rules }}" as="ru" hint-placeholder-count="3"><div style="display:flex;gap:8px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1.3;color:#ffffff"><span style="flex:none;color:{{ ru.mc }}">◆</span><span>{{ ru.t }}</span></div></sc-for>
+</div>
+
+<div style="flex:none;display:flex;flex-direction:column;gap:8px;padding:8px 10px;background:#0a0821;border:3px solid #f2f2f2;border-radius:6px;box-shadow:3px 3px 0 #240011;box-sizing:border-box">
+<div style="display:flex;justify-content:space-between;gap:8px;font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap"><span style="color:#ffffff">YOUR FLEET</span><span style="color:#a9b0c0">NEWEST 6 FIGHT</span></div>
+<sc-if value="{{ hasShips }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:repeat({{ nCols }},minmax(0,1fr));gap:6px">
+<sc-for list="{{ tiles }}" as="tl" hint-placeholder-count="4"><div style="min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px"><img src="{{ tl.src }}" alt="{{ tl.name }}" style="width:30px;height:37px;display:block;filter:drop-shadow(2px 2px 0 #000)"><span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;color:{{ tl.col }}">{{ tl.need }}</span><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;white-space:nowrap;color:#a9b0c0">{{ tl.eff }}</span><sc-if value="{{ tl.showName }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:-1px;white-space:nowrap;color:#ffffff">{{ tl.name }}</span></sc-if></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ noShips }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.4;text-align:center;color:#ff4d4d">NO SHIPS LAUNCHED. NOTHING TO FIGHT WITH.</span></sc-if>
+<sc-if value="{{ hasReserve }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1.3;color:#6b7187">{{ reserveTxt }}</span></sc-if>
+</div>
+
+<div style="flex:1;min-height:0"></div>
+<button onClick="{{ fight }}" style="flex:none;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:30px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer;opacity:{{ fightOp }}" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">FIGHT</button>
+<div style="flex:none;display:flex;gap:8px">
+<sc-if value="{{ canParley }}" hint-placeholder-val="{{ false }}"><button onClick="{{ parley }}" style="flex:1;min-width:0;height:48px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #ffd644;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:22px;letter-spacing:1px;white-space:nowrap;color:#ffd644;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">{{ parleyLbl }}</button></sc-if>
+<button onClick="{{ decoy }}" style="flex:1;min-width:0;height:48px;display:flex;align-items:center;justify-content:center;background:#0a0821;border:3px solid #f2f2f2;border-radius:8px;box-shadow:4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:22px;letter-spacing:1px;white-space:nowrap;color:#ffffff;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #240011">{{ decoyLbl }}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:16px;right:16px;top:64px;bottom:18px;display:flex;flex-direction:column;justify-content:center">
+<div ref="{{ endRef }}" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#a9b0c0">{{ end.kicker }}</span>
+<div style="font-family:'Jersey 15',monospace;font-size:54px;line-height:.9;letter-spacing:2px;text-align:center;color:{{ end.col }};text-shadow:4px 4px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000">{{ end.title }}</div>
+<span style="font-family:'Silkscreen',monospace;font-size:12px;line-height:1;color:#ffffff">{{ end.sub }}</span>
+<div style="width:100%;display:flex;flex-direction:column">
+<div style="height:8px;background:linear-gradient(to top right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+<div style="background:#f2f2f2 repeating-linear-gradient(0deg,rgba(10,8,33,.05) 0 1px,transparent 1px 4px);color:#0a0821;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px">
+<div style="text-align:center;font-family:'Jersey 15',monospace;font-size:28px;line-height:1;letter-spacing:2px">GATE REPORT</div>
+<div style="text-align:center;font-family:'Silkscreen',monospace;font-size:12px;color:#3a3a5a">{{ end.stamp }}</div>
+<div style="border-top:2px dashed #0a0821;margin:2px 0"></div>
+<sc-for list="{{ end.rows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;min-height:28px">
+<div style="width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center"><img src="{{ r.src }}" alt="" style="width:18px;height:18px;display:block"></div>
+<span style="flex:1;min-width:0;font-family:'Jersey 15',monospace;font-size:20px;line-height:1;letter-spacing:1px">{{ r.label }}</span>
+<span style="font-family:'Jersey 15',monospace;font-size:20px;line-height:1;white-space:nowrap;color:{{ r.col }}">{{ r.value }}</span>
+</div>
+</sc-for>
+</div>
+<div style="height:8px;background:linear-gradient(to bottom right,#f2f2f2 50%,transparent 50%) 0 0/12px 8px repeat-x"></div>
+</div>
+<button onClick="{{ next }}" style="width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:#e8522c;border:3px solid #f2f2f2;border-radius:8px;box-shadow:inset 0 -7px 0 #b3201c,4px 4px 0 #240011;font-family:'Jersey 15',monospace;font-size:28px;letter-spacing:2px;color:#ffffff;text-shadow:2px 2px 0 #7a1a0e;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:inset 0 -5px 0 #b3201c,2px 2px 0 #240011">{{ end.btn }}</button>
+</div>
+</div>
+</sc-if>
+</div>
+<div ref="{{ fxRef }}" style="position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden"></div>
+</div>
+
+<sc-if value="{{ isFight }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:100;background:#000">
+<sc-if value="{{ fx.isM }}" hint-placeholder-val="{{ false }}"><dc-import name="Marauder Gate" fleet="{{ fx.fleet }}" hull="{{ fx.hull }}" hp="{{ fx.hp }}" atk-bonus="{{ fx.atkBonus }}" bounty="{{ fx.bounty }}" gold="{{ gold }}" difficulty="{{ fx.diff }}" skip-intro="{{ true }}" ii0="{{ fx.ii0 }}" frenzy0="{{ fx.frenzy0 }}" no-eat="{{ fx.noEat }}" on-done="{{ onFightDone }}" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ fx.isC }}" hint-placeholder-val="{{ false }}"><dc-import name="Mother Core Gate" fleet="{{ fx.fleet }}" hull="{{ fx.hull }}" hp="{{ fx.hp }}" atk-bonus="{{ fx.atkBonus }}" bounty="{{ fx.bounty }}" gold="{{ gold }}" difficulty="{{ fx.diff }}" skip-intro="{{ true }}" ii0="{{ fx.ii0 }}" frenzy0="{{ fx.frenzy0 }}" no-eat="{{ fx.noEat }}" on-done="{{ onFightDone }}" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ fx.isG }}" hint-placeholder-val="{{ false }}"><dc-import name="Garganta Gate" fleet="{{ fx.fleet }}" hull="{{ fx.hull }}" hp="{{ fx.hp }}" atk-bonus="{{ fx.atkBonus }}" bounty="{{ fx.bounty }}" gold="{{ gold }}" difficulty="{{ fx.diff }}" skip-intro="{{ true }}" ii0="{{ fx.ii0 }}" frenzy0="{{ fx.frenzy0 }}" no-eat="{{ fx.noEat }}" on-done="{{ onFightDone }}" hint-size="100%,100%"></dc-import></sc-if>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;sector&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;],&quot;default&quot;:&quot;2&quot;,&quot;tsType&quot;:&quot;'1' | '2' | '3'&quot;,&quot;section&quot;:&quot;Mock&quot;},&quot;fleetSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:0,&quot;max&quot;:8,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Mock&quot;},&quot;encounter&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;random&quot;,&quot;marauder&quot;,&quot;mothercore&quot;,&quot;garganta&quot;],&quot;default&quot;:&quot;random&quot;,&quot;tsType&quot;:&quot;'random' | 'marauder' | 'mothercore' | 'garganta'&quot;,&quot;section&quot;:&quot;Mock&quot;}}">
+class Component extends DCLogic {
+  // launched ship class → combat role at the gate (one die per ship, like the boss fights)
+  ROLES = {
+    herald: { name: 'HERALD', ship: 'ship_blue', col: '#7ab8ff', lo: 3, hi: 6, need: '3+', dmg: 1 },
+    warden: { name: 'WARDEN', ship: 'ship_teal', col: '#6af5d6', lo: 1, hi: 2, need: '1-2', block: 2 },
+    kestrel: { name: 'KESTREL', ship: 'ship_violet', col: '#c79bff', lo: 5, hi: 6, need: '5+', dmg: 2 },
+    sovereign: { name: 'SOVEREIGN', ship: 'ship_gold', col: '#ffd644', lo: 6, hi: 6, need: '6', dmg: 4 },
+    barnacle: { name: 'BARNACLE', ship: 'ship_amber', col: '#ffb36a', lo: 1, hi: 3, need: '1-3', repair: 1 },
+    siren: { name: 'SIREN', ship: 'ship_magenta', col: '#ff5cd6', lo: 2, hi: 4, need: '2-4', block: 1 },
+    wraith: { name: 'WRAITH', ship: 'ship_ice', col: '#bfe8ff', lo: 3, hi: 4, need: '3-4', dmg: 2 },
+    obsidian: { name: 'OBSIDIAN', ship: 'ship_obsidian', col: '#a99cff', lo: 4, hi: 4, need: '4', dmg: 3 }
+  };
+  LOG = ['herald', 'warden', 'kestrel', 'sovereign', 'barnacle', 'siren', 'wraith', 'obsidian']; // launch order, oldest first
+  ORDER = ['marauder', 'mothercore', 'garganta'];
+  // hp is balanced for 4 ships; each ship more or fewer moves it by `per`. short/big: the boss's reaction to your fleet size
+  BOSSES = {
+    marauder: { name: 'MARAUDER', src: 'assets/kestrel_h11.png', rot: 180, bw: 99, bh: 120, tw: 56, th: 68, col: '#ff4d4d', blurb: 'A RAIDER WAS WAITING ON THE EXIT SIDE.', hp: { easy: 8, normal: 10, hard: 14 }, per: 2, bounty: 40, prestige: 20, decoy: 20,
+      short: { max: 1, tag: 'SMELLS BLOOD', txt: 'A LONE SHIP IS EASY PICKINGS. EVERY ATTACK +1.', atk: 1 },
+      big: { min: 4, tag: 'WANTS NO PART', txt: 'IT OFFERS A PARLEY: HALF BOUNTY, NO FIGHT.', parley: true } },
+    mothercore: { name: 'MOTHER CORE', src: 'assets/mother_core.png', rot: 0, bw: 166, bh: 120, tw: 96, th: 70, col: '#8fc0ff', blurb: 'A MOTHER CORE IS PARKED ACROSS THE EXIT.', hp: { easy: 16, normal: 20, hard: 26 }, per: 3, bounty: 150, prestige: 80, decoy: 60,
+      short: { max: 2, tag: 'LOW PRIORITY', txt: 'IT SCANS BEFORE IT SHOOTS. OPENS WITH CORE EXPOSED: YOUR HITS ×2.', ii0: 2 },
+      big: { min: 5, tag: 'TARGET-RICH', txt: 'SO MANY TARGETS. EVERY ATTACK +1.', atk: 1 } },
+    garganta: { name: 'GARGANTA', src: 'assets/garganta_v4.png', rot: 0, bw: 150, bh: 134, tw: 88, th: 79, col: '#9dff5a', blurb: 'GARGANTA RISES OUT OF THE WAKE.', hp: { easy: 18, normal: 22, hard: 28 }, per: 3, bounty: 200, prestige: 100, decoy: 60,
+      always: 'A BITE PAST YOUR BLOCK EATS A SHIP, GONE FOR THE RUN',
+      short: { max: 3, tag: 'BARELY A SNACK', txt: "NOT WORTH SWALLOWING. IT WON'T EAT SHIPS, ONLY CHEWS THE HULL.", noEat: true },
+      big: { min: 6, tag: 'FEEDING FRENZY', txt: 'A WHOLE BUFFET. STARTS IN FRENZY: EVERY ATTACK +1.', frenzy0: true } }
+  };
+  ODDS = { 1: [70, 25, 5], 2: [40, 40, 20], 3: [15, 40, 45] };
+  SEC = { 1: 'THE SHALLOWS', 2: 'THE DRIFT', 3: 'THE DEEP' };
+  DIFF = { 1: 'easy', 2: 'normal', 3: 'hard' };
+  ZC = { short: '#ff4d4d', even: '#f2f2f2', big: '#6af5d6' };
+  GOLD0 = 120;
+  wrapRef = React.createRef(); stageRef = React.createRef(); shakeRef = React.createRef(); fxRef = React.createRef(); driftA = React.createRef(); driftB = React.createRef();
+  gateRef = React.createRef(); swirlRef = React.createRef(); panelRef = React.createRef(); briefRef = React.createRef(); endRef = React.createRef();
+  paradeRefs = [0, 1, 2, 3, 4, 5, 6, 7].map(() => React.createRef()); hovRefs = [0, 1, 2, 3, 4, 5, 6, 7].map(() => React.createRef());
+  hv = [0, 1, 2, 3, 4, 5, 6, 7].map(() => ({ ph: Math.random() * 6.28, f: 1.1 + Math.random() * .8 }));
+  ts = []; gen = 0; t0 = performance.now();
+  fresh() {
+    const p = this.props || {}, fs = parseInt(p.fleetSize, 10), n = Math.max(0, Math.min(8, fs >= 0 ? fs : 4)), sec = [1, 2, 3].includes(+p.sector) ? +p.sector : 2;
+    return { phase: 'arrive', sector: sec, launched: this.LOG.slice(0, n), gold: this.GOLD0, prestige: 0, boss: null, hi: -1, landed: false, win: -1, res: null };
+  }
+  state = this.fresh();
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const loop = () => { this.tick(); this.raf = requestAnimationFrame(loop); }; this.raf = requestAnimationFrame(loop);
+    this.onResize = () => this.fit(); window.addEventListener('resize', this.onResize);
+    if (window.ResizeObserver && this.wrapRef.current) { this.ro = new ResizeObserver(this.onResize); this.ro.observe(this.wrapRef.current); }
+    this.onTap = () => this.ac(); window.addEventListener('pointerdown', this.onTap);
+    this.fit();
+  }
+  componentDidUpdate(pp) { if (pp && (pp.sector !== this.props.sector || pp.fleetSize !== this.props.fleetSize || pp.encounter !== this.props.encounter)) this.reset(this.fresh()); }
+  componentWillUnmount() { this.clearAll(); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); window.removeEventListener('pointerdown', this.onTap); if (this.ro) this.ro.disconnect(); }
+  fit() { const w = this.wrapRef.current, st = this.stageRef.current; if (!w || !st) return; st.style.transform = 'scale(' + Math.min(w.clientWidth / 390, w.clientHeight / 844) + ')'; }
+  later(f, ms) { const g = this.gen; this.ts.push(setTimeout(() => { if (g === this.gen) f(); }, ms)); }
+  clearAll() { this.gen++; this.ts.forEach(clearTimeout); this.ts = []; const fx = this.fxRef.current; if (fx) fx.innerHTML = ''; }
+  reset(st) { this.clearAll(); this.paradeRefs.forEach(r => { const el = r.current; if (el && el.getAnimations) el.getAnimations().forEach(a => a.cancel()); }); this.setState(st); }
+  hexA(h, a) { return 'rgba(' + parseInt(h.slice(1, 3), 16) + ',' + parseInt(h.slice(3, 5), 16) + ',' + parseInt(h.slice(5, 7), 16) + ',' + a + ')'; }
+  // ─── fleet size → encounter ───
+  calc(S) {
+    const fighting = S.launched.slice(-6), reserve = S.launched.slice(0, Math.max(0, S.launched.length - 6)), N = fighting.length;
+    const B = this.BOSSES[S.boss || 'marauder'], diff = this.DIFF[S.sector], base = B.hp[diff], hp = Math.max(4, base + B.per * (N - 4)), hull = Math.max(4, 2 * N);
+    const band = N === 0 ? 'none' : N <= B.short.max ? 'short' : N >= B.big.min ? 'big' : 'even', m = band === 'short' ? B.short : band === 'big' ? B.big : {};
+    return { fighting, reserve, N, B, diff, base, hp, hull, band, m, bounty: Math.max(5, Math.round(B.bounty * hp / base / 5) * 5) };
+  }
+  // ─── sound ───
+  ac() { if (!this._ac) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { this._ac = new C(); } catch (e) { return null; } } if (this._ac.state === 'suspended') this._ac.resume(); return this._ac; }
+  tone(f, d, type, vol, f2, delay) { try { const a = this.ac(); if (!a) return; const t = a.currentTime + (delay || 0), o = a.createOscillator(), g = a.createGain(); o.type = type || 'square'; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d); g.gain.setValueAtTime(vol || .04, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + d + .02); } catch (e) {} }
+  // ─── fx ───
+  rect(el) { const st = this.stageRef.current; if (!st || !el) return null; const S = st.getBoundingClientRect(), k = S.width / st.offsetWidth || 1, r = el.getBoundingClientRect(); return { x: (r.left - S.left) / k, y: (r.top - S.top) / k, w: r.width / k, h: r.height / k }; }
+  center(el) { const r = this.rect(el); return r ? { x: r.x + r.w / 2, y: r.y + r.h / 2 } : null; }
+  fxEl(css, txt) { const fx = this.fxRef.current; if (!fx) return null; const d = document.createElement('div'); d.style.cssText = 'position:absolute;' + css; if (txt != null) d.textContent = txt; fx.appendChild(d); return d; }
+  anim(d, kf, o) { if (!d) return; if (!d.animate) { d.remove(); return; } d.animate(kf, o).onfinish = () => d.remove(); }
+  shake(p, ms) { const el = this.shakeRef.current; if (!el || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + (-p) + 'px,' + (p * .5) + 'px)' }, { transform: 'translate(' + p + 'px,' + (-p * .4) + 'px)' }, { transform: 'translate(' + (-p * .6) + 'px,' + (p * .3) + 'px)' }, { transform: 'translate(0,0)' }], { duration: ms || 260 }); }
+  flash(col, a, ms, st) { if (this.reduced) return; this.anim(this.fxEl('inset:0;background:' + col + ';opacity:0'), [{ opacity: a }, { opacity: 0 }], { duration: ms || 320, easing: st ? 'steps(' + st + ')' : 'ease-out' }); }
+  stamp(word, sub, col, y, size) {
+    const fx = this.fxRef.current; if (!fx) return;
+    const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;right:0;top:' + y + 'px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;transform-origin:50% 60%;pointer-events:none';
+    const big = document.createElement('div'); big.textContent = word; big.style.cssText = "font-family:'Jersey 15',monospace;font-size:" + (size || 52) + 'px;line-height:.9;letter-spacing:2px;white-space:nowrap;color:' + col + ';text-shadow:3px 3px 0 #240011,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000';
+    el.appendChild(big);
+    if (sub) { const sm = document.createElement('div'); sm.textContent = sub; sm.style.cssText = "font-family:'Silkscreen',monospace;font-size:12px;line-height:1;letter-spacing:1px;color:#ffffff;background:#0a0821;border:2px solid " + col + ';border-radius:3px;padding:3px 6px;white-space:nowrap'; el.appendChild(sm); }
+    fx.appendChild(el);
+    if (!el.animate) return;
+    el.animate([{ transform: 'scale(2.6) rotate(-6deg)', opacity: 0 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .14 }, { transform: 'scale(1.04) rotate(-2deg)', opacity: 1, offset: .22 }, { transform: 'scale(1) rotate(-2deg)', opacity: 1, offset: .86 }, { transform: 'scale(.9) translateY(-14px) rotate(-2deg)', opacity: 0 }], { duration: 1700, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => el.remove();
+  }
+  slideIn(el, dy) { if (el && el.animate && !this.reduced) el.animate([{ opacity: 0, transform: 'translateY(' + (dy || 24) + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'cubic-bezier(.2,.8,.3,1)' }); }
+  // ─── flow: arrive → jump → chance encounter reel → briefing → fight → gate report ───
+  jump() {
+    const S = this.state; if (S.phase !== 'arrive') return;
+    this.setState({ phase: 'jump' }); this.tone(180, .7, 'sawtooth', .04, 900);
+    const g = this.center(this.gateRef.current), n = S.launched.length;
+    this.paradeRefs.slice(0, n).forEach((r, i) => { const el = r.current, c = this.center(el); if (!el || !c || !g || !el.animate || this.reduced) return; el.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: 'translate(' + (g.x - c.x).toFixed(0) + 'px,' + (g.y - c.y).toFixed(0) + 'px) scale(.15)', opacity: 0 }], { duration: 620, delay: i * 70, easing: 'cubic-bezier(.5,0,.8,.4)', fill: 'forwards' }); });
+    const t = 560 + n * 70;
+    this.later(() => { this.flash('#ffffff', .75, 420, 3); this.shake(6, 300); this.tone(1200, .25, 'triangle', .05, 300); }, t);
+    this.later(() => this.scan(), t + 420);
+  }
+  scan() {
+    const S = this.state, forced = this.ORDER.indexOf((this.props || {}).encounter);
+    let w = forced; if (w < 0) { const o = this.ODDS[S.sector]; let r = Math.random() * 100; w = 0; while (w < 2 && r >= o[w]) { r -= o[w]; w++; } }
+    this.setState({ phase: 'scan', hi: -1, landed: false, boss: null, win: w }, () => this.slideIn(this.panelRef.current, 40));
+    this.flash('#ff1a1a', .3, 420); this.shake(5, 300); this.tone(140, .35, 'square', .05, 90);
+    const n = 13 + w; let t = 420;
+    for (let i = 0; i < n; i++) { const q = i / (n - 1); t += 55 + 300 * Math.pow(q, 2.6); this.later(() => { this.setState({ hi: i % 3 }); this.tone(520 + (i % 3) * 120, .05, 'square', .03); }, t); }
+    this.later(() => this.land(w), t + 280);
+  }
+  land(w) {
+    const key = this.ORDER[w], B = this.BOSSES[key];
+    this.setState({ landed: true, boss: key, hi: w });
+    this.flash(B.col, .35, 380); this.shake(8, 320); [0, .09, .18].forEach((d, i) => this.tone([392, 494, 587][i] / (key === 'garganta' ? 2 : 1), .3, 'square', .04, 0, d));
+    this.stamp(B.name, 'WAITING AT THE GATE', B.col, 168, 50);
+    this.later(() => this.setState({ phase: 'brief' }, () => this.slideIn(this.briefRef.current, 20)), 1600);
+  }
+  fight() { const S = this.state; if (S.phase !== 'brief' || !this.calc(S).N) return; this.setState({ phase: 'fight' }); }
+  parley() { const S = this.state, C = this.calc(S); if (S.phase !== 'brief' || !C.m.parley) return; this.settle({ kind: 'parley', gold: Math.round(C.bounty / 2), prestige: 0, lost: [] }); }
+  decoy() { const S = this.state, C = this.calc(S); if (S.phase !== 'brief') return; this.settle({ kind: 'decoy', gold: -C.B.decoy, prestige: 0, lost: [] }); }
+  onFightDone(r) {
+    const S = this.state, C = this.calc(S), off = S.launched.length - C.N, won = r && r.outcome === 'won';
+    if (!won) return this.settle({ kind: 'lost', gold: 0, prestige: 0, lost: [], rounds: r && r.rounds });
+    this.settle({ kind: 'won', gold: C.bounty, prestige: C.B.prestige, lost: (r.lost || []).map(k => k + off), rounds: r.rounds });
+  }
+  settle(res) {
+    const S = this.state, C = this.calc(S), names = res.lost.map(i => this.ROLES[S.launched[i]].name);
+    this.setState({ phase: 'result', launched: S.launched.filter((_, i) => !res.lost.includes(i)), gold: S.gold + res.gold, prestige: S.prestige + res.prestige, res: { ...res, names, boss: C.B.name, bossCol: C.B.col, N: C.N } }, () => this.slideIn(this.endRef.current, 16));
+  }
+  next() {
+    const S = this.state;
+    if (S.res && S.res.kind === 'lost') return this.reset(this.fresh());
+    this.reset({ ...S, phase: 'arrive', sector: S.sector % 3 + 1, boss: null, hi: -1, landed: false, win: -1, res: null });
+  }
+  tick() {
+    const t = (performance.now() - this.t0) / 1000, A = this.driftA.current, B = this.driftB.current, sw = this.swirlRef.current;
+    if (A) A.style.backgroundPosition = '0px ' + ((t * 14) % 900).toFixed(1) + 'px';
+    if (B) B.style.backgroundPosition = '120px ' + (300 + (t * 30) % 1350).toFixed(1) + 'px';
+    if (sw) sw.style.transform = 'rotate(' + ((t * (this.state.phase === 'jump' ? 260 : 40)) % 360).toFixed(1) + 'deg)';
+    if (this.reduced) return;
+    this.hovRefs.forEach((r, i) => { const el = r.current, p = this.hv[i]; if (!el) return; el.style.transform = 'translate(' + (Math.sin(t * p.f * .7 + p.ph) * 2).toFixed(2) + 'px,' + (Math.sin(t * p.f + p.ph) * 3).toFixed(2) + 'px)'; });
+  }
+  renderVals() {
+    const S = this.state, ph = S.phase, C = this.calc(S), B = C.B, red = ph === 'scan' || ph === 'brief', bc = S.boss ? B.col : '#ff4d4d';
+    const roleEff = (r, c) => r.dmg ? r.dmg + ' DMG' : r.repair ? (c ? 'REP ' : 'REPAIR ') + r.repair : (c ? 'BLK ' : 'BLOCK ') + r.block;
+    const odds = this.ODDS[S.sector];
+    const reel = this.ORDER.map((k, i) => { const b = this.BOSSES[k], on = S.hi === i, win = S.landed && S.win === i, dim = S.landed && !win;
+      return { src: b.src, name: b.name, odds: odds[i] + '%', w: b.tw, h: b.th, rot: b.rot, col: on || win ? b.col : '#a9b0c0', bd: on || win ? b.col : '#3a3a5a', bg: on || win ? this.hexA(b.col === '#8fc0ff' ? '#3f7bff' : b.col, .16) : '#05040f',
+        glow: on || win ? '0 0 18px ' + this.hexA(b.col === '#8fc0ff' ? '#3f7bff' : b.col, .7) : 'none', op: dim ? .35 : 1 }; });
+    const cells = [1, 2, 3, 4, 5, 6].map(n => { const z = n <= B.short.max ? 'short' : n >= B.big.min ? 'big' : 'even', zc = this.ZC[z], me = n === C.N;
+      return { n: '' + n, mark: me ? 'visible' : 'hidden', bg: me ? zc : this.hexA(zc, .08), bd: me ? '#ffffff' : this.hexA(zc, .5), col: me ? '#0a0821' : zc }; });
+    const caps = [{ t: 'SHORT', span: B.short.max, col: this.ZC.short }, { t: 'MATCHED', span: B.big.min - B.short.max - 1, col: this.ZC.even }, { t: 'SWARM', span: 7 - B.big.min, col: this.ZC.big }];
+    const eff = C.band === 'none' ? { tag: 'NO ESCORT', txt: 'NO SHIPS TO FIGHT WITH. DECOY IS THE ONLY WAY THROUGH.', col: '#ff4d4d' }
+      : C.band === 'even' ? { tag: 'STRAIGHT FIGHT', txt: 'NO TWIST AT THIS FLEET SIZE.', col: '#f2f2f2' } : { tag: C.m.tag, txt: C.m.txt, col: this.ZC[C.band] };
+    const rules = [
+      { t: C.N + (C.N === 1 ? ' SHIP FIGHTS' : ' SHIPS FIGHT') + ' · HULL ' + C.hull + ' (2 PER SHIP)', mc: '#48f320' },
+      { t: 'BOSS HP ' + C.hp + (C.N === 4 ? ' · BASE FOR 4 SHIPS' : ' · ' + (C.N > 4 ? '+' : '-') + B.per + ' PER SHIP ' + (C.N > 4 ? 'OVER' : 'UNDER') + ' 4'), mc: B.col },
+      { t: 'A DIE WITH NO SHIP TO TAKE IT HITS YOUR HULL', mc: '#ff4d4d' }
+    ].concat(B.always ? [{ t: B.always, mc: '#9dff5a' }] : []);
+    const compact = C.N > 4;
+    const tiles = C.fighting.map(id => { const r = this.ROLES[id]; return { src: 'assets/' + r.ship + '.png', name: r.name, need: r.need, col: r.col, eff: roleEff(r, compact), showName: !compact }; });
+    const R = S.res, gl = R ? R.gold : 0;
+    const lostRow = R && { src: 'assets/spaceship_icon.png', label: R.names.length ? 'EATEN · ' + R.names.join(', ') : 'SHIPS LOST', value: R.names.length ? '-' + R.names.length : 'NONE', col: R.names.length ? '#b3201c' : '#2e8a12' };
+    const fleetRow = { src: 'assets/spaceship_icon.png', label: 'FLEET NOW', value: S.launched.length + (S.launched.length === 1 ? ' SHIP' : ' SHIPS'), col: '#0a0821' };
+    const end = !R ? { kicker: '', title: '', col: '#ffffff', sub: '', stamp: '', rows: [], btn: '' }
+      : R.kind === 'won' ? { kicker: 'SECTOR ' + S.sector + ' · JUMP GATE', title: R.boss + ' DOWN', col: '#48f320', sub: 'THROUGH THE GATE', stamp: R.N + ' SHIPS FOUGHT · ' + (R.rounds || 0) + ' ROUNDS', btn: 'NEXT GATE',
+        rows: [{ src: 'assets/coin.png', label: 'BOUNTY', value: '+' + gl, col: '#0a0821' }, { src: 'assets/prestige.png', label: 'PRESTIGE', value: '+' + R.prestige, col: '#0a0821' }, lostRow, fleetRow] }
+      : R.kind === 'parley' ? { kicker: 'SECTOR ' + S.sector + ' · JUMP GATE', title: 'PARLEY', col: '#ffd644', sub: 'IT PAYS YOU TO LET IT GO', stamp: R.N + ' SHIPS WAS ENOUGH', btn: 'NEXT GATE',
+        rows: [{ src: 'assets/coin.png', label: 'HALF BOUNTY', value: '+' + gl, col: '#0a0821' }, { src: 'assets/prestige.png', label: 'PRESTIGE', value: 'NONE', col: '#3a3a5a' }, fleetRow] }
+      : R.kind === 'decoy' ? { kicker: 'SECTOR ' + S.sector + ' · JUMP GATE', title: 'SLIPPED THROUGH', col: '#ffd644', sub: 'THE DECOY TAKES THE HEAT', stamp: 'NO CONTACT', btn: 'NEXT GATE',
+        rows: [{ src: 'assets/coin.png', label: 'DECOY', value: '' + gl, col: '#b3201c' }, fleetRow] }
+      : { kicker: 'SECTOR ' + S.sector + ' · JUMP GATE', title: 'BREACHED', col: '#ff4d4d', sub: 'THE RUN ENDS AT THE GATE', stamp: R.boss + ' · ROUND ' + (R.rounds || 0), btn: 'NEW RUN',
+        rows: [{ src: 'assets/prestige.png', label: 'PRESTIGE AT RISK', value: 'LOST', col: '#b3201c' }, { src: 'assets/spaceship_icon.png', label: 'LAUNCHED SHIPS', value: 'KEPT IN FLEET', col: '#2e8a12' }] };
+    if (R && R.kind !== 'lost') end.btn = 'NEXT GATE · SECTOR ' + (S.sector % 3 + 1);
+    return {
+      wrapRef: this.wrapRef, stageRef: this.stageRef, shakeRef: this.shakeRef, fxRef: this.fxRef, driftA: this.driftA, driftB: this.driftB,
+      gateRef: this.gateRef, swirlRef: this.swirlRef, panelRef: this.panelRef, briefRef: this.briefRef, endRef: this.endRef,
+      sector: S.sector, secName: this.SEC[S.sector], gold: S.gold, prestige: S.prestige,
+      glow: red ? this.hexA(bc === '#8fc0ff' ? '#3f7bff' : bc, .22) : 'rgba(106,245,214,.18)',
+      isGateView: ph === 'arrive' || ph === 'jump' || ph === 'scan', isArrive: ph === 'arrive' || ph === 'jump', isScan: ph === 'scan', isBrief: ph === 'brief', isResult: ph === 'result', isFight: ph === 'fight',
+      gate: ph === 'scan' ? { col: '#ff4d4d', glow: 'rgba(255,77,77,.6)', core: 'rgba(255,77,77,.35)', swirl: 'rgba(255,120,120,.7)' } : { col: '#6af5d6', glow: 'rgba(106,245,214,.55)', core: 'rgba(106,245,214,.3)', swirl: 'rgba(190,255,240,.7)' },
+      parade: S.launched.map((id, i) => ({ ref: this.paradeRefs[i], hov: this.hovRefs[i], src: 'assets/' + this.ROLES[id].ship + '.png', name: this.ROLES[id].name })),
+      paradeN: S.launched.length + (S.launched.length === 1 ? ' SHIP' : ' SHIPS'), noParade: !S.launched.length, jumpOp: ph === 'arrive' ? 1 : .4, jump: () => this.jump(),
+      reel, scanTxt: S.landed ? B.blurb : 'SECTOR ' + S.sector + ' ODDS · SCANNING THE EXIT', scanCol: S.landed ? B.col : '#a9b0c0',
+      brief: { src: B.src, rot: B.rot, w: B.bw, h: B.bh, name: B.name, col: B.col, blurb: B.blurb, hp: C.hp, hull: C.hull, bounty: C.bounty, vs: C.N + (C.N === 1 ? ' SHIP' : ' SHIPS') + ' VS ' + B.name },
+      cells, caps, eff, rules, tiles, nCols: Math.max(1, C.N), hasShips: C.N > 0, noShips: C.N === 0,
+      hasReserve: C.reserve.length > 0, reserveTxt: 'RESERVE · ' + C.reserve.map(id => this.ROLES[id].name).join(', ') + ' · SITTING THIS ONE OUT, SAFE',
+      fightOp: C.N ? 1 : .35, canParley: !!C.m.parley, parleyLbl: 'PARLEY · +' + Math.round(C.bounty / 2), decoyLbl: 'DECOY · -' + B.decoy + ' GOLD',
+      fight: () => this.fight(), parley: () => this.parley(), decoy: () => this.decoy(),
+      fx: { isM: S.boss === 'marauder', isC: S.boss === 'mothercore', isG: S.boss === 'garganta', fleet: C.fighting.map(id => this.ROLES[id]), hull: C.hull, hp: C.hp, atkBonus: C.m.atk || 0, bounty: C.bounty, diff: C.diff, ii0: C.m.ii0 || 0, frenzy0: !!C.m.frenzy0, noEat: !!C.m.noEat },
+      onFightDone: r => this.onFightDone(r),
+      end, next: () => this.next()
+    };
+  }
+}
+</script>
+</body>
+</html>

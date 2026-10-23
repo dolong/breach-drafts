@@ -1,0 +1,45 @@
+{
+  "source_pack": "Breach boss SFX v4.6 — victory + game over",
+  "clips": [
+    {
+      "id": "boss_victory",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Boss beaten — impact + sub drop, bright shimmer, trailer stinger and organ chord in the same major key, distant fireworks",
+      "trigger": "boss files · win()",
+      "files": [
+        {
+          "name": "boss_victory_01",
+          "ogg": "ogg/boss_victory_01.ogg",
+          "mp3": "mp3/boss_victory_01.mp3",
+          "duration_ms": 3400,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -2.4
+        }
+      ]
+    },
+    {
+      "id": "fleet_defeat",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Fleet destroyed — hull bursts, final blow at 620ms, ship powers down, small sad orchestral sting",
+      "trigger": "boss files · lose(), once (final blow baked in at +620ms)",
+      "files": [
+        {
+          "name": "fleet_defeat_01",
+          "ogg": "ogg/fleet_defeat_01.ogg",
+          "mp3": "mp3/fleet_defeat_01.mp3",
+          "duration_ms": 4000,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -2.2
+        }
+      ]
+    }
+  ]
+}

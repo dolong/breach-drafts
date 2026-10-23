@@ -1,0 +1,315 @@
+{
+  "source_pack": "Breach boss SFX v4 — built from Sonniss GDC bundles (royalty-free, no attribution)",
+  "clips": [
+    {
+      "id": "encounter_alarm",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Red alert before a boss reveal — ship klaxon, sub hit, riser cresting into the reveal",
+      "trigger": "Jump Gate v2 · alarm() (ends as reveal() fires at +1100ms)",
+      "files": [
+        {
+          "name": "encounter_alarm_01",
+          "ogg": "ogg/encounter_alarm_01.ogg",
+          "mp3": "mp3/encounter_alarm_01.mp3",
+          "duration_ms": 1100,
+          "lufs_m_max": -12.5,
+          "true_peak_db": -3.0
+        }
+      ]
+    },
+    {
+      "id": "encounter_alarm_loop",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": true,
+      "round_robin": false,
+      "event": "Klaxon loop (2 cycles, seamless) if the reveal ever waits on a tap",
+      "trigger": "Jump Gate v2 · loop until reveal()",
+      "files": [
+        {
+          "name": "encounter_alarm_loop_01",
+          "ogg": "ogg/encounter_alarm_loop_01.ogg",
+          "mp3": "mp3/encounter_alarm_loop_01.mp3",
+          "duration_ms": 841,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.3
+        }
+      ]
+    },
+    {
+      "id": "boss_warp_in",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Boss materialises — reversed swell sucks in, cinematic slam + sub drop at 0.42s",
+      "trigger": "boss files · warpIn() (flash at +420ms)",
+      "files": [
+        {
+          "name": "boss_warp_in_01",
+          "ogg": "ogg/boss_warp_in_01.ogg",
+          "mp3": "mp3/boss_warp_in_01.mp3",
+          "duration_ms": 1600,
+          "lufs_m_max": -13.5,
+          "true_peak_db": -3.8
+        }
+      ]
+    },
+    {
+      "id": "reveal_garganta",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Garganta reveal — breath in, dragon roar on the colour flash, bite + T-Rex roar on the name slam",
+      "trigger": "Jump Gate v2 · reveal() when boss = garganta (hits at +0.22s and +0.96s)",
+      "files": [
+        {
+          "name": "reveal_garganta_01",
+          "ogg": "ogg/reveal_garganta_01.ogg",
+          "mp3": "mp3/reveal_garganta_01.mp3",
+          "duration_ms": 2399,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -3.6
+        }
+      ]
+    },
+    {
+      "id": "reveal_mothercore",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Mother Core reveal — braam on the colour flash, metal slam + sub on the name slam",
+      "trigger": "Jump Gate v2 · reveal() when boss = mothercore",
+      "files": [
+        {
+          "name": "reveal_mothercore_01",
+          "ogg": "ogg/reveal_mothercore_01.ogg",
+          "mp3": "mp3/reveal_mothercore_01.mp3",
+          "duration_ms": 2300,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -3.9
+        }
+      ]
+    },
+    {
+      "id": "reveal_marauder",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Marauder reveal — hit on the colour flash, warship roars past and peaks on the name slam",
+      "trigger": "Jump Gate v2 · reveal() when boss = marauder",
+      "files": [
+        {
+          "name": "reveal_marauder_01",
+          "ogg": "ogg/reveal_marauder_01.ogg",
+          "mp3": "mp3/reveal_marauder_01.mp3",
+          "duration_ms": 2200,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -2.5
+        }
+      ]
+    },
+    {
+      "id": "boss_phase2_frenzy",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Garganta FRENZY — full dragon roar over a braam and sub hit",
+      "trigger": "Garganta · afterPlayer() FRENZY",
+      "files": [
+        {
+          "name": "boss_phase2_frenzy_01",
+          "ogg": "ogg/boss_phase2_frenzy_01.ogg",
+          "mp3": "mp3/boss_phase2_frenzy_01.mp3",
+          "duration_ms": 2200,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -1.4
+        }
+      ]
+    },
+    {
+      "id": "garganta_inhale",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": false,
+      "event": "Garganta draws breath — maw open, ×2 damage window",
+      "trigger": "Garganta · startRound() when exposed()",
+      "files": [
+        {
+          "name": "garganta_inhale_01",
+          "ogg": "ogg/garganta_inhale_01.ogg",
+          "mp3": "mp3/garganta_inhale_01.mp3",
+          "duration_ms": 1320,
+          "lufs_m_max": -16.0,
+          "true_peak_db": -4.6
+        }
+      ]
+    },
+    {
+      "id": "garganta_hurt",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "combat",
+      "gain_db": -6,
+      "loop": false,
+      "round_robin": true,
+      "event": "Garganta flinches — pained snarl, layered on boss_hit",
+      "trigger": "Garganta · hurt()",
+      "files": [
+        {
+          "name": "garganta_hurt_01",
+          "ogg": "ogg/garganta_hurt_01.ogg",
+          "mp3": "mp3/garganta_hurt_01.mp3",
+          "duration_ms": 600,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -8.0
+        },
+        {
+          "name": "garganta_hurt_02",
+          "ogg": "ogg/garganta_hurt_02.ogg",
+          "mp3": "mp3/garganta_hurt_02.mp3",
+          "duration_ms": 600,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -7.5
+        },
+        {
+          "name": "garganta_hurt_03",
+          "ogg": "ogg/garganta_hurt_03.ogg",
+          "mp3": "mp3/garganta_hurt_03.mp3",
+          "duration_ms": 600,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -7.9
+        },
+        {
+          "name": "garganta_hurt_04",
+          "ogg": "ogg/garganta_hurt_04.ogg",
+          "mp3": "mp3/garganta_hurt_04.mp3",
+          "duration_ms": 600,
+          "lufs_m_max": -15.5,
+          "true_peak_db": -7.1
+        }
+      ]
+    },
+    {
+      "id": "garganta_bite",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "BITE — growl wind-up, lunge, jaw SNAP at 0.385s, roar",
+      "trigger": "Garganta · bite() at the start (snap at +385ms)",
+      "files": [
+        {
+          "name": "garganta_bite_01",
+          "ogg": "ogg/garganta_bite_01.ogg",
+          "mp3": "mp3/garganta_bite_01.mp3",
+          "duration_ms": 1400,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.9
+        },
+        {
+          "name": "garganta_bite_02",
+          "ogg": "ogg/garganta_bite_02.ogg",
+          "mp3": "mp3/garganta_bite_02.mp3",
+          "duration_ms": 1400,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.2
+        },
+        {
+          "name": "garganta_bite_03",
+          "ogg": "ogg/garganta_bite_03.ogg",
+          "mp3": "mp3/garganta_bite_03.mp3",
+          "duration_ms": 1400,
+          "lufs_m_max": -14.0,
+          "true_peak_db": -5.9
+        }
+      ]
+    },
+    {
+      "id": "garganta_maw_shut",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": true,
+      "event": "MAW SHUTS — heavy jaw clamp, thud, low growl",
+      "trigger": "Garganta · enemyTurn() when atk = 0",
+      "files": [
+        {
+          "name": "garganta_maw_shut_01",
+          "ogg": "ogg/garganta_maw_shut_01.ogg",
+          "mp3": "mp3/garganta_maw_shut_01.mp3",
+          "duration_ms": 950,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -6.3
+        },
+        {
+          "name": "garganta_maw_shut_02",
+          "ogg": "ogg/garganta_maw_shut_02.ogg",
+          "mp3": "mp3/garganta_maw_shut_02.mp3",
+          "duration_ms": 950,
+          "lufs_m_max": -15.0,
+          "true_peak_db": -4.0
+        }
+      ]
+    }
+  ],
+  "alternatives_B": [
+    {
+      "id": "encounter_alarm",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Red alert — cinematic two-tone trailer alarm, boom, riser into the reveal",
+      "trigger": "Jump Gate v2 · alarm()",
+      "files": [
+        {
+          "name": "encounter_alarm_B_01",
+          "ogg": "alt_B/ogg/encounter_alarm_B_01.ogg",
+          "mp3": "alt_B/mp3/encounter_alarm_B_01.mp3",
+          "duration_ms": 1100,
+          "lufs_m_max": -12.5,
+          "true_peak_db": -1.9
+        }
+      ]
+    },
+    {
+      "id": "reveal_garganta",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Garganta reveal — beast growl on the colour flash, braam + dragon roar on the name slam",
+      "trigger": "Jump Gate v2 · reveal() when boss = garganta",
+      "files": [
+        {
+          "name": "reveal_garganta_B_01",
+          "ogg": "alt_B/ogg/reveal_garganta_B_01.ogg",
+          "mp3": "alt_B/mp3/reveal_garganta_B_01.mp3",
+          "duration_ms": 2591,
+          "lufs_m_max": -13.0,
+          "true_peak_db": -4.0
+        }
+      ]
+    }
+  ]
+}

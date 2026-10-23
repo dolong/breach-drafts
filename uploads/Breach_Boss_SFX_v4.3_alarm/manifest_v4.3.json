@@ -1,0 +1,45 @@
+{
+  "source_pack": "Breach boss SFX v4.3 — alarm: bunker hand-crank ×2",
+  "clips": [
+    {
+      "id": "encounter_alarm",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": false,
+      "round_robin": false,
+      "event": "Bunker hand-crank siren, cranked twice; second crank peaks on the reveal, then winds down underneath it",
+      "trigger": "Jump Gate v2 · alarm() at the start; reveal() fires at +3115ms",
+      "files": [
+        {
+          "name": "encounter_alarm_01",
+          "ogg": "ogg/encounter_alarm_01.ogg",
+          "mp3": "mp3/encounter_alarm_01.mp3",
+          "duration_ms": 4203,
+          "lufs_m_max": -12.5,
+          "true_peak_db": -3.3
+        }
+      ]
+    },
+    {
+      "id": "encounter_alarm_loop",
+      "source": "sonniss-gdc (royalty-free, no attribution)",
+      "tier": "big",
+      "gain_db": 0,
+      "loop": true,
+      "round_robin": false,
+      "event": "One hand-crank cycle (crank up, sag), seamless",
+      "trigger": "Jump Gate v2 · loop only if the reveal waits on a tap",
+      "files": [
+        {
+          "name": "encounter_alarm_loop_01",
+          "ogg": "ogg/encounter_alarm_loop_01.ogg",
+          "mp3": "mp3/encounter_alarm_loop_01.mp3",
+          "duration_ms": 1635,
+          "lufs_m_max": -12.5,
+          "true_peak_db": -5.7
+        }
+      ]
+    }
+  ]
+}
