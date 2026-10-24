@@ -1,0 +1,46 @@
+#group	event	tier	source_stem	note
+dice	roll_shake	dice	DSGNMisc_HIT-Hit Rattle	rotate variants each roll
+dice	die_land_slot	dice	DSGNMisc_HIT-Bit Kick	rotate; pitch +2 semitones on last die
+dice	die_land_hull	dice	DSGNImpt_EXPLOSION-Thud	pitch down as hull total rises
+dice	slot_fill_flash	dice	DSGNTonl_SKILL IMPACT-Flick	
+dice	airlock_hold	dice	UIMisc_INTERFACE-Lock	
+dice	reroll_swipe	dice	DSGNTonl_USABLE-Magic Swipe	layer with reroll_coin
+dice	reroll_coin	dice	DSGNTonl_USABLE-Coin Spend	layer with reroll_swipe
+dice	loaded_die	dice	MAGSpel_CAST-Skill Ready	
+hull	hull_heartbeat	dice	DSGNSynth_BUFF-Mecha Failing	loop at 60bpm when hull 6-7, low volume
+hull	hull_warning	ui	DSGNSynth_BUFF-Mecha Barrier Fail	fires at hull 7
+hull	vent	ui	DSGNMisc_SKILL IMPACT-Energy Dissipate	hull dice reroll
+hull	repair_hull	ui	UIGlitch_USABLE-Mecha Repair	
+big	breach_explosion	big	DSGNImpt_EXPLOSION-Mecha Limb Explosion	
+big	breach_shatter	big	DSGNMisc_SKILL IMPACT-Glassy Sprites	fire 80ms after breach_explosion
+big	jettison_confirm	big	DSGNImpt_EXPLOSION-Flare Extinguish	
+big	run_over	big	DSGNImpt_EXPLOSION-Forced Shutdown	follow with 1s of silence
+big	launch_ignition	big	DSGNImpt_EXPLOSION-Mecha Propulsor Ignition	
+big	launch_reveal	big	DSGNSynth_BUFF-Mecha Level Up	on ship reveal, after ignition
+big	blueprint_drop	big	DSGNMisc_USABLE-Mecha Weapon Equip	replacement blueprint drops in
+big	greed_gather	big	DSGNSynth_CAST-Mecha Energy Gathering	during slow-mo
+big	greed_vent	big	DSGNImpt_EXPLOSION-Magisplosion	on the vent
+card	deal	ui	WHSH_MOVEMENT-Simple Whoosh	rotate per card
+card	flip	ui	UIClick_INTERFACE-Metallic Click	
+card	pick	ui	DSGNMisc_MELEE-Bit Sword	the confident accent
+card	return_unpicked	ui	DSGNMisc_INTERFACE-Phasey Swipe	
+card	bounty_tag	ui	DSGNTonl_SKILL IMPACT-Sparkly Star	
+card	cooldown_tap	ui	DSGNSynth_BUFF-Turn Locked	
+card	asteroid_extra_roll	ui	MAGSpel_CAST-Zap Up	pitch up each repeat
+card	distress_beacon	ui	DSGNSynth_BUFF-Mecha Selection	
+econ	cargo_gain	ui	DSGNTonl_USABLE-Whimsy Coin	
+econ	gold_gain	ui	DSGNTonl_USABLE-Coin Toss	
+econ	coin_fly	ui	DSGNMisc_MOVEMENT-Coin Whoosh	per coin in the race payout stream
+econ	coin_land	ui	DSGNTonl_SKILL IMPACT-Coin Impact	on land
+econ	spend_gold	ui	DSGNTonl_USABLE-Coin Spend	
+econ	part_bought	ui	DSGNTonl_USABLE-Mecha Upgrade Equip	permanent part
+ui	denied	ui	UIMisc_INTERFACE-Denied	cant afford / invalid drop
+ui	counter_tick	ui	DSGNTonl_INTERFACE-Tonal Click	pitch up a semitone per tick in code
+ui	button_tap	ui	UIClick_INTERFACE-Positive Click	
+ui	screen_change	ui	DSGNTonl_USABLE-Scifi Select	
+route	travel_beat	ui	WHSH_MOVEMENT-Mecha Ship Passby	
+route	node_ahead_pulse	ui	DSGNTonl_USABLE-Chirps	depot / race node ahead
+route	race_won	ui	DSGNMisc_SKILL IMPACT-Dramatic Finish	
+route	race_lost	ui	DSGNSynth_BUFF-Failed Buff	
+route	adventure_unlocked	ui	DSGNSynth_BUFF-Stats Up	
+route	energy_refill	ui	DSGNSynth_BUFF-Mecha Lock In	new run
